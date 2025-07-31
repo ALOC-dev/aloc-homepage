@@ -47,5 +47,4 @@ pnpm format     # Prettier 코드 포맷팅
 - **Framework**: Next.js 15.4.4
 - **Language**: TypeScript 5.8.3
 - **Styling**: Tailwind CSS 4.1.11
-- **Package Manager**: pnpm 10.13.1d CSS 4.1.11
 - **Package Manager**: pnpm 10.13.1
