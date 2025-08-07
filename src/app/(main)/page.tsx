@@ -9,7 +9,7 @@ export default function Main() {
       {/* 로고 아이콘 */}
       <div className='absolute left-[1.1%] top-[3%] z-20'>
         <Image
-          src='/images/아이콘.png'
+          src='/images/common/아이콘.png'
           alt='ALOC Logo'
           width={80}
           height={80}
@@ -28,7 +28,7 @@ export default function Main() {
         <div className='relative aspect-[4/3] w-auto h-auto'>
           {/* 배경 이미지 */}
           <Image
-            src='/images/macbook.png'
+            src='/images/main/macbook.png'
             alt='Background'
             width={1440}
             height={1080}
@@ -40,7 +40,7 @@ export default function Main() {
           <div className='absolute left-[5.75%] top-[15.5%] transform origin-top-left -rotate-[17.14deg] z-10 w-fit h-fit'>
             <Link href='/activity'>
               <Image
-                src='/images/activity.png'
+                src='/images/main/activity.png'
                 alt='Activity Sticker'
                 width={2050}
                 height={1000}
@@ -53,7 +53,7 @@ export default function Main() {
           <div className='absolute left-[70%] top-[2.5%] transform origin-top-left rotate-[9.52deg] z-10 w-fit h-fit'>
             <Link href='/gallery'>
               <Image
-                src='/images/camera.png'
+                src='/images/gallery/camera.png'
                 alt='Camera Sticker'
                 width={512}
                 height={512}
@@ -66,7 +66,7 @@ export default function Main() {
           <div className='absolute left-[7.9%] top-[60.8%] transform origin-top-left rotate-[10.61deg] z-10 w-fit h-fit'>
             <Link href='/members'>
               <Image
-                src='/images/맥주잔.png'
+                src='/images/main/맥주잔.png'
                 alt='Beer Sticker'
                 width={320}
                 height={320}
@@ -78,7 +78,7 @@ export default function Main() {
           {/* 스티커 4 - computer-science 스티커 */}
           <div className='absolute left-[55%] top-[25%] transform origin-top-left rotate-[5deg] z-10 w-fit h-fit'>
             <Image
-              src='/images/computer-science.png'
+              src='/images/main/computer-science.png'
               alt='Computer Science Sticker'
               width={400}
               height={300}
@@ -89,7 +89,7 @@ export default function Main() {
           {/* 스티커 5 - 부엉이 캐릭터 */}
           <div className='absolute left-[72.1%] top-[60.8%] z-10 w-fit h-fit'>
             <Image
-              src='/images/시립대마스코트.png'
+              src='/images/main/시립대마스코트.png'
               alt='University Mascot'
               width={288}
               height={288}
@@ -100,7 +100,7 @@ export default function Main() {
           {/* 스티커 6 - 서울시립대 로고 */}
           <div className='absolute left-[28.3%] top-[68%] z-10 w-fit h-fit'>
             <Image
-              src='/images/서울시립대로고.png'
+              src='/images/main/서울시립대로고.png'
               alt='University of Seoul Logo'
               width={3020}
               height={320}
@@ -108,11 +108,11 @@ export default function Main() {
             />
           </div>
 
-          {/* 스티커 7 - ALL LINKED ONE CODE */}
+          {/* 스티커 7 - aloc */}
           <div className='absolute left-[25.1%] top-[41.7%] transform origin-top-left -rotate-[9.59deg] z-10 w-fit h-fit'>
             <Link href='/introduction'>
               <Image
-                src='/images/aloc.png'
+                src='/images/main/aloc.png'
                 alt='ALL LINKED ONE CODE'
                 width={464}
                 height={320}
