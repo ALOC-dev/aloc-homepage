@@ -1,6 +1,6 @@
 # ALOC
 
-Next.js와 TypeScript로 설계한 서울시립대학교 컴퓨터과학부 소모임 Aloc Homepage 입니다.
+Next.js와 TypeScript로 설계한 서울시립대학교 컴퓨터과학부 소모임 Aloc의 Homepage 입니다.
 
 ![Next.js](https://img.shields.io/badge/Next.js-15.4.4-black?logo=next.js)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5.8.3-blue?logo=typescript)
