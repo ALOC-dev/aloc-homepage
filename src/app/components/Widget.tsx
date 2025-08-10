@@ -57,7 +57,7 @@ const Widget: React.FC<WidgetProps> = ({ className = '' }) => {
 
   return (
     <div
-      className={`absolute w-[146px] h-[588px] left-[1256px] top-[284px] rounded-[40px] ${className}`}
+      className={`fixed w-[146px] h-[588px] right-[20px] bottom-[84px] rounded-[40px] z-50 ${className}`}
       style={{ background: 'rgba(255, 255, 255, 0.70)' }}
     >
       <div className='flex flex-col items-center space-y-6'>
