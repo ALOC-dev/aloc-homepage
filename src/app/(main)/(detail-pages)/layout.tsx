@@ -37,7 +37,7 @@ export default function DetailPageLayout({ children }: DetailPageLayoutProps) {
   }, []);
 
   return (
-    <div className='w-[1440px] h-[1080px] relative object-cover'>
+    <div className='w-screen h-screen fixed object-cover'>
       {/* 배경 이미지 */}
       <Image
         src='/images/figma/background.png'
@@ -47,7 +47,19 @@ export default function DetailPageLayout({ children }: DetailPageLayoutProps) {
       />
 
       {/* 내부 페이지 윈도우 */}
-      <div className='absolute w-[1179px] h-[884px] left-[29px] top-[143px] bg-white rounded-[24.57px] overflow-hidden shadow-lg'>
+      <div
+        className='absolute bg-white rounded-[24.57px] overflow-hidden shadow-lg'
+        style={{
+          width: 'calc(100vw - 270px)',
+          height: 'calc(100vh - 250px)',
+          left: '100px',
+          top: '70px',
+          minWidth: '890px',
+          minHeight: '600px',
+          maxHeight: '700px',
+          maxWidth: '1100px',
+        }}
+      >
         {children}
       </div>
 

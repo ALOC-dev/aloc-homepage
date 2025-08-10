@@ -22,47 +22,47 @@ const Widget: React.FC<WidgetProps> = ({ className = '' }) => {
       label: 'Home',
       icon: '/images/members/home-icon.png',
       alt: 'Home',
-      width: 89,
-      height: 89,
-      className: 'w-[89px] h-[89px] rounded-lg overflow-hidden shadow-md',
+      width: 67,
+      height: 67,
+      className: 'w-[67px] h-[67px] rounded-lg overflow-hidden shadow-md',
     },
     {
       id: 'activity',
       label: 'Activity',
       icon: '/images/members/activity-icon.png',
       alt: 'Activity',
-      width: 90,
-      height: 90,
-      className: 'w-[90px] h-[90px] rounded-lg overflow-hidden',
+      width: 68,
+      height: 68,
+      className: 'w-[68px] h-[68px] rounded-lg overflow-hidden',
     },
     {
       id: 'members',
       label: '멤버 소개',
       icon: '/images/members/member-icon.svg',
       alt: '멤버 소개',
-      width: 84,
-      height: 69,
-      className: 'w-[84px] h-[69px]',
+      width: 63,
+      height: 52,
+      className: 'w-[63px] h-[52px]',
     },
     {
       id: 'photos',
       label: '활동 사진',
-      icon: '/images/members/photo-icon.png',
+      icon: '/images/figma/activity-photo.png',
       alt: '활동 사진',
-      width: 85,
-      height: 85,
-      className: 'w-[85px] h-[85px] rounded-lg overflow-hidden',
+      width: 64,
+      height: 64,
+      className: 'w-[64px] h-[64px] rounded-lg overflow-hidden',
     },
   ];
 
   return (
     <div
-      className={`fixed w-[146px] h-[588px] right-[20px] bottom-[84px] rounded-[40px] z-50 ${className}`}
+      className={`fixed w-[110px] h-[441px] right-[30px] top-[104px] rounded-[30px] z-50 ${className}`}
       style={{ background: 'rgba(255, 255, 255, 0.70)' }}
     >
-      <div className='flex flex-col items-center space-y-6'>
+      <div className='flex flex-col items-center space-y-4'>
         {navItems.map((item) => (
-          <div key={item.id} className={`text-center mt-[27px]`}>
+          <div key={item.id} className={`text-center mt-[20px]`}>
             <div className={item.className}>
               <Image
                 src={item.icon}
@@ -72,7 +72,7 @@ const Widget: React.FC<WidgetProps> = ({ className = '' }) => {
                 className='object-cover'
               />
             </div>
-            <span className='text-[18px] font-normal text-black tracking-[-1.2px] leading-[30px]'>
+            <span className='text-[13px] font-normal text-black tracking-[-0.8px] leading-[22px]'>
               {item.label}
             </span>
           </div>
