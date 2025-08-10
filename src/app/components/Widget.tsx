@@ -9,7 +9,6 @@ interface NavItem {
   width: number;
   height: number;
   className?: string;
-  marginTop?: string;
 }
 
 interface WidgetProps {
@@ -26,7 +25,6 @@ const Widget: React.FC<WidgetProps> = ({ className = '' }) => {
       width: 89,
       height: 89,
       className: 'w-[89px] h-[89px] rounded-lg overflow-hidden shadow-md',
-      marginTop: 'mt-[27px]',
     },
     {
       id: 'activity',
@@ -36,7 +34,6 @@ const Widget: React.FC<WidgetProps> = ({ className = '' }) => {
       width: 90,
       height: 90,
       className: 'w-[90px] h-[90px] rounded-lg overflow-hidden',
-      marginTop: 'mt-[16px]',
     },
     {
       id: 'members',
@@ -46,7 +43,6 @@ const Widget: React.FC<WidgetProps> = ({ className = '' }) => {
       width: 84,
       height: 69,
       className: 'w-[84px] h-[69px]',
-      marginTop: 'mt-[16px]',
     },
     {
       id: 'photos',
@@ -56,7 +52,6 @@ const Widget: React.FC<WidgetProps> = ({ className = '' }) => {
       width: 85,
       height: 85,
       className: 'w-[85px] h-[85px] rounded-lg overflow-hidden',
-      marginTop: 'mt-[16px]',
     },
   ];
 
@@ -67,7 +62,7 @@ const Widget: React.FC<WidgetProps> = ({ className = '' }) => {
     >
       <div className='flex flex-col items-center space-y-6'>
         {navItems.map((item) => (
-          <div key={item.id} className={`text-center ${item.marginTop}`}>
+          <div key={item.id} className={`text-center mt-[27px]`}>
             <div className={item.className}>
               <Image
                 src={item.icon}
