@@ -123,7 +123,7 @@ export default function Members() {
     <div className='w-[1440px] h-[1080px] relative object-cover'>
       {/* 배경 이미지 */}
       <Image
-        src='/images/members/background.png'
+        src='/images/figma/background.png'
         alt='배경'
         fill
         className='object-cover'
