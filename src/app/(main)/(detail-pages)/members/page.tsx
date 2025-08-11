@@ -2,23 +2,14 @@
 
 import React, { useState } from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
+import { members, type Member } from '@/app/data/members';
 
 // 세대 타입 정의
 interface Generation {
   id: number;
   name: string;
   color: string;
-}
-
-// 멤버 타입 정의
-interface Member {
-  id: number;
-  name: string;
-  role: string;
-  stack: string;
-  generation: number;
-  avatar: string;
-  isHighlighted?: boolean;
 }
 
 export default function Members() {
@@ -33,51 +24,7 @@ export default function Members() {
     { id: 1, name: '1기', color: '#107EFF' },
   ];
 
-  // 멤버 데이터
-  const members: Member[] = [
-    {
-      id: 1,
-      name: '2기 박주영',
-      role: '회장',
-      stack: '백엔드, AI',
-      generation: 2,
-      avatar: '/images/members/profile-icon.png',
-      isHighlighted: true,
-    },
-    {
-      id: 2,
-      name: '3기 송희영',
-      role: '부원',
-      stack: '프론트엔드',
-      generation: 3,
-      avatar: '/images/members/profile-icon.png',
-    },
-    {
-      id: 3,
-      name: '3기 이채우',
-      role: '부원',
-      stack: '백엔드',
-      generation: 3,
-      avatar: '/images/members/profile-icon.png',
-    },
-    {
-      id: 4,
-      name: '3기 김정훈',
-      role: '부원',
-      stack: 'AI',
-      generation: 3,
-      avatar: '/images/members/profile-icon.png',
-    },
-    // 추가 멤버들 (플레이스홀더)
-    ...Array.from({ length: 16 }, (_, i) => ({
-      id: i + 5,
-      name: '이름',
-      role: '역할',
-      stack: '관련스택',
-      generation: 1,
-      avatar: '/images/members/profile-icon.png',
-    })),
-  ];
+  // 멤버 데이터는 외부 파일에서 가져옴
 
   // 필터링된 멤버 목록
   const filteredMembers = selectedGeneration
@@ -210,14 +157,13 @@ export default function Members() {
           {/* 멤버 목록 */}
           <div className='px-[12.28px] py-[10px] space-y-0'>
             {filteredMembers.map((member, index) => (
-              <div
+              <Link
                 key={member.id}
-                className={`w-full h-[36.04px] rounded-[9.83px] flex items-center relative ${
-                  member.isHighlighted
-                    ? 'bg-[#0265E1]'
-                    : index % 2 === 1
-                      ? 'bg-[#F4F5F5]'
-                      : 'bg-[#FFFFFF]'
+                href={`/members/detail?id=${member.id}`}
+                className={`w-full h-[36.04px] rounded-[9.83px] flex items-center relative cursor-pointer transition-colors group ${
+                  index % 2 === 1
+                    ? 'bg-[#F4F5F5] hover:bg-[#0265E1]'
+                    : 'bg-[#FFFFFF] hover:bg-[#0265E1]'
                 }`}
               >
                 {/* 프로필 이미지 */}
@@ -233,37 +179,25 @@ export default function Members() {
 
                 {/* 이름 */}
                 <div className='absolute left-[89.27px] top-[7.37px]'>
-                  <span
-                    className={`text-[18.02px] font-[700] ${
-                      member.isHighlighted ? 'text-white' : 'text-black'
-                    }`}
-                  >
+                  <span className='text-[18.02px] font-[700] text-[#000000] group-hover:text-[#FFFFFF]'>
                     {member.name}
                   </span>
                 </div>
 
                 {/* 역할 */}
                 <div className='absolute left-[420px] top-[7.37px]'>
-                  <span
-                    className={`text-[18.02px] font-[700] ${
-                      member.isHighlighted ? 'text-[#BBD1F7]' : 'text-[#494949]'
-                    }`}
-                  >
+                  <span className='text-[18.02px] font-[700] text-[#494949] group-hover:text-[#FFFFFF]'>
                     {member.role}
                   </span>
                 </div>
 
                 {/* 관련스택 */}
                 <div className='absolute left-[540px] top-[7.37px]'>
-                  <span
-                    className={`text-[18.02px] font-[700] ${
-                      member.isHighlighted ? 'text-[#BBD1F7]' : 'text-[#494949]'
-                    }`}
-                  >
+                  <span className='text-[18.02px] font-[700] text-[#494949] group-hover:text-[#FFFFFF]'>
                     {member.stack}
                   </span>
                 </div>
-              </div>
+              </Link>
             ))}
           </div>
         </div>

@@ -1,7 +1,30 @@
+'use client';
+
 import Image from 'next/image';
 import Link from 'next/link';
+import { useSearchParams } from 'next/navigation';
+import { getMemberById } from '@/app/data/members';
 
 export default function MemberDetail() {
+  const searchParams = useSearchParams();
+  const memberId = searchParams.get('id');
+  const member = memberId ? getMemberById(parseInt(memberId)) : null;
+
+  if (!member) {
+    return (
+      <div className='relative w-full h-full bg-[#FFFFFF] flex items-center justify-center'>
+        <div className='text-center'>
+          <h1 className='text-[24px] font-[700] text-[#3C414C] mb-4'>
+            멤버를 찾을 수 없습니다
+          </h1>
+          <Link href='/members' className='text-[#408CFF] hover:underline'>
+            멤버 목록으로 돌아가기
+          </Link>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className='relative w-full h-full bg-[#FFFFFF]'>
       {/* 상단 헤더 바 */}
@@ -15,7 +38,7 @@ export default function MemberDetail() {
 
         {/* 페이지 타이틀 */}
         <h1 className='absolute top-[5px] left-1/2 -translate-x-1/2 text-[20.49px] font-[700] text-black center'>
-          3기 송희영
+          {member.name}
         </h1>
       </div>
 
@@ -34,32 +57,33 @@ export default function MemberDetail() {
 
         {/* 역할 배지 */}
         <div className='absolute left-[44.25px] top-[281.56px]'>
-          <span className='text-[21.31px] font-[700] text-[#408CFF]'>부원</span>
+          <span className='text-[21.31px] font-[700] text-[#408CFF]'>
+            {member.role}
+          </span>
         </div>
 
         {/* 이름 */}
         <div className='absolute left-[44.25px] top-[320.07px]'>
           <span className='text-[40.97px] font-[700] text-[#3C414C]'>
-            송희영
+            {member.name.split(' ')[1] || member.name}
           </span>
         </div>
 
         {/* 태그(직무/관심분야) */}
         <div className='absolute left-[44.25px] top-[382.35px] flex gap-[8.19px]'>
-          <span className='px-[8.19px] py-[5.74px] rounded-[9.83px] border border-[#A9ADB9] text-[13.93px] font-[700] text-black'>
-            프론트엔드
-          </span>
-          <span className='px-[8.19px] py-[5.74px] rounded-[9.83px] border border-[#A9ADB9] text-[13.93px] font-[700] text-black'>
-            백엔드
-          </span>
-          <span className='px-[8.19px] py-[5.74px] rounded-[9.83px] border border-[#A9ADB9] text-[13.93px] font-[700] text-black'>
-            AI
-          </span>
+          {member.stack.split(', ').map((skill, index) => (
+            <span
+              key={index}
+              className='px-[8.19px] py-[5.74px] rounded-[9.83px] border border-[#A9ADB9] text-[13.93px] font-[700] text-black'
+            >
+              {skill}
+            </span>
+          ))}
         </div>
 
         {/* GitHub 아이콘 버튼 */}
         <a
-          href='https://github.com/'
+          href={member.githubUrl || '#'}
           target='_blank'
           rel='noreferrer noopener'
           aria-label='GitHub 프로필'
@@ -82,8 +106,8 @@ export default function MemberDetail() {
           <h2 className='text-[#3C414C] text-[32.78px] font-[700] leading-[1.2] mb-[24px]'>
             자기소개
           </h2>
-          <p className='text-[#5C5E66] text-[24.58px] leading-[1.2] max-w-[573px]'>
-            안녕하세요. 서울시립대학교 컴퓨터과학부 송희영입니다.
+          <p className='text-[#5C5E66] text-[18.58px] leading-[1.2] max-w-[573px] pr-[30px]'>
+            {member.introduction}
           </p>
         </div>
         {/* 뒤로가기 버튼 */}
