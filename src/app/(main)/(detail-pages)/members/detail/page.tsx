@@ -99,10 +99,24 @@ export default function MemberDetail() {
         </a>
       </div>
 
+      {/* 뒤로가기 버튼 - 전체 페이지 레벨에서 고정 */}
+      <Link
+        href='/members'
+        className='absolute top-[83px] right-[20px] flex z-10'
+      >
+        <Image
+          src='/images/members/arrow-back-up.svg'
+          alt='뒤로가기'
+          width={24}
+          height={24}
+          className='object-contain'
+        />
+      </Link>
+
       {/* 우측 콘텐츠 */}
       <div className='absolute left-[281.89px] right-0 top-[63.1px] h-full border-l border-[#A9ADB9]/70'>
         {/* 내부 패딩과 타이포 */}
-        <div className='relative w-full h-full px-[60px] pt-[30.16px]'>
+        <div className='relative h-full px-[60px] pt-[30.16px]'>
           <h2 className='text-[#3C414C] text-[32.78px] font-[700] leading-[1.2] mb-[24px]'>
             자기소개
           </h2>
@@ -110,16 +124,6 @@ export default function MemberDetail() {
             {member.introduction}
           </p>
         </div>
-        {/* 뒤로가기 버튼 */}
-        <Link href='/members' className='absolute top-[20px] right-[20px] flex'>
-          <Image
-            src='/images/members/arrow-back-up.svg'
-            alt='뒤로가기'
-            width={24}
-            height={24}
-            className='object-contain'
-          />
-        </Link>
       </div>
     </div>
   );
