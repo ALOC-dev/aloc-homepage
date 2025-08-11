@@ -206,7 +206,7 @@ export default function Members() {
         </div>
 
         {/* 메인 콘텐츠 그룹 */}
-        <div className='flex-1 bg-[#FFFFFF] overflow-auto'>
+        <div className='flex-1 bg-[#FFFFFF] overflow-auto scrollbar-hide'>
           {/* 멤버 목록 */}
           <div className='px-[12.28px] py-[10px] space-y-0'>
             {filteredMembers.map((member, index) => (
