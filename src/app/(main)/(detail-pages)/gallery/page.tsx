@@ -99,13 +99,13 @@ export default function Gallery() {
         </div>
 
         {/* 검색 버튼 */}
-        <button className='absolute top-[39.31px] right-[32.76px] w-[32.76px] h-[32.76px] bg-white rounded-full flex items-center justify-center shadow-sm hover:shadow-md transition-shadow'>
+        <button className='absolute top-[39.31px] right-[32.76px] w-[32.76px] h-[32.76px] bg-[#FFFFFF] rounded-full flex items-center justify-center shadow-sm hover:shadow-md transition-shadow'>
           <div className='w-[26.62px] h-[26.62px] text-[#494949]'>🔍</div>
         </button>
       </div>
 
       {/* 메인 콘텐츠 영역 */}
-      <div className='p-8 bg-white'>
+      <div className='p-8 bg-[#FFFFFF]'>
         {/* 카테고리 필터 */}
         <div className='mb-8'>
           <div className='flex gap-4 justify-center'>
@@ -130,7 +130,7 @@ export default function Gallery() {
           {filteredItems.map((item) => (
             <div
               key={item.id}
-              className='bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow group'
+              className='bg-[#FFFFFF] rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow group'
             >
               {/* 이미지 */}
               <div className='relative w-full h-48 overflow-hidden'>

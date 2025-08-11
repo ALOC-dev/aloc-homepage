@@ -30,13 +30,13 @@ export default function Activity() {
         </div>
 
         {/* 검색 버튼 */}
-        <button className='absolute top-[39.31px] right-[32.76px] w-[32.76px] h-[32.76px] bg-white rounded-full flex items-center justify-center shadow-sm hover:shadow-md transition-shadow'>
+        <button className='absolute top-[39.31px] right-[32.76px] w-[32.76px] h-[32.76px] bg-[#FFFFFF] rounded-full flex items-center justify-center shadow-sm hover:shadow-md transition-shadow'>
           <div className='w-[26.62px] h-[26.62px] text-[#494949]'>🔍</div>
         </button>
       </div>
 
       {/* 메인 콘텐츠 영역 */}
-      <div className='p-8 bg-white'>
+      <div className='p-8 bg-[#FFFFFF]'>
         <div className='max-w-4xl mx-auto'>
           {/* 활동 개요 섹션 */}
           <div className='mb-8'>

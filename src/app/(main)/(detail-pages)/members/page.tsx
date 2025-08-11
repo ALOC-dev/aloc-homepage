@@ -41,7 +41,7 @@ export default function Members() {
       role: '회장',
       stack: '백엔드, AI',
       generation: 2,
-      avatar: 'https://placehold.co/40x40',
+      avatar: '/images/members/profile-icon.png',
       isHighlighted: true,
     },
     {
@@ -50,7 +50,7 @@ export default function Members() {
       role: '부원',
       stack: '프론트엔드',
       generation: 3,
-      avatar: 'https://placehold.co/40x40',
+      avatar: '/images/members/profile-icon.png',
     },
     {
       id: 3,
@@ -58,7 +58,7 @@ export default function Members() {
       role: '부원',
       stack: '백엔드',
       generation: 3,
-      avatar: 'https://placehold.co/40x40',
+      avatar: '/images/members/profile-icon.png',
     },
     {
       id: 4,
@@ -66,7 +66,7 @@ export default function Members() {
       role: '부원',
       stack: 'AI',
       generation: 3,
-      avatar: 'https://placehold.co/40x40',
+      avatar: '/images/members/profile-icon.png',
     },
     // 추가 멤버들 (플레이스홀더)
     ...Array.from({ length: 16 }, (_, i) => ({
@@ -75,7 +75,7 @@ export default function Members() {
       role: '역할',
       stack: '관련스택',
       generation: 1,
-      avatar: 'https://placehold.co/40x40',
+      avatar: '/images/members/profile-icon.png',
     })),
   ];
 
@@ -92,9 +92,9 @@ export default function Members() {
   };
 
   return (
-    <div className='w-full h-full'>
-      {/* 상단 헤더 바 (macOS 스타일) */}
-      <div className='w-full h-[118.75px] bg-[#F2F2F4] relative shadow-md'>
+    <div className='w-full h-full flex'>
+      {/* 왼쪽 사이드바 그룹 */}
+      <div className='w-[232.59px] h-full bg-[#DFDFE1] shadow-[2.457px_0_5.733px_0_rgba(0,0,0,0.25)] flex-shrink-0 relative z-30'>
         {/* macOS 트래픽 라이트 */}
         <div className='absolute top-[47.5px] left-[49.96px] flex space-x-[29px]'>
           <div className='w-[24.57px] h-[24.57px] bg-[#FF5F56] rounded-full' />
@@ -102,98 +102,113 @@ export default function Members() {
           <div className='w-[24.57px] h-[24.57px] bg-[#28C83E] rounded-full' />
         </div>
 
-        {/* 제목 */}
-        <h1 className='absolute top-[45.86px] left-[414.4px] text-[24.57px] font-bold text-[#3C414C]'>
-          멤버 소개
-        </h1>
+        {/* 왼쪽 사이드바 컨텐츠 그룹 */}
+        <div className='mt-[140px] flex flex-col items-center'>
+          {/* 즐겨찾기 섹션 */}
+          <div className='mb-8'>
+            <h2 className='text-[18.84px] font-[700] text-[#A9ADB9] mb-4'>
+              즐겨찾기
+            </h2>
+            <div className='bg-[#C7C7C9] w-[200px] h-[41px] rounded-[12.28px] p-3 flex items-center'>
+              <div className='w-[24.57px] h-[19.66px] ml-[13px]'>
+                <Image
+                  src='/images/members/member-folder-icon.svg'
+                  alt='멤버폴더'
+                  width={24.57}
+                  height={19.66}
+                  className='object-contain'
+                />
+              </div>
+              <span className='ml-[10px] text-[18.84px] font-[700] text-[#3C414C]'>
+                멤버 소개
+              </span>
+            </div>
+          </div>
 
-        {/* 네비게이션 버튼들 */}
-        <div className='absolute top-[49.14px] left-[310.4px] flex space-x-[45px]'>
-          <button className='w-[12.39px] h-[21.11px] text-[#B5B4B9] hover:text-gray-600'>
-            ←
-          </button>
-          <button className='w-[12.39px] h-[21.11px] text-[#B5B4B9] hover:text-gray-600'>
-            →
-          </button>
+          {/* 기수 필터 섹션 */}
+          <div className='mt-[10px]'>
+            <h2 className='text-[18.84px] font-[700] text-[#A9ADB9]'>기수</h2>
+            <div>
+              {generations.map((generation) => (
+                <button
+                  key={generation.id}
+                  onClick={() => handleGenerationClick(generation.id)}
+                  className={`flex items-center rounded-[12.28px] border-none gap-[15px] w-[200px] h-[41px] transition-opacity ${
+                    selectedGeneration === generation.id
+                      ? 'opacity-100 bg-[#C7C7C9]'
+                      : ' hover:opacity-100 bg-transparent'
+                  }`}
+                >
+                  <div
+                    className='ml-[10px] w-[20.47px] h-[20.47px] rounded-full'
+                    style={{ backgroundColor: generation.color }}
+                  />
+                  <span className='text-[18.84px] font-[700] text-[#3C414C]'>
+                    {generation.name}
+                  </span>
+                </button>
+              ))}
+            </div>
+          </div>
         </div>
-
-        {/* 검색 버튼 */}
-        <button className='absolute top-[39.31px] right-[32.76px] w-[32.76px] h-[32.76px] bg-white rounded-full flex items-center justify-center shadow-sm hover:shadow-md transition-shadow'>
-          <div className='w-[26.62px] h-[26.62px] text-[#494949]'>🔍</div>
-        </button>
       </div>
 
-      <div className='flex'>
-        {/* 왼쪽 사이드바 */}
-        <div className='w-[232.59px] h-[765.75px] bg-[#DFDFE1] shadow-lg'>
-          <div className='p-4'>
-            {/* 즐겨찾기 섹션 */}
-            <div className='mt-[20px] mb-8'>
-              <h2 className='text-[18.84px] font-bold text-[#A9ADB9] mb-4'>
-                즐겨찾기
-              </h2>
-              <div className='bg-[#C7C7C9] rounded-[12.28px] p-3 flex items-center'>
-                <div className='w-[24.57px] h-[19.66px] mr-3 relative'>
-                  <div className='absolute w-[24.57px] h-[13.1px] bottom-0 bg-[#C7C7C9] rounded-b-[4px] border-2 border-[#D18F00]' />
-                  <div className='absolute w-[24.57px] h-[8.19px] top-0 bg-[#C7C7C9] border-2 border-[#D18F00] rounded-[1.64px]' />
-                </div>
-                <span className='text-[18.84px] font-bold text-[#3C414C]'>
-                  멤버 소개
-                </span>
-              </div>
-            </div>
+      {/* 오른쪽 영역 (헤더바 + 메인 콘텐츠) */}
+      <div className='flex-1 h-full flex flex-col'>
+        {/* 상단 헤더바 그룹 */}
+        <div className='w-full h-[118.75px] bg-[#F2F2F4] shadow-[0_2.457px_5.733px_0_rgba(0,0,0,0.25)] flex-shrink-0 relative'>
+          {/* 제목 */}
+          <h1 className='absolute top-[29.14px] left-[182.81px] text-[24.57px] font-[700] text-[#3C414C]'>
+            멤버 소개
+          </h1>
 
-            {/* 기수 필터 섹션 */}
-            <div>
-              <h2 className='text-[18.84px] font-bold text-[#A9ADB9] mb-6'>
-                기수
-              </h2>
-              <div className='space-y-[15px]'>
-                {generations.map((generation) => (
-                  <button
-                    key={generation.id}
-                    onClick={() => handleGenerationClick(generation.id)}
-                    className={`flex items-center gap-[15px] p-2 rounded transition-opacity ${
-                      selectedGeneration === generation.id
-                        ? 'opacity-100 bg-white/20'
-                        : 'opacity-70 hover:opacity-100'
-                    }`}
-                  >
-                    <div
-                      className='w-[20.47px] h-[20.47px] rounded-full'
-                      style={{ backgroundColor: generation.color }}
-                    />
-                    <span className='text-[18.84px] font-bold text-[#3C414C]'>
-                      {generation.name}
-                    </span>
-                  </button>
-                ))}
-              </div>
-            </div>
+          {/* 네비게이션 아이콘들 */}
+          <div className='absolute top-[49.14px] left-[78.81px] flex space-x-[45px]'>
+            <Image
+              src='/images/members/arrow-left.svg'
+              alt='이전'
+              width={12.39}
+              height={21.11}
+              className='object-contain'
+            />
+            <Image
+              src='/images/members/arrow-right.svg'
+              alt='다음'
+              width={12.39}
+              height={21.11}
+              className='object-contain'
+            />
+          </div>
+
+          {/* 검색 아이콘 */}
+          <div className='absolute top-[39.31px] right-[32.76px] w-[32.76px] h-[32.76px]  flex items-center justify-center shadow-sm'>
+            <Image
+              src='/images/members/search-icon.svg'
+              alt='검색'
+              width={26.62}
+              height={26.62}
+              className='object-contain'
+            />
           </div>
         </div>
 
-        {/* 메인 콘텐츠 영역 */}
-        <div className='flex-1 bg-white'>
-          {/* 테이블 헤더 */}
-          <div className='flex justify-between items-center px-8 py-4 border-b border-[#A9ADB9]'>
-            <div className='flex space-x-[300px]'>
-              <span className='text-[16.38px] font-normal text-[#494949] ml-[45px]'>
-                이름
-              </span>
-              <div className='flex space-x-[115px]'>
-                <span className='text-[16.38px] font-normal text-[#494949]'>
-                  역할
-                </span>
-                <span className='text-[16.38px] font-normal text-[#494949]'>
-                  관련스택
-                </span>
-              </div>
-            </div>
-          </div>
+        {/* 테이블 헤더 그룹 */}
+        <div className='flex items-center border-b border-[#A9ADB9] h-[38px] relative bg-[#FFFFFF] flex-shrink-0'>
+          <span className='absolute left-[99.27px] text-[16.38px] font-[700] text-[#494949]'>
+            이름
+          </span>
+          <span className='absolute left-[435px] text-[16.38px] font-[700] text-[#494949]'>
+            역할
+          </span>
+          <span className='absolute left-[555px] text-[16.38px] font-[700] text-[#494949]'>
+            관련스택
+          </span>
+        </div>
 
+        {/* 메인 콘텐츠 그룹 */}
+        <div className='flex-1 bg-[#FFFFFF] overflow-auto scrollbar-hide'>
           {/* 멤버 목록 */}
-          <div className='px-6 space-y-0'>
+          <div className='px-[12.28px] py-[10px] space-y-0'>
             {filteredMembers.map((member, index) => (
               <div
                 key={member.id}
@@ -202,7 +217,7 @@ export default function Members() {
                     ? 'bg-[#0265E1]'
                     : index % 2 === 1
                       ? 'bg-[#F4F5F5]'
-                      : 'bg-white'
+                      : 'bg-[#FFFFFF]'
                 }`}
               >
                 {/* 프로필 이미지 */}
@@ -219,7 +234,7 @@ export default function Members() {
                 {/* 이름 */}
                 <div className='absolute left-[89.27px] top-[7.37px]'>
                   <span
-                    className={`text-[18.02px] font-bold ${
+                    className={`text-[18.02px] font-[700] ${
                       member.isHighlighted ? 'text-white' : 'text-black'
                     }`}
                   >
@@ -230,7 +245,7 @@ export default function Members() {
                 {/* 역할 */}
                 <div className='absolute left-[420px] top-[7.37px]'>
                   <span
-                    className={`text-[18.02px] font-bold ${
+                    className={`text-[18.02px] font-[700] ${
                       member.isHighlighted ? 'text-[#BBD1F7]' : 'text-[#494949]'
                     }`}
                   >
@@ -241,7 +256,7 @@ export default function Members() {
                 {/* 관련스택 */}
                 <div className='absolute left-[540px] top-[7.37px]'>
                   <span
-                    className={`text-[18.02px] font-bold ${
+                    className={`text-[18.02px] font-[700] ${
                       member.isHighlighted ? 'text-[#BBD1F7]' : 'text-[#494949]'
                     }`}
                   >

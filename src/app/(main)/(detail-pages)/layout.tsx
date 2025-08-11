@@ -48,7 +48,7 @@ export default function DetailPageLayout({ children }: DetailPageLayoutProps) {
 
       {/* 내부 페이지 윈도우 */}
       <div
-        className='absolute bg-white rounded-[24.57px] overflow-hidden shadow-lg'
+        className='absolute bg-[#FFFFFF] rounded-[24.57px] overflow-hidden shadow-lg'
         style={{
           width: 'calc(100vw - 270px)',
           height: 'calc(100vh - 250px)',
