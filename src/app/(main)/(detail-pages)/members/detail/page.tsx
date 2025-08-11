@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import Link from 'next/link';
 
 export default function MemberDetail() {
   return (
@@ -85,6 +86,16 @@ export default function MemberDetail() {
             안녕하세요. 서울시립대학교 컴퓨터과학부 송희영입니다.
           </p>
         </div>
+        {/* 뒤로가기 버튼 */}
+        <Link href='/members' className='absolute top-[20px] right-[20px] flex'>
+          <Image
+            src='/images/members/arrow-back-up.svg'
+            alt='뒤로가기'
+            width={24}
+            height={24}
+            className='object-contain'
+          />
+        </Link>
       </div>
     </div>
   );
