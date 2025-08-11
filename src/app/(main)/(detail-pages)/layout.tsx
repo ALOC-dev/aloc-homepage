@@ -1,8 +1,10 @@
 'use client';
 
-import React, { useState, useEffect, useRef } from 'react';
-import Image from 'next/image';
+import React from 'react';
 import Widget from '@/components/Widget';
+import { BackgroundImage } from '@/components/layout-components/BackgroundImage';
+import { DraggableContainer } from '@/components/layout-components/DraggableContainer';
+import { useBodyStyle } from '@/components/layout-components/useBodyStyle';
 import dynamic from 'next/dynamic';
 
 interface DetailPageLayoutProps {
@@ -10,150 +12,25 @@ interface DetailPageLayoutProps {
 }
 
 function DetailPageLayout({ children }: DetailPageLayoutProps) {
-  const containerWidth = 890;
+  const containerWidth = 1000;
   const containerHeight = 600;
-  const [position, setPosition] = useState(() => {
-    if (typeof window === 'undefined') {
-      return { x: 0, y: 0 };
-    }
-    const centerX = (window.innerWidth - containerWidth) / 2;
-    const centerY = (window.innerHeight - containerHeight) / 2;
-    return { x: centerX, y: centerY };
-  });
-  const [isDragging, setIsDragging] = useState(false);
-  const [dragOffset, setDragOffset] = useState({ x: 0, y: 0 });
-  const [isInDragArea, setIsInDragArea] = useState(false);
-  const containerRef = useRef<HTMLDivElement>(null);
 
   // HTML/body 기본 여백 제거로 배경 이미지 흰색선 해결
-  useEffect(() => {
-    // 기존 스타일 백업
-    const originalHtmlStyle = {
-      margin: document.documentElement.style.margin,
-      padding: document.documentElement.style.padding,
-    };
-    const originalBodyStyle = {
-      margin: document.body.style.margin,
-      padding: document.body.style.padding,
-    };
-
-    // HTML과 body의 여백/패딩 제거
-    document.documentElement.style.margin = '0';
-    document.documentElement.style.padding = '0';
-    document.body.style.margin = '0';
-    document.body.style.padding = '0';
-
-    // 컴포넌트 언마운트 시 원래 스타일로 복원
-    return () => {
-      document.documentElement.style.margin = originalHtmlStyle.margin;
-      document.documentElement.style.padding = originalHtmlStyle.padding;
-      document.body.style.margin = originalBodyStyle.margin;
-      document.body.style.padding = originalBodyStyle.padding;
-    };
-  }, []);
-
-  const handleMouseDown = (e: React.MouseEvent) => {
-    if (containerRef.current) {
-      const rect = containerRef.current.getBoundingClientRect();
-      const element = document.elementFromPoint(e.clientX, e.clientY);
-
-      // #f2f2f4 색상 영역에서만 드래그 가능
-      if (element && element instanceof HTMLElement) {
-        const computedStyle = window.getComputedStyle(element);
-        const backgroundColor = computedStyle.backgroundColor;
-
-        // rgb(242, 242, 244) 또는 #f2f2f4 색상 확인
-        if (
-          backgroundColor === 'rgb(242, 242, 244)' ||
-          backgroundColor === '#f2f2f4'
-        ) {
-          setDragOffset({
-            x: e.clientX - rect.left,
-            y: e.clientY - rect.top,
-          });
-          setIsDragging(true);
-        }
-      }
-    }
-  };
-
-  const handleContainerMouseMove = (e: React.MouseEvent) => {
-    const element = document.elementFromPoint(e.clientX, e.clientY);
-
-    if (element && element instanceof HTMLElement) {
-      const computedStyle = window.getComputedStyle(element);
-      const backgroundColor = computedStyle.backgroundColor;
-
-      // #f2f2f4 색상 영역에서만 커서 변경
-      setIsInDragArea(
-        backgroundColor === 'rgb(242, 242, 244)' ||
-          backgroundColor === '#f2f2f4',
-      );
-    } else {
-      setIsInDragArea(false);
-    }
-  };
-
-  const handleDocumentMouseMove = (e: MouseEvent) => {
-    if (isDragging) {
-      const newX = e.clientX - dragOffset.x;
-      const newY = e.clientY - dragOffset.y;
-
-      // 화면 경계 내에서만 이동하도록 제한
-      const maxX = window.innerWidth - 890; // 컨테이너 너비
-      const maxY = window.innerHeight - 600; // 컨테이너 높이
-
-      setPosition({
-        x: Math.max(0, Math.min(newX, maxX)),
-        y: Math.max(0, Math.min(newY, maxY)),
-      });
-    }
-  };
-
-  const handleMouseUp = () => {
-    setIsDragging(false);
-  };
-
-  useEffect(() => {
-    if (isDragging) {
-      document.addEventListener('mousemove', handleDocumentMouseMove);
-      document.addEventListener('mouseup', handleMouseUp);
-
-      return () => {
-        document.removeEventListener('mousemove', handleDocumentMouseMove);
-        document.removeEventListener('mouseup', handleMouseUp);
-      };
-    }
-  }, [isDragging, dragOffset]);
+  useBodyStyle();
 
   return (
     <div className='w-screen h-screen fixed object-cover'>
       {/* 배경 이미지 */}
-      <Image
-        src='/images/figma/background.png'
-        alt='배경'
-        fill
-        className='object-cover'
-      />
+      <BackgroundImage />
 
       {/* 내부 페이지 윈도우 */}
-      <div
-        ref={containerRef}
-        className={`absolute bg-[#FFFFFF] rounded-[24.57px] overflow-hidden shadow-lg select-none ${
-          isInDragArea ? 'cursor-move' : 'cursor-default'
-        }`}
-        style={{
-          width: `${containerWidth}px`,
-          height: `${containerHeight}px`,
-          left: `${position.x}px`,
-          top: `${position.y}px`,
-          userSelect: 'none',
-        }}
-        onMouseDown={handleMouseDown}
-        onMouseMove={handleContainerMouseMove}
+      <DraggableContainer
+        width={containerWidth}
+        height={containerHeight}
+        dragColor='#f2f2f4'
       >
         {children}
-      </div>
+      </DraggableContainer>
 
       {/* 오른쪽 사이드바 네비게이션 */}
       <Widget />
