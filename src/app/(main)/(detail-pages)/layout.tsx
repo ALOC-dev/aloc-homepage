@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
-import Widget from '@/app/components/Widget';
+import Widget from '@/components/Widget';
 
 interface DetailPageLayoutProps {
   children: React.ReactNode;
