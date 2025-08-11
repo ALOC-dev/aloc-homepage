@@ -92,9 +92,9 @@ export default function Members() {
   };
 
   return (
-    <div className='w-full h-full'>
-      {/* 상단 헤더 바 (macOS 스타일) */}
-      <div className='w-full h-[118.75px] bg-[#F2F2F4] relative shadow-md'>
+    <div className='w-full h-full flex'>
+      {/* 왼쪽 사이드바 그룹 */}
+      <div className='w-[232.59px] h-full bg-[#DFDFE1] shadow-lg flex-shrink-0 relative'>
         {/* macOS 트래픽 라이트 */}
         <div className='absolute top-[47.5px] left-[49.96px] flex space-x-[29px]'>
           <div className='w-[24.57px] h-[24.57px] bg-[#FF5F56] rounded-full' />
@@ -102,79 +102,95 @@ export default function Members() {
           <div className='w-[24.57px] h-[24.57px] bg-[#28C83E] rounded-full' />
         </div>
 
-        {/* 제목 */}
-        <h1 className='absolute top-[45.86px] left-[414.4px] text-[24.57px] font-bold text-[#3C414C]'>
-          멤버 소개
-        </h1>
-
-        {/* 네비게이션 버튼들 */}
-        <div className='absolute top-[49.14px] left-[310.4px] flex space-x-[45px]'>
-          <button className='w-[12.39px] h-[21.11px] text-[#B5B4B9] hover:text-gray-600'>
-            ←
-          </button>
-          <button className='w-[12.39px] h-[21.11px] text-[#B5B4B9] hover:text-gray-600'>
-            →
-          </button>
-        </div>
-
-        {/* 검색 버튼 */}
-        <button className='absolute top-[39.31px] right-[32.76px] w-[32.76px] h-[32.76px] bg-white rounded-full flex items-center justify-center shadow-sm hover:shadow-md transition-shadow'>
-          <div className='w-[26.62px] h-[26.62px] text-[#494949]'>🔍</div>
-        </button>
-      </div>
-
-      <div className='flex'>
-        {/* 왼쪽 사이드바 */}
-        <div className='w-[232.59px] h-[765.75px] bg-[#DFDFE1] shadow-lg'>
-          <div className='p-4'>
-            {/* 즐겨찾기 섹션 */}
-            <div className='mt-[20px] mb-8'>
-              <h2 className='text-[18.84px] font-bold text-[#A9ADB9] mb-4'>
-                즐겨찾기
-              </h2>
-              <div className='bg-[#C7C7C9] rounded-[12.28px] p-3 flex items-center'>
-                <div className='w-[24.57px] h-[19.66px] mr-3 relative'>
-                  <div className='absolute w-[24.57px] h-[13.1px] bottom-0 bg-[#C7C7C9] rounded-b-[4px] border-2 border-[#D18F00]' />
-                  <div className='absolute w-[24.57px] h-[8.19px] top-0 bg-[#C7C7C9] border-2 border-[#D18F00] rounded-[1.64px]' />
-                </div>
-                <span className='text-[18.84px] font-bold text-[#3C414C]'>
-                  멤버 소개
-                </span>
+        {/* 왼쪽 사이드바 컨텐츠 그룹 */}
+        <div className='mt-[140px] ml-[22px]'>
+          {/* 즐겨찾기 섹션 */}
+          <div className='mb-8'>
+            <h2 className='text-[18.84px] font-bold text-[#A9ADB9] mb-4'>
+              즐겨찾기
+            </h2>
+            <div className='bg-[#C7C7C9] rounded-[12.28px] p-3 flex items-center'>
+              <div className='w-[24.57px] h-[19.66px] mr-3 relative'>
+                <div className='absolute w-[24.57px] h-[13.1px] bottom-0 bg-[#C7C7C9] rounded-b-[4px] border-2 border-[#D18F00]' />
+                <div className='absolute w-[24.57px] h-[8.19px] top-0 bg-[#C7C7C9] border-2 border-[#D18F00] rounded-[1.64px]' />
               </div>
+              <span className='text-[18.84px] font-bold text-[#3C414C]'>
+                멤버 소개
+              </span>
             </div>
+          </div>
 
-            {/* 기수 필터 섹션 */}
-            <div>
-              <h2 className='text-[18.84px] font-bold text-[#A9ADB9] mb-6'>
-                기수
-              </h2>
-              <div className='space-y-[15px]'>
-                {generations.map((generation) => (
-                  <button
-                    key={generation.id}
-                    onClick={() => handleGenerationClick(generation.id)}
-                    className={`flex items-center gap-[15px] p-2 rounded transition-opacity ${
-                      selectedGeneration === generation.id
-                        ? 'opacity-100 bg-white/20'
-                        : 'opacity-70 hover:opacity-100'
-                    }`}
-                  >
-                    <div
-                      className='w-[20.47px] h-[20.47px] rounded-full'
-                      style={{ backgroundColor: generation.color }}
-                    />
-                    <span className='text-[18.84px] font-bold text-[#3C414C]'>
-                      {generation.name}
-                    </span>
-                  </button>
-                ))}
-              </div>
+          {/* 기수 필터 섹션 */}
+          <div>
+            <h2 className='text-[18.84px] font-bold text-[#A9ADB9] mb-6'>
+              기수
+            </h2>
+            <div className='space-y-[15px]'>
+              {generations.map((generation) => (
+                <button
+                  key={generation.id}
+                  onClick={() => handleGenerationClick(generation.id)}
+                  className={`flex items-center gap-[15px] p-2 rounded transition-opacity ${
+                    selectedGeneration === generation.id
+                      ? 'opacity-100 bg-[#FFFFFF]'
+                      : 'opacity-70 hover:opacity-100'
+                  }`}
+                >
+                  <div
+                    className='w-[20.47px] h-[20.47px] rounded-full'
+                    style={{ backgroundColor: generation.color }}
+                  />
+                  <span className='text-[18.84px] font-bold text-[#3C414C]'>
+                    {generation.name}
+                  </span>
+                </button>
+              ))}
             </div>
           </div>
         </div>
+      </div>
 
-        {/* 메인 콘텐츠 영역 */}
-        <div className='flex-1 bg-white'>
+      {/* 오른쪽 영역 (헤더바 + 메인 콘텐츠) */}
+      <div className='flex-1 h-full flex flex-col'>
+        {/* 상단 헤더바 그룹 */}
+        <div className='w-full h-[118.75px] bg-[#F2F2F4] shadow-md flex-shrink-0 relative'>
+          {/* 제목 */}
+          <h1 className='absolute top-[29.14px] left-[182.81px] text-[24.57px] font-bold text-[#3C414C]'>
+            멤버 소개
+          </h1>
+
+          {/* 네비게이션 아이콘들 */}
+          <div className='absolute top-[49.14px] left-[78.81px] flex space-x-[45px]'>
+            <Image
+              src='/images/members/arrow-left.svg'
+              alt='이전'
+              width={12.39}
+              height={21.11}
+              className='object-contain'
+            />
+            <Image
+              src='/images/members/arrow-right.svg'
+              alt='다음'
+              width={12.39}
+              height={21.11}
+              className='object-contain'
+            />
+          </div>
+
+          {/* 검색 아이콘 */}
+          <div className='absolute top-[39.31px] right-[32.76px] w-[32.76px] h-[32.76px]  flex items-center justify-center shadow-sm'>
+            <Image
+              src='/images/members/search-icon.svg'
+              alt='검색'
+              width={26.62}
+              height={26.62}
+              className='object-contain'
+            />
+          </div>
+        </div>
+
+        {/* 메인 콘텐츠 그룹 */}
+        <div className='flex-1 bg-[#FFFFFF] overflow-auto'>
           {/* 테이블 헤더 */}
           <div className='flex justify-between items-center px-8 py-4 border-b border-[#A9ADB9]'>
             <div className='flex space-x-[300px]'>
@@ -202,7 +218,7 @@ export default function Members() {
                     ? 'bg-[#0265E1]'
                     : index % 2 === 1
                       ? 'bg-[#F4F5F5]'
-                      : 'bg-white'
+                      : 'bg-[#FFFFFF]'
                 }`}
               >
                 {/* 프로필 이미지 */}

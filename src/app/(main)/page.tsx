@@ -5,7 +5,7 @@ import Link from 'next/link';
 
 export default function Main() {
   return (
-    <div className='w-screen h-screen bg-white overflow-hidden'>
+    <div className='w-screen h-screen bg-[#FFFFFF] overflow-hidden'>
       {/* 로고 아이콘 */}
       <div className='absolute left-[1.1%] top-[3%] z-20'>
         <Image
