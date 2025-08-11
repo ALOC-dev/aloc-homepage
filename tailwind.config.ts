@@ -11,6 +11,18 @@ const config: Config = {
       fontFamily: {
         inter: ['var(--font-inter)', 'sans-serif'],
       },
+      colors: {
+        lightGray: 'var(--color-light-gray)',
+        gray: 'var(--color-gray)',
+        darkGray: 'var(--color-dark-gray)',
+        greenButton: 'var(--color-green-button)',
+        yellowButton: 'var(--color-yellow-button)',
+        redButton: 'var(--color-red-button)',
+        blue: 'var(--color-blue)',
+        skyBlue: 'var(--color-sky-blue)',
+        black: 'var(--color-black)',
+        white: 'var(--color-white)',
+      },
     },
   },
   plugins: [],
