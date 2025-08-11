@@ -185,15 +185,15 @@ export default function Members() {
                 </div>
 
                 {/* 역할 */}
-                <div className='absolute left-[420px] top-[7.37px]'>
-                  <span className='text-[18.02px] font-[700] text-[#494949] group-hover:text-[#FFFFFF]'>
+                <div>
+                  <span className='text-[18.02px] absolute left-[420px] top-[7.37px] font-[700] text-[#494949] group-hover:text-[#FFFFFF]'>
                     {member.role}
                   </span>
                 </div>
 
                 {/* 관련스택 */}
-                <div className='absolute left-[540px] top-[7.37px]'>
-                  <span className='text-[18.02px] font-[700] text-[#494949] group-hover:text-[#FFFFFF]'>
+                <div>
+                  <span className='text-[18.02px]  absolute left-[540px] top-[7.37px] font-[700] text-[#494949] group-hover:text-[#FFFFFF]'>
                     {member.stack}
                   </span>
                 </div>

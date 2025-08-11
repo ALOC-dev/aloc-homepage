@@ -28,7 +28,7 @@ export default function MemberDetail() {
   return (
     <div className='relative w-full h-full bg-[#FFFFFF]'>
       {/* 상단 헤더 바 */}
-      <div className='w-full h-[63.1px] bg-[#E0DFE4] relative shadow-[0_2px_4px_rgba(0,0,0,0.05)]'>
+      <div className='w-full h-[63.1px] bg-[#f2f2f4] relative shadow-[0_2px_4px_rgba(0,0,0,0.05)]'>
         {/* macOS 트래픽 라이트 */}
         <div className='absolute top-[18.03px] left-[15.57px] flex space-x-[14.33px]'>
           <div className='w-[24.58px] h-[24.58px] bg-[#FF5F56] rounded-full' />
