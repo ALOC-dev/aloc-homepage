@@ -3,13 +3,23 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
 import Widget from '@/components/Widget';
+import dynamic from 'next/dynamic';
 
 interface DetailPageLayoutProps {
   children: React.ReactNode;
 }
 
-export default function DetailPageLayout({ children }: DetailPageLayoutProps) {
-  const [position, setPosition] = useState({ x: 100, y: 70 });
+function DetailPageLayout({ children }: DetailPageLayoutProps) {
+  const containerWidth = 890;
+  const containerHeight = 600;
+  const [position, setPosition] = useState(() => {
+    if (typeof window === 'undefined') {
+      return { x: 0, y: 0 };
+    }
+    const centerX = (window.innerWidth - containerWidth) / 2;
+    const centerY = (window.innerHeight - containerHeight) / 2;
+    return { x: centerX, y: centerY };
+  });
   const [isDragging, setIsDragging] = useState(false);
   const [dragOffset, setDragOffset] = useState({ x: 0, y: 0 });
   const [isInDragArea, setIsInDragArea] = useState(false);
@@ -133,14 +143,10 @@ export default function DetailPageLayout({ children }: DetailPageLayoutProps) {
           isInDragArea ? 'cursor-move' : 'cursor-default'
         }`}
         style={{
-          width: '890px',
-          height: '600px',
+          width: `${containerWidth}px`,
+          height: `${containerHeight}px`,
           left: `${position.x}px`,
           top: `${position.y}px`,
-          minWidth: '890px',
-          minHeight: '600px',
-          maxHeight: '700px',
-          maxWidth: '1100px',
           userSelect: 'none',
         }}
         onMouseDown={handleMouseDown}
@@ -154,3 +160,5 @@ export default function DetailPageLayout({ children }: DetailPageLayoutProps) {
     </div>
   );
 }
+
+export default dynamic(() => Promise.resolve(DetailPageLayout), { ssr: false });
