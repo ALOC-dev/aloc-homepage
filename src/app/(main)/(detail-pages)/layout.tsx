@@ -27,7 +27,7 @@ function DetailPageLayout({ children }: DetailPageLayoutProps) {
       <DraggableContainer
         width={containerWidth}
         height={containerHeight}
-        dragColor='var(--color-light-gray)'
+        dragColor='var(--color-border-bright)'
       >
         {children}
       </DraggableContainer>

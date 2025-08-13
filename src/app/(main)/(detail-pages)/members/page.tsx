@@ -4,7 +4,6 @@ import React, { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { members, type Member } from '@/app/data/members';
-import '@/app/global.css';
 
 // 세대 타입 정의
 interface Generation {
@@ -21,7 +20,7 @@ export default function Members() {
   // 세대 데이터
   const generations: Generation[] = [
     { id: 3, name: '3기', color: 'var(--color-brand-orange)' },
-    { id: 2, name: '2기', color: 'var(--color-brand-green-primary)' },
+    { id: 2, name: '2기', color: 'var(--color-brand-green-bright)' },
     { id: 1, name: '1기', color: 'var(--color-brand-blue)' },
   ];
 
@@ -42,10 +41,10 @@ export default function Members() {
   return (
     <div className='w-full h-full flex'>
       {/* 왼쪽 사이드바 그룹 */}
-      <div className='w-[232.59px] h-full bg-border-muted shadow-[2.457px_0_5.733px_0_rgba(0,0,0,0.25)] flex-shrink-0 relative z-30'>
+      <div className='w-[232.59px] h-full bg-border-brighter shadow-[2.457px_0_5.733px_0_rgba(0,0,0,0.25)] flex-shrink-0 relative z-30'>
         {/* macOS 트래픽 라이트 */}
         <div className='absolute top-[47.5px] left-[49.96px] flex space-x-[29px]'>
-          <div className='w-[24.57px] h-[24.57px] bg-red rounded-full' />
+          <div className='w-[24.57px] h-[24.57px] bg-brand-red rounded-full' />
           <div className='w-[24.57px] h-[24.57px] bg-brand-yellow rounded-full' />
           <div className='w-[24.57px] h-[24.57px] bg-brand-green rounded-full' />
         </div>
@@ -53,11 +52,11 @@ export default function Members() {
         {/* 왼쪽 사이드바 컨텐츠 그룹 */}
         <div className='mt-[140px] flex flex-col items-center'>
           {/* 즐겨찾기 섹션 */}
-          <div className='mb-8'>
-            <h2 className='text-[18.84px] font-[700] text-border-gray mb-4'>
+          <div className='mb-6'>
+            <h2 className='text-[18.84px] font-[700] text-border-dark'>
               즐겨찾기
             </h2>
-            <div className='bg-border-light w-[200px] h-[41px] rounded-[12.28px] p-4 flex items-center'>
+            <div className='bg-border-bright w-[200px] h-[41px] rounded-[12.28px] flex items-center'>
               <div className='w-[24.57px] h-[19.66px] ml-[13px]'>
                 <Image
                   src='/images/members/member-folder-icon.svg'
@@ -67,7 +66,7 @@ export default function Members() {
                   className='object-contain'
                 />
               </div>
-              <span className='ml-[10px] text-[18.84px] font-[700] text-text-primary'>
+              <span className='ml-[10px] text-[18.84px] font-bold text-text-primary'>
                 멤버 소개
               </span>
             </div>
@@ -75,7 +74,7 @@ export default function Members() {
 
           {/* 기수 필터 섹션 */}
           <div className='mt-[10px]'>
-            <h2 className='text-[18.84px] font-[700] text-border-gray'>기수</h2>
+            <h2 className='text-[18.84px] font-bold text-border-dark'>기수</h2>
             <div>
               {generations.map((generation) => (
                 <button
@@ -83,7 +82,7 @@ export default function Members() {
                   onClick={() => handleGenerationClick(generation.id)}
                   className={`flex items-center rounded-[12.28px] border-none gap-[15px] w-[200px] h-[41px] transition-opacity ${
                     selectedGeneration === generation.id
-                      ? 'opacity-100 bg-border-light'
+                      ? 'opacity-100 bg-border-bright'
                       : ' hover:opacity-100 bg-transparent'
                   }`}
                 >
@@ -104,9 +103,9 @@ export default function Members() {
       {/* 오른쪽 영역 (헤더바 + 메인 콘텐츠) */}
       <div className='flex-1 h-full flex flex-col'>
         {/* 상단 헤더바 그룹 */}
-        <div className='w-full h-[118.75px] bg-bg-light shadow-[0_2.457px_5.733px_0_rgba(0,0,0,0.25)] flex-shrink-0 relative'>
+        <div className='w-full h-[118.75px] z-20 bg-bright-gray shadow-[0_2.457px_5.733px_0_rgba(0,0,0,0.25)] flex-shrink-0 relative'>
           {/* 제목 */}
-          <h1 className='absolute top-[29.14px] left-[182.81px] text-[24.57px] font-[700] text-text-primary'>
+          <h1 className='absolute top-[42.14px] left-[182.81px] text-[24.57px] font-[700] text-text-primary'>
             멤버 소개
           </h1>
 
@@ -129,7 +128,7 @@ export default function Members() {
           </div>
 
           {/* 검색 아이콘 */}
-          <div className='absolute top-[39.31px] right-[32.76px] w-[32.76px] h-[32.76px]  flex items-center justify-center shadow-sm'>
+          <div className='absolute top-[39.31px] right-[32.76px] w-[32.76px] h-[32.76px]  flex items-center justify-center'>
             <Image
               src='/images/members/search-icon.svg'
               alt='검색'
@@ -142,13 +141,13 @@ export default function Members() {
 
         {/* 테이블 헤더 그룹 */}
         <div className='flex items-center border-b border-border-gray h-[38px] relative bg-white flex-shrink-0'>
-          <span className='absolute left-[99.27px] text-[16.38px] font-[700] text-text-secondary'>
+          <span className='absolute left-[99.27px] text-[16.38px] text-text-secondary'>
             이름
           </span>
-          <span className='absolute left-[435px] text-[16.38px] font-[700] text-text-secondary'>
+          <span className='absolute left-[435px] text-[16.38px]  text-text-secondary'>
             역할
           </span>
-          <span className='absolute left-[555px] text-[16.38px] font-[700] text-text-secondary'>
+          <span className='absolute left-[555px] text-[16.38px] text-text-secondary'>
             관련스택
           </span>
         </div>
@@ -161,10 +160,8 @@ export default function Members() {
               <Link
                 key={member.id}
                 href={`/members/detail?id=${member.id}`}
-                className={`w-full h-[36.04px] rounded-[9.83px] flex items-center relative cursor-pointer transition-colors group ${
-                  index % 2 === 1
-                    ? 'bg-gray-light hover:bg-brand-blue-hover'
-                    : 'bg-white hover:bg-brand-blue-hover'
+                className={`w-full h-[36.04px] rounded-[9.83px] flex items-center relative cursor-pointer transition-colors group hover:bg-brand-blue-hover ${
+                  index % 2 === 1 ? 'bg-brighter-gray ' : 'bg-white '
                 }`}
               >
                 {/* 프로필 이미지 */}

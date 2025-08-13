@@ -3,7 +3,7 @@
 @theme {
   /* 폰트 */
   --font-inter: 'Inter', sans-serif;
-
+  --font-weight-bold: 700;
   /* Tailwind 기본 색상들 */
   --color-red: #ef4444;
   --color-red-50: #fef2f2;
@@ -69,18 +69,18 @@
   --color-white: #ffffff;
 
   /* 커스텀 색상들 - 중복 사용되는 컬러들 */
-  --color-light-gray: #f2f2f4;
-  --color-gray-light: #f4f5f5;
-  --color-gray-muted: #f8f9fa;
+  --color-bright-gray: #f2f2f4;
+  --color-brighter-gray: #f4f5f5;
+  --color-brightest-gray: #f8f9fa; /* 무채색 */
 
   --color-text-primary: #3c414c;
   --color-text-secondary: #494949;
   --color-text-tertiary: #5c5e66;
   --color-text-muted: #b5b4b9;
 
-  --color-border-gray: #a9adb9;
-  --color-border-light: #c7c7c9;
-  --color-border-muted: #dfdfe1;
+  --color-border-dark: #a9adb9;
+  --color-border-bright: #c7c7c9;
+  --color-border-brighter: #dfdfe1;
 
   --color-brand-red: #ff5f56;
   --color-brand-yellow: #fdbc2e;
@@ -88,7 +88,7 @@
   --color-brand-blue: #107eff;
   --color-brand-blue-hover: #0265e1;
   --color-brand-blue-link: #408cff;
-  --color-brand-green-primary: #23cc3d;
+  --color-brand-green-bright: #23cc3d;
   --color-brand-orange: #ed6900;
 }
 
