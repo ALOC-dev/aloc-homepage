@@ -1,0 +1,63 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --font-inter: 'Inter', sans-serif;
+
+    /* 기본 컬러 */
+    --color-white: #ffffff;
+    --color-black: #000000;
+
+    /* 그레이 스케일 */
+    --color-light-gray: #e7e7e7;
+    --color-gray: #d9d9d9;
+    --color-dark-gray: #969696;
+    --color-light-gray-bg: #f2f2f4;
+    --color-gray-light: #f4f5f5;
+    --color-gray-medium: #a9adb9;
+    --color-gray-muted: #b5b4b9;
+    --color-gray-border: #c7c7c9;
+
+    /* 텍스트 컬러 */
+    --color-text-primary: #3c414c;
+    --color-text-secondary: #494949;
+    --color-text-tertiary: #5c5e66;
+
+    /* 브랜드 컬러 */
+    --color-red: #ff5f56;
+    --color-yellow: #fdbc2e;
+    --color-green: #28c83e;
+    --color-blue-primary: #107eff;
+    --color-green-primary: #23cc3d;
+    --color-orange: #ed6900;
+
+    /* 액션 컬러 */
+    --color-blue-hover: #0265e1;
+    --color-blue-link: #408cff;
+    --color-sky-blue: #009cff;
+
+    /* 레거시 호환성 */
+    --color-green-button: #23cc3d;
+    --color-yellow-button: #fcb933;
+    --color-red-button: #ff5f53;
+    --color-blue: #107eff;
+  }
+}
+
+@layer utilities {
+  .font-inter {
+    font-family: var(--font-inter);
+  }
+}
+
+@layer utilities {
+  .scrollbar-hide {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+  }
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera */
+  }
+}
