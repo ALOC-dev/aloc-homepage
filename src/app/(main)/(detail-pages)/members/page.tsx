@@ -41,7 +41,7 @@ export default function Members() {
   return (
     <div className='w-full h-full flex'>
       {/* 왼쪽 사이드바 그룹 */}
-      <div className='w-[232.59px] h-full bg-border-brighter shadow-[2.457px_0_5.733px_0_rgba(0,0,0,0.25)] flex-shrink-0 relative z-30'>
+      <div className='w-[232.59px] h-full bg-border-brighter shadow-sidebar flex-shrink-0 relative z-30'>
         {/* macOS 트래픽 라이트 */}
         <div className='absolute top-[47.5px] left-[49.96px] flex space-x-[29px]'>
           <div className='w-[24.57px] h-[24.57px] bg-brand-red rounded-full' />
@@ -103,7 +103,7 @@ export default function Members() {
       {/* 오른쪽 영역 (헤더바 + 메인 콘텐츠) */}
       <div className='flex-1 h-full flex flex-col'>
         {/* 상단 헤더바 그룹 */}
-        <div className='w-full h-[118.75px] z-20 bg-bright-gray shadow-[0_2.457px_5.733px_0_rgba(0,0,0,0.25)] flex-shrink-0 relative'>
+        <div className='w-full h-[118.75px] z-20 bg-bright-gray shadow-header flex-shrink-0 relative'>
           {/* 제목 */}
           <h1 className='absolute top-[42.14px] left-[182.81px] text-[24.57px] font-[700] text-text-primary'>
             멤버 소개

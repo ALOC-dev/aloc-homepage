@@ -31,7 +31,7 @@ export default function MemberDetail() {
   return (
     <div className='relative w-full h-full bg-white'>
       {/* 상단 헤더 바 */}
-      <div className='w-full h-[63.1px] bg-bright-gray relative shadow-[0_2px_4px_rgba(0,0,0,0.05)] z-30'>
+      <div className='w-full h-[63.1px] bg-bright-gray relative shadow-header z-30'>
         {/* macOS 트래픽 라이트 */}
         <div className='absolute top-[18.03px] left-[15.57px] flex space-x-[14.33px]'>
           <div className='w-[24.58px] h-[24.58px] bg-brand-red rounded-full' />
@@ -48,7 +48,7 @@ export default function MemberDetail() {
       {/* 좌측 패널 */}
       <div className='absolute w-[289.89px]'>
         {/* 프로필 이미지 */}
-        <div className='absolute left-[40.97px] top-[32.76px] w-[196.67px] h-[196.67px] rounded-[19.67px] overflow-hidden shadow-[0_1px_3px_rgba(0,0,0,0.1)]'>
+        <div className='absolute left-[40.97px] top-[32.76px] w-[196.67px] h-[196.67px] rounded-[19.67px] overflow-hidden shadow-header'>
           <Image
             src='/images/members/detail-icon.png'
             alt='프로필 이미지'

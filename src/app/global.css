@@ -101,4 +101,13 @@
   .scrollbar-hide::-webkit-scrollbar {
     display: none; /* Chrome, Safari, Opera */
   }
+
+  /* 공통 그림자 효과 */
+  .shadow-sidebar {
+    box-shadow: 2.457px 0 5.733px 0 rgba(0, 0, 0, 0.25);
+  }
+
+  .shadow-header {
+    box-shadow: 0 2.457px 5.733px 0 rgba(0, 0, 0, 0.25);
+  }
 }
