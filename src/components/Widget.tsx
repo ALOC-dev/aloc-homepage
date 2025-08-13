@@ -27,7 +27,7 @@ const Widget: React.FC<WidgetProps> = ({ className = '' }) => {
       href: '/',
       width: 67,
       height: 67,
-      className: 'w-[67px] h-[67px] rounded-lg overflow-hidden shadow-md',
+      className: 'w-[67px] h-[67px] overflow-hidden',
     },
     {
       id: 'activity',
@@ -37,7 +37,7 @@ const Widget: React.FC<WidgetProps> = ({ className = '' }) => {
       href: '/activity',
       width: 68,
       height: 68,
-      className: 'w-[68px] h-[68px] rounded-lg overflow-hidden',
+      className: 'w-[68px] h-[68px] overflow-hidden',
     },
     {
       id: 'members',
@@ -57,7 +57,7 @@ const Widget: React.FC<WidgetProps> = ({ className = '' }) => {
       href: '/gallery',
       width: 64,
       height: 64,
-      className: 'w-[64px] h-[64px] rounded-lg overflow-hidden',
+      className: 'w-[64px] h-[64px] overflow-hidden',
     },
   ];
 
@@ -66,7 +66,7 @@ const Widget: React.FC<WidgetProps> = ({ className = '' }) => {
       className={`fixed w-[110px] h-[441px] right-[30px] top-[104px] rounded-[30px] z-50 ${className}`}
       style={{ background: 'rgba(255, 255, 255, 0.70)' }}
     >
-      <div className='flex flex-col items-center space-y-4'>
+      <div className='flex flex-col items-center '>
         {navItems.map((item) => (
           <Link
             key={item.id}
@@ -75,7 +75,9 @@ const Widget: React.FC<WidgetProps> = ({ className = '' }) => {
             className='block no-underline hover:no-underline focus:no-underline visited:no-underline'
           >
             <div className={`text-center mt-[20px]`}>
-              <div className={item.className}>
+              <div
+                className={`${item.className} duration-300 ease-in-out hover:scale-120`}
+              >
                 <Image
                   src={item.icon}
                   alt={item.alt}
