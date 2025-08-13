@@ -31,7 +31,7 @@ export const DraggableContainer = ({
   return (
     <div
       ref={containerRef}
-      className={`absolute bg-[#FFFFFF] rounded-[24.57px] overflow-hidden shadow-lg select-none ${
+      className={`absolute bg-white rounded-[20.57px] overflow-hidden shadow-lg select-none ${
         isInDragArea ? 'cursor-move' : 'cursor-default'
       }`}
       style={{
