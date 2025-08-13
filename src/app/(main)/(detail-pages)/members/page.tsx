@@ -41,22 +41,21 @@ export default function Members() {
   return (
     <div className='w-full h-full flex'>
       {/* 왼쪽 사이드바 그룹 */}
-      <div className='w-[232.59px] h-full bg-border-brighter shadow-sidebar flex-shrink-0 relative z-30'>
-        {/* macOS 트래픽 라이트 */}
-        <div className='absolute top-[47.5px] left-[49.96px] flex space-x-[29px]'>
-          <div className='w-[24.57px] h-[24.57px] bg-brand-red rounded-full' />
-          <div className='w-[24.57px] h-[24.57px] bg-brand-yellow rounded-full' />
-          <div className='w-[24.57px] h-[24.57px] bg-brand-green rounded-full' />
-        </div>
-
+      <div className='w-[170.59px] h-full bg-border-brighter shadow-sidebar items-center flex-shrink-0 relative z-30'>
         {/* 왼쪽 사이드바 컨텐츠 그룹 */}
-        <div className='mt-[140px] flex flex-col items-center'>
+        <div className='mt-[40px] flex flex-col items-center'>
+          {/* macOS 트래픽 라이트 */}
+          <div className='flex space-x-[19px]'>
+            <div className='w-[24.57px] h-[24.57px] bg-brand-red rounded-full' />
+            <div className='w-[24.57px] h-[24.57px] bg-brand-yellow rounded-full' />
+            <div className='w-[24.57px] h-[24.57px] bg-brand-green rounded-full' />
+          </div>
           {/* 즐겨찾기 섹션 */}
-          <div className='mb-6'>
-            <h2 className='text-[18.84px] font-[700] text-border-dark'>
+          <div className='mt-18 mb-6'>
+            <h2 className='text-[15.84px] font-bold text-border-dark'>
               즐겨찾기
             </h2>
-            <div className='bg-border-bright w-[200px] h-[41px] rounded-[12.28px] flex items-center'>
+            <div className='bg-border-bright w-[150px] h-[41px] rounded-[12.28px] flex items-center'>
               <div className='w-[24.57px] h-[19.66px] ml-[13px]'>
                 <Image
                   src='/images/members/member-folder-icon.svg'
@@ -74,13 +73,13 @@ export default function Members() {
 
           {/* 기수 필터 섹션 */}
           <div className='mt-[10px]'>
-            <h2 className='text-[18.84px] font-bold text-border-dark'>기수</h2>
+            <h2 className='text-[15.84px] font-bold text-border-dark'>기수</h2>
             <div>
               {generations.map((generation) => (
                 <button
                   key={generation.id}
                   onClick={() => handleGenerationClick(generation.id)}
-                  className={`flex items-center rounded-[12.28px] border-none gap-[15px] w-[200px] h-[41px] transition-opacity ${
+                  className={`flex items-center rounded-[12.28px] border-none gap-[15px] w-[150px] h-[41px] transition-opacity ${
                     selectedGeneration === generation.id
                       ? 'opacity-100 bg-border-bright'
                       : ' hover:opacity-100 bg-transparent'
@@ -90,7 +89,7 @@ export default function Members() {
                     className='ml-[10px] w-[20.47px] h-[20.47px] rounded-full'
                     style={{ backgroundColor: generation.color }}
                   />
-                  <span className='text-[18.84px] font-[700] text-text-primary'>
+                  <span className='text-[18.84px] font-bold text-text-primary'>
                     {generation.name}
                   </span>
                 </button>
@@ -105,7 +104,7 @@ export default function Members() {
         {/* 상단 헤더바 그룹 */}
         <div className='w-full h-[118.75px] z-20 bg-bright-gray shadow-header flex-shrink-0 relative'>
           {/* 제목 */}
-          <h1 className='absolute top-[42.14px] left-[182.81px] text-[24.57px] font-[700] text-text-primary'>
+          <h1 className='absolute top-[42.14px] left-[182.81px] text-[24.57px] font-bold text-text-primary'>
             멤버 소개
           </h1>
 
@@ -144,10 +143,10 @@ export default function Members() {
           <span className='absolute left-[99.27px] text-[16.38px] text-text-secondary'>
             이름
           </span>
-          <span className='absolute left-[435px] text-[16.38px]  text-text-secondary'>
+          <span className='absolute left-[495px] text-[16.38px]  text-text-secondary'>
             역할
           </span>
-          <span className='absolute left-[555px] text-[16.38px] text-text-secondary'>
+          <span className='absolute left-[615px] text-[16.38px] text-text-secondary'>
             관련스택
           </span>
         </div>
@@ -184,14 +183,14 @@ export default function Members() {
 
                 {/* 역할 */}
                 <div>
-                  <span className='text-[18.02px] absolute left-[420px] top-[7.37px] font-[700] text-text-secondary group-hover:text-white'>
+                  <span className='text-[18.02px] absolute left-[480px] top-[7.37px] font-[700] text-text-secondary group-hover:text-white'>
                     {member.role}
                   </span>
                 </div>
 
                 {/* 관련스택 */}
                 <div>
-                  <span className='text-[18.02px]  absolute left-[540px] top-[7.37px] font-[700] text-text-secondary group-hover:text-white'>
+                  <span className='text-[18.02px]  absolute left-[600px] top-[7.37px] font-[700] text-text-secondary group-hover:text-white'>
                     {member.stack}
                   </span>
                 </div>
