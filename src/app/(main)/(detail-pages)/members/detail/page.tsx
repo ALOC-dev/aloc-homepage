@@ -12,12 +12,15 @@ export default function MemberDetail() {
 
   if (!member) {
     return (
-      <div className='relative w-full h-full bg-[#FFFFFF] flex items-center justify-center'>
+      <div className='relative w-full h-full bg-white flex items-center justify-center'>
         <div className='text-center'>
-          <h1 className='text-[24px] font-[700] text-[#3C414C] mb-4'>
+          <h1 className='text-[24px] font-[700] text-text-primary mb-4'>
             멤버를 찾을 수 없습니다
           </h1>
-          <Link href='/members' className='text-[#408CFF] hover:underline'>
+          <Link
+            href='/members'
+            className='text-brand-blue-link hover:underline'
+          >
             멤버 목록으로 돌아가기
           </Link>
         </div>
@@ -26,14 +29,14 @@ export default function MemberDetail() {
   }
 
   return (
-    <div className='relative w-full h-full bg-[#FFFFFF]'>
+    <div className='relative w-full h-full bg-white'>
       {/* 상단 헤더 바 */}
-      <div className='w-full h-[63.1px] bg-[#f2f2f4] relative shadow-[0_2px_4px_rgba(0,0,0,0.05)]'>
+      <div className='w-full h-[63.1px] bg-light-gray relative shadow-[0_2px_4px_rgba(0,0,0,0.05)]'>
         {/* macOS 트래픽 라이트 */}
         <div className='absolute top-[18.03px] left-[15.57px] flex space-x-[14.33px]'>
-          <div className='w-[24.58px] h-[24.58px] bg-[#FF5F56] rounded-full' />
-          <div className='w-[24.58px] h-[24.58px] bg-[#FDBC2E] rounded-full' />
-          <div className='w-[24.58px] h-[24.58px] bg-[#28C83E] rounded-full' />
+          <div className='w-[24.58px] h-[24.58px] bg-brand-red rounded-full' />
+          <div className='w-[24.58px] h-[24.58px] bg-brand-yellow rounded-full' />
+          <div className='w-[24.58px] h-[24.58px] bg-brand-green rounded-full' />
         </div>
 
         {/* 페이지 타이틀 */}
@@ -57,14 +60,14 @@ export default function MemberDetail() {
 
         {/* 역할 배지 */}
         <div className='absolute left-[44.25px] top-[281.56px]'>
-          <span className='text-[21.31px] font-[700] text-[#408CFF]'>
+          <span className='text-[21.31px] font-[700] text-brand-blue-link'>
             {member.role}
           </span>
         </div>
 
         {/* 이름 */}
         <div className='absolute left-[44.25px] top-[320.07px]'>
-          <span className='text-[40.97px] font-[700] text-[#3C414C]'>
+          <span className='text-[40.97px] font-[700] text-text-primary'>
             {member.name.split(' ')[1] || member.name}
           </span>
         </div>
@@ -74,7 +77,7 @@ export default function MemberDetail() {
           {member.stack.split(', ').map((skill, index) => (
             <span
               key={index}
-              className='px-[8.19px] py-[5.74px] rounded-[9.83px] border border-[#A9ADB9] text-[13.93px] font-[700] text-black'
+              className='px-[8.19px] py-[5.74px] rounded-[9.83px] border border-border-gray text-[13.93px] font-[700] text-black'
             >
               {skill}
             </span>
@@ -114,13 +117,13 @@ export default function MemberDetail() {
       </Link>
 
       {/* 우측 콘텐츠 */}
-      <div className='absolute left-[281.89px] right-0 top-[63.1px] h-full border-l border-[#A9ADB9]/70'>
+      <div className='absolute left-[281.89px] right-0 top-[63.1px] h-full border-l border-border-gray/70'>
         {/* 내부 패딩과 타이포 */}
         <div className='relative h-full px-[60px] pt-[30.16px]'>
-          <h2 className='text-[#3C414C] text-[32.78px] font-[700] leading-[1.2] mb-[24px]'>
+          <h2 className='text-text-primary text-[32.78px] font-[700] leading-[1.2] mb-[24px]'>
             자기소개
           </h2>
-          <p className='text-[#5C5E66] text-[18.58px] leading-[1.2] max-w-[573px] pr-[30px]'>
+          <p className='text-text-tertiary text-[18.58px] leading-[1.2] max-w-[573px] pr-[30px]'>
             {member.introduction}
           </p>
         </div>

@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { members, type Member } from '@/app/data/members';
+import '@/app/global.css';
 
 // 세대 타입 정의
 interface Generation {
@@ -19,9 +20,9 @@ export default function Members() {
 
   // 세대 데이터
   const generations: Generation[] = [
-    { id: 3, name: '3기', color: '#ED6900' },
-    { id: 2, name: '2기', color: '#23CC3D' },
-    { id: 1, name: '1기', color: '#107EFF' },
+    { id: 3, name: '3기', color: 'var(--color-brand-orange)' },
+    { id: 2, name: '2기', color: 'var(--color-brand-green-primary)' },
+    { id: 1, name: '1기', color: 'var(--color-brand-blue)' },
   ];
 
   // 멤버 데이터는 외부 파일에서 가져옴
@@ -41,22 +42,22 @@ export default function Members() {
   return (
     <div className='w-full h-full flex'>
       {/* 왼쪽 사이드바 그룹 */}
-      <div className='w-[232.59px] h-full bg-[#DFDFE1] shadow-[2.457px_0_5.733px_0_rgba(0,0,0,0.25)] flex-shrink-0 relative z-30'>
+      <div className='w-[232.59px] h-full bg-border-muted shadow-[2.457px_0_5.733px_0_rgba(0,0,0,0.25)] flex-shrink-0 relative z-30'>
         {/* macOS 트래픽 라이트 */}
         <div className='absolute top-[47.5px] left-[49.96px] flex space-x-[29px]'>
-          <div className='w-[24.57px] h-[24.57px] bg-[#FF5F56] rounded-full' />
-          <div className='w-[24.57px] h-[24.57px] bg-[#FDBC2E] rounded-full' />
-          <div className='w-[24.57px] h-[24.57px] bg-[#28C83E] rounded-full' />
+          <div className='w-[24.57px] h-[24.57px] bg-red rounded-full' />
+          <div className='w-[24.57px] h-[24.57px] bg-brand-yellow rounded-full' />
+          <div className='w-[24.57px] h-[24.57px] bg-brand-green rounded-full' />
         </div>
 
         {/* 왼쪽 사이드바 컨텐츠 그룹 */}
         <div className='mt-[140px] flex flex-col items-center'>
           {/* 즐겨찾기 섹션 */}
           <div className='mb-8'>
-            <h2 className='text-[18.84px] font-[700] text-[#A9ADB9] mb-4'>
+            <h2 className='text-[18.84px] font-[700] text-border-gray mb-4'>
               즐겨찾기
             </h2>
-            <div className='bg-[#C7C7C9] w-[200px] h-[41px] rounded-[12.28px] p-3 flex items-center'>
+            <div className='bg-border-light w-[200px] h-[41px] rounded-[12.28px] p-4 flex items-center'>
               <div className='w-[24.57px] h-[19.66px] ml-[13px]'>
                 <Image
                   src='/images/members/member-folder-icon.svg'
@@ -66,7 +67,7 @@ export default function Members() {
                   className='object-contain'
                 />
               </div>
-              <span className='ml-[10px] text-[18.84px] font-[700] text-[#3C414C]'>
+              <span className='ml-[10px] text-[18.84px] font-[700] text-text-primary'>
                 멤버 소개
               </span>
             </div>
@@ -74,7 +75,7 @@ export default function Members() {
 
           {/* 기수 필터 섹션 */}
           <div className='mt-[10px]'>
-            <h2 className='text-[18.84px] font-[700] text-[#A9ADB9]'>기수</h2>
+            <h2 className='text-[18.84px] font-[700] text-border-gray'>기수</h2>
             <div>
               {generations.map((generation) => (
                 <button
@@ -82,7 +83,7 @@ export default function Members() {
                   onClick={() => handleGenerationClick(generation.id)}
                   className={`flex items-center rounded-[12.28px] border-none gap-[15px] w-[200px] h-[41px] transition-opacity ${
                     selectedGeneration === generation.id
-                      ? 'opacity-100 bg-[#C7C7C9]'
+                      ? 'opacity-100 bg-border-light'
                       : ' hover:opacity-100 bg-transparent'
                   }`}
                 >
@@ -90,7 +91,7 @@ export default function Members() {
                     className='ml-[10px] w-[20.47px] h-[20.47px] rounded-full'
                     style={{ backgroundColor: generation.color }}
                   />
-                  <span className='text-[18.84px] font-[700] text-[#3C414C]'>
+                  <span className='text-[18.84px] font-[700] text-text-primary'>
                     {generation.name}
                   </span>
                 </button>
@@ -103,9 +104,9 @@ export default function Members() {
       {/* 오른쪽 영역 (헤더바 + 메인 콘텐츠) */}
       <div className='flex-1 h-full flex flex-col'>
         {/* 상단 헤더바 그룹 */}
-        <div className='w-full h-[118.75px] bg-[#F2F2F4] shadow-[0_2.457px_5.733px_0_rgba(0,0,0,0.25)] flex-shrink-0 relative'>
+        <div className='w-full h-[118.75px] bg-bg-light shadow-[0_2.457px_5.733px_0_rgba(0,0,0,0.25)] flex-shrink-0 relative'>
           {/* 제목 */}
-          <h1 className='absolute top-[29.14px] left-[182.81px] text-[24.57px] font-[700] text-[#3C414C]'>
+          <h1 className='absolute top-[29.14px] left-[182.81px] text-[24.57px] font-[700] text-text-primary'>
             멤버 소개
           </h1>
 
@@ -140,20 +141,20 @@ export default function Members() {
         </div>
 
         {/* 테이블 헤더 그룹 */}
-        <div className='flex items-center border-b border-[#A9ADB9] h-[38px] relative bg-[#FFFFFF] flex-shrink-0'>
-          <span className='absolute left-[99.27px] text-[16.38px] font-[700] text-[#494949]'>
+        <div className='flex items-center border-b border-border-gray h-[38px] relative bg-white flex-shrink-0'>
+          <span className='absolute left-[99.27px] text-[16.38px] font-[700] text-text-secondary'>
             이름
           </span>
-          <span className='absolute left-[435px] text-[16.38px] font-[700] text-[#494949]'>
+          <span className='absolute left-[435px] text-[16.38px] font-[700] text-text-secondary'>
             역할
           </span>
-          <span className='absolute left-[555px] text-[16.38px] font-[700] text-[#494949]'>
+          <span className='absolute left-[555px] text-[16.38px] font-[700] text-text-secondary'>
             관련스택
           </span>
         </div>
 
         {/* 메인 콘텐츠 그룹 */}
-        <div className='flex-1 bg-[#FFFFFF] overflow-auto scrollbar-hide'>
+        <div className='flex-1 bg-white overflow-auto scrollbar-hide'>
           {/* 멤버 목록 */}
           <div className='px-[12.28px] py-[10px] space-y-0'>
             {filteredMembers.map((member, index) => (
@@ -162,8 +163,8 @@ export default function Members() {
                 href={`/members/detail?id=${member.id}`}
                 className={`w-full h-[36.04px] rounded-[9.83px] flex items-center relative cursor-pointer transition-colors group ${
                   index % 2 === 1
-                    ? 'bg-[#F4F5F5] hover:bg-[#0265E1]'
-                    : 'bg-[#FFFFFF] hover:bg-[#0265E1]'
+                    ? 'bg-gray-light hover:bg-brand-blue-hover'
+                    : 'bg-white hover:bg-brand-blue-hover'
                 }`}
               >
                 {/* 프로필 이미지 */}
@@ -179,21 +180,21 @@ export default function Members() {
 
                 {/* 이름 */}
                 <div className='absolute left-[89.27px] top-[7.37px]'>
-                  <span className='text-[18.02px] font-[700] text-[#000000] group-hover:text-[#FFFFFF]'>
+                  <span className='text-[18.02px] font-[700] text-black group-hover:text-white'>
                     {member.name}
                   </span>
                 </div>
 
                 {/* 역할 */}
                 <div>
-                  <span className='text-[18.02px] absolute left-[420px] top-[7.37px] font-[700] text-[#494949] group-hover:text-[#FFFFFF]'>
+                  <span className='text-[18.02px] absolute left-[420px] top-[7.37px] font-[700] text-text-secondary group-hover:text-white'>
                     {member.role}
                   </span>
                 </div>
 
                 {/* 관련스택 */}
                 <div>
-                  <span className='text-[18.02px]  absolute left-[540px] top-[7.37px] font-[700] text-[#494949] group-hover:text-[#FFFFFF]'>
+                  <span className='text-[18.02px]  absolute left-[540px] top-[7.37px] font-[700] text-text-secondary group-hover:text-white'>
                     {member.stack}
                   </span>
                 </div>

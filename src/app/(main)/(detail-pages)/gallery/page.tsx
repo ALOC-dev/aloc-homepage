@@ -75,37 +75,37 @@ export default function Gallery() {
   return (
     <div className='w-full h-full'>
       {/* 상단 헤더 바 (macOS 스타일) */}
-      <div className='w-full h-[118.75px] bg-[#F2F2F4] relative shadow-md'>
+      <div className='w-full h-[118.75px] bg-bg-light relative shadow-md'>
         {/* macOS 트래픽 라이트 */}
         <div className='absolute top-[47.5px] left-[49.96px] flex space-x-[29px]'>
-          <div className='w-[24.57px] h-[24.57px] bg-[#FF5F56] rounded-full' />
-          <div className='w-[24.57px] h-[24.57px] bg-[#FDBC2E] rounded-full' />
-          <div className='w-[24.57px] h-[24.57px] bg-[#28C83E] rounded-full' />
+          <div className='w-[24.57px] h-[24.57px] bg-brand-red rounded-full' />
+          <div className='w-[24.57px] h-[24.57px] bg-brand-yellow rounded-full' />
+          <div className='w-[24.57px] h-[24.57px] bg-brand-green rounded-full' />
         </div>
 
         {/* 제목 */}
-        <h1 className='absolute top-[45.86px] left-[414.4px] text-[24.57px] font-bold text-[#3C414C]'>
+        <h1 className='absolute top-[45.86px] left-[414.4px] text-[24.57px] font-bold text-text-primary'>
           활동 사진
         </h1>
 
         {/* 네비게이션 버튼들 */}
         <div className='absolute top-[49.14px] left-[310.4px] flex space-x-[45px]'>
-          <button className='w-[12.39px] h-[21.11px] text-[#B5B4B9] hover:text-gray-600'>
+          <button className='w-[12.39px] h-[21.11px] text-text-muted hover:text-gray-600'>
             ←
           </button>
-          <button className='w-[12.39px] h-[21.11px] text-[#B5B4B9] hover:text-gray-600'>
+          <button className='w-[12.39px] h-[21.11px] text-text-muted hover:text-gray-600'>
             →
           </button>
         </div>
 
         {/* 검색 버튼 */}
-        <button className='absolute top-[39.31px] right-[32.76px] w-[32.76px] h-[32.76px] bg-[#FFFFFF] rounded-full flex items-center justify-center shadow-sm hover:shadow-md transition-shadow'>
-          <div className='w-[26.62px] h-[26.62px] text-[#494949]'>🔍</div>
+        <button className='absolute top-[39.31px] right-[32.76px] w-[32.76px] h-[32.76px] bg-white rounded-full flex items-center justify-center shadow-sm hover:shadow-md transition-shadow'>
+          <div className='w-[26.62px] h-[26.62px] text-text-secondary'>🔍</div>
         </button>
       </div>
 
       {/* 메인 콘텐츠 영역 */}
-      <div className='p-8 bg-[#FFFFFF]'>
+      <div className='p-8 bg-white'>
         {/* 카테고리 필터 */}
         <div className='mb-8'>
           <div className='flex gap-4 justify-center'>
@@ -115,8 +115,8 @@ export default function Gallery() {
                 onClick={() => setSelectedCategory(category.id)}
                 className={`px-6 py-2 rounded-full transition-all ${
                   selectedCategory === category.id
-                    ? 'bg-[#107EFF] text-white'
-                    : 'bg-[#F4F5F5] text-[#494949] hover:bg-[#E9ECEF]'
+                    ? 'bg-brand-blue text-white'
+                    : 'bg-gray-light text-text-secondary hover:bg-[#E9ECEF]'
                 }`}
               >
                 {category.name}
@@ -130,7 +130,7 @@ export default function Gallery() {
           {filteredItems.map((item) => (
             <div
               key={item.id}
-              className='bg-[#FFFFFF] rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow group'
+              className='bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow group'
             >
               {/* 이미지 */}
               <div className='relative w-full h-48 overflow-hidden'>
@@ -145,14 +145,14 @@ export default function Gallery() {
               {/* 카드 내용 */}
               <div className='p-4'>
                 <div className='flex justify-between items-start mb-2'>
-                  <h3 className='font-bold text-[#3C414C] text-lg'>
+                  <h3 className='font-bold text-text-primary text-lg'>
                     {item.title}
                   </h3>
-                  <span className='text-sm text-[#494949] bg-[#F4F5F5] px-2 py-1 rounded'>
+                  <span className='text-sm text-text-secondary bg-gray-light px-2 py-1 rounded'>
                     {item.date}
                   </span>
                 </div>
-                <p className='text-[#494949] text-sm leading-relaxed'>
+                <p className='text-text-secondary text-sm leading-relaxed'>
                   {item.description}
                 </p>
 
@@ -161,10 +161,10 @@ export default function Gallery() {
                   <span
                     className={`inline-block px-3 py-1 rounded-full text-xs font-medium ${
                       item.category === 'study'
-                        ? 'bg-[#107EFF]/10 text-[#107EFF]'
+                        ? 'bg-brand-blue/10 text-brand-blue'
                         : item.category === 'project'
-                          ? 'bg-[#23CC3D]/10 text-[#23CC3D]'
-                          : 'bg-[#ED6900]/10 text-[#ED6900]'
+                          ? 'bg-brand-green-primary/10 text-brand-green-primary'
+                          : 'bg-brand-orange/10 text-brand-orange'
                     }`}
                   >
                     {categories.find((cat) => cat.id === item.category)?.name}
@@ -178,13 +178,13 @@ export default function Gallery() {
         {/* 빈 상태 */}
         {filteredItems.length === 0 && (
           <div className='text-center py-12'>
-            <div className='w-16 h-16 bg-[#F4F5F5] rounded-full flex items-center justify-center mx-auto mb-4'>
+            <div className='w-16 h-16 bg-gray-light rounded-full flex items-center justify-center mx-auto mb-4'>
               <span className='text-2xl'>📷</span>
             </div>
-            <h3 className='text-lg font-medium text-[#3C414C] mb-2'>
+            <h3 className='text-lg font-medium text-text-primary mb-2'>
               해당 카테고리에 사진이 없습니다
             </h3>
-            <p className='text-[#494949]'>다른 카테고리를 선택해보세요</p>
+            <p className='text-text-secondary'>다른 카테고리를 선택해보세요</p>
           </div>
         )}
       </div>
