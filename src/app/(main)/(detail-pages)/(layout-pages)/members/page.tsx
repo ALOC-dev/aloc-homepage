@@ -4,6 +4,8 @@ import React, { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { members, type Member } from '@/app/data/members';
+import SidebarContainer from '@/components/layout-components/SidebarContainer';
+import HeaderContainer from '@/components/layout-components/HeaderContainer';
 
 // 세대 타입 정의
 interface Generation {
@@ -41,68 +43,59 @@ export default function Members() {
   return (
     <div className='w-full h-full flex'>
       {/* 왼쪽 사이드바 그룹 */}
-      <div className='w-[170.59px] h-full bg-border-brighter shadow-sidebar items-center flex-shrink-0 relative z-30'>
-        {/* 왼쪽 사이드바 컨텐츠 그룹 */}
-        <div className='mt-[40px] flex flex-col items-center'>
-          {/* macOS 트래픽 라이트 */}
-          <div className='flex space-x-[19px]'>
-            <div className='w-[24.57px] h-[24.57px] bg-brand-red rounded-full' />
-            <div className='w-[24.57px] h-[24.57px] bg-brand-yellow rounded-full' />
-            <div className='w-[24.57px] h-[24.57px] bg-brand-green rounded-full' />
-          </div>
-          {/* 즐겨찾기 섹션 */}
-          <div className='mt-18 mb-6'>
-            <h2 className='text-[15.84px] font-bold text-border-dark'>
-              즐겨찾기
-            </h2>
-            <div className='bg-border-bright w-[150px] h-[41px] rounded-[12.28px] flex items-center'>
-              <div className='w-[24.57px] h-[19.66px] ml-[13px]'>
-                <Image
-                  src='/images/members/member-folder-icon.svg'
-                  alt='멤버폴더'
-                  width={24.57}
-                  height={19.66}
-                  className='object-contain'
-                />
-              </div>
-              <span className='ml-[10px] text-[18.84px] font-bold text-text-primary'>
-                멤버 소개
-              </span>
+      <SidebarContainer>
+        {/* 즐겨찾기 섹션 */}
+        <div className='mt-18 mb-6'>
+          <h2 className='text-[15.84px] font-bold text-border-dark'>
+            즐겨찾기
+          </h2>
+          <div className='bg-border-bright w-[150px] h-[41px] rounded-[12.28px] flex items-center'>
+            <div className='w-[24.57px] h-[19.66px] ml-[13px]'>
+              <Image
+                src='/images/members/member-folder-icon.svg'
+                alt='멤버폴더'
+                width={24.57}
+                height={19.66}
+                className='object-contain'
+              />
             </div>
-          </div>
-
-          {/* 기수 필터 섹션 */}
-          <div className='mt-[10px]'>
-            <h2 className='text-[15.84px] font-bold text-border-dark'>기수</h2>
-            <div>
-              {generations.map((generation) => (
-                <button
-                  key={generation.id}
-                  onClick={() => handleGenerationClick(generation.id)}
-                  className={`flex items-center rounded-[12.28px] border-none gap-[15px] w-[150px] h-[41px] transition-opacity ${
-                    selectedGeneration === generation.id
-                      ? 'opacity-100 bg-border-bright'
-                      : ' hover:opacity-100 bg-transparent'
-                  }`}
-                >
-                  <div
-                    className='ml-[10px] w-[20.47px] h-[20.47px] rounded-full'
-                    style={{ backgroundColor: generation.color }}
-                  />
-                  <span className='text-[18.84px] font-bold text-text-primary'>
-                    {generation.name}
-                  </span>
-                </button>
-              ))}
-            </div>
+            <span className='ml-[10px] text-[18.84px] font-bold text-text-primary'>
+              멤버 소개
+            </span>
           </div>
         </div>
-      </div>
+
+        {/* 기수 필터 섹션 */}
+        <div className='mt-[10px]'>
+          <h2 className='text-[15.84px] font-bold text-border-dark'>기수</h2>
+          <div>
+            {generations.map((generation) => (
+              <button
+                key={generation.id}
+                onClick={() => handleGenerationClick(generation.id)}
+                className={`flex items-center rounded-[12.28px] border-none gap-[15px] w-[150px] h-[41px] transition-opacity ${
+                  selectedGeneration === generation.id
+                    ? 'opacity-100 bg-border-bright'
+                    : ' hover:opacity-100 bg-transparent'
+                }`}
+              >
+                <div
+                  className='ml-[10px] w-[20.47px] h-[20.47px] rounded-full'
+                  style={{ backgroundColor: generation.color }}
+                />
+                <span className='text-[18.84px] font-bold text-text-primary'>
+                  {generation.name}
+                </span>
+              </button>
+            ))}
+          </div>
+        </div>
+      </SidebarContainer>
 
       {/* 오른쪽 영역 (헤더바 + 메인 콘텐츠) */}
       <div className='flex-1 h-full flex flex-col'>
         {/* 상단 헤더바 그룹 */}
-        <div className='w-full h-[118.75px] z-20 bg-bright-gray shadow-header flex-shrink-0 relative'>
+        <HeaderContainer>
           {/* 제목 */}
           <h1 className='absolute top-[42.14px] left-[182.81px] text-[24.57px] font-bold text-text-primary'>
             멤버 소개
@@ -136,7 +129,7 @@ export default function Members() {
               className='object-contain'
             />
           </div>
-        </div>
+        </HeaderContainer>
 
         {/* 테이블 헤더 그룹 */}
         <div className='flex items-center border-b border-border-gray h-[38px] relative bg-white flex-shrink-0'>
