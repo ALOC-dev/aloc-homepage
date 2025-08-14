@@ -115,48 +115,29 @@ export default function ProjectsPage() {
             />
           </div>
         </HeaderContainer>
-        {/* 프로젝트 목록 컨테이너 */}
+        {/* 프로젝트/스터디 목록 컨테이너 */}
         <div className='flex flex-col items-center w-[180px] h-full border-r border-border-gray'>
           <div className='mt-[10px] flex flex-col'>
-            {selectedTab === 'project'
-              ? // 프로젝트 목록
-                projects.map((project, index) => (
-                  <button
-                    key={project.id}
-                    onClick={() => setSelectedItem(project.id)}
-                    className={`w-[150px] h-[61px] flex flex-col items-start rounded-[7.5px] p-2 cursor-pointer transition-colors ${
-                      selectedItem === project.id
-                        ? 'bg-yellow-200'
-                        : 'bg-transparent'
-                    }`}
-                  >
-                    <h3 className=' text-[15.5px] font-bold text-[#3C414C] mb-[4.5px]'>
-                      {project.title}
-                    </h3>
-                    <p className='text-[11.5px] text-[#5C5E66]'>
-                      {project.description}
-                    </p>
-                  </button>
-                ))
-              : // 스터디 목록
-                studies.map((study, index) => (
-                  <button
-                    key={study.id}
-                    onClick={() => setSelectedItem(study.id)}
-                    className={`w-[150px] h-[61px] flex flex-col items-start rounded-[7.5px] p-2 cursor-pointer transition-colors  ${
-                      selectedItem === study.id
-                        ? 'bg-yellow-200'
-                        : 'bg-transparent'
-                    }`}
-                  >
-                    <h3 className='text-[15.5px] font-bold text-[#3C414C] mb-[4.5px]'>
-                      {study.title}
-                    </h3>
-                    <p className='text-[11.5px] text-[#5C5E66]'>
-                      {study.description}
-                    </p>
-                  </button>
-                ))}
+            {(selectedTab === 'project' ? projects : studies).map(
+              (item, index) => (
+                <button
+                  key={item.id}
+                  onClick={() => setSelectedItem(item.id)}
+                  className={`w-[150px] h-[61px] flex flex-col items-start rounded-[7.5px] p-2 cursor-pointer transition-colors ${
+                    selectedItem === item.id
+                      ? 'bg-yellow-200'
+                      : 'bg-transparent'
+                  }`}
+                >
+                  <h3 className='text-[15.5px] font-bold text-[#3C414C] mb-[4.5px]'>
+                    {item.title}
+                  </h3>
+                  <p className='text-[11.5px] text-[#5C5E66]'>
+                    {item.description}
+                  </p>
+                </button>
+              ),
+            )}
           </div>
         </div>
 
