@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import Image from 'next/image';
 import { SidebarContainer } from '@/components/layout-components';
 import { HeaderContainer } from '@/components/layout-components';
-import { projects, studies } from '@/app/data/projects';
+import { projects, studies } from '@/app/data/activities';
 
 export default function ProjectsPage() {
   const [selectedTab, setSelectedTab] = useState<'project' | 'study'>(
@@ -116,23 +116,23 @@ export default function ProjectsPage() {
           </div>
         </HeaderContainer>
         {/* 프로젝트/스터디 목록 컨테이너 */}
-        <div className='flex flex-col items-center w-[180px] h-full border-r border-border-gray'>
+        <div className='flex flex-col items-center w-[200px] h-full border-r border-border-gray'>
           <div className='mt-[10px] flex flex-col'>
             {(selectedTab === 'project' ? projects : studies).map(
               (item, index) => (
                 <button
                   key={item.id}
                   onClick={() => setSelectedItem(item.id)}
-                  className={`w-[150px] h-[61px] flex flex-col items-start rounded-[7.5px] p-2 cursor-pointer transition-colors ${
+                  className={`w-[170px] h-[81px] flex flex-col justify-center items-start rounded-[7.5px] p-2 cursor-pointer transition-colors ${
                     selectedItem === item.id
                       ? 'bg-yellow-200'
                       : 'bg-transparent'
                   }`}
                 >
-                  <h3 className='text-[15.5px] font-bold text-[#3C414C] mb-[4.5px]'>
+                  <h3 className='text-[15.5px] font-bold text-text-primary mb-[4.5px]'>
                     {item.title}
                   </h3>
-                  <p className='text-[11.5px] text-[#5C5E66]'>
+                  <p className='text-[14.5px] text-text-secondary'>
                     {item.description}
                   </p>
                 </button>
