@@ -115,139 +115,129 @@ export default function ProjectsPage() {
             />
           </div>
         </HeaderContainer>
-        {/* 프로젝트/스터디 목록 컨테이너 */}
-        <div className='flex flex-col items-center w-[200px] h-full border-r border-border-gray'>
-          <div className='mt-[10px] flex flex-col'>
-            {(selectedTab === 'project' ? projects : studies).map(
-              (item, index) => (
-                <button
-                  key={item.id}
-                  onClick={() => setSelectedItem(item.id)}
-                  className={`w-[170px] h-[81px] flex flex-col justify-center items-start rounded-[7.5px] p-2 cursor-pointer transition-colors ${
-                    selectedItem === item.id
-                      ? 'bg-yellow-200'
-                      : 'bg-transparent'
-                  }`}
-                >
-                  <h3 className='text-[15.5px] font-bold text-text-primary mb-[4.5px]'>
-                    {item.title}
-                  </h3>
-                  <p className='text-[14.5px] text-text-secondary'>
-                    {item.description}
-                  </p>
-                </button>
-              ),
-            )}
-          </div>
-        </div>
-
-        {/* 프로젝트 상세 정보 컨테이너 */}
-        <div className='relative'>
-          {/* 프로젝트 이미지 */}
-          <div className='absolute top-[37px] left-[220.5px] w-[213px] h-[98px] rounded-[10px] overflow-hidden'>
-            <Image
-              src='/images/figma/project-image-2b1b0e.png'
-              alt='프로젝트 이미지'
-              width={213}
-              height={98}
-              className='w-full h-full object-cover'
-            />
-          </div>
-
-          {/* 프로젝트 상세 정보 */}
-          <div className='absolute top-[166.5px] left-[173px] w-[103px]'>
-            <h2 className='text-[15px] font-bold text-[#3C414C] mb-[7.5px]'>
-              이시대맛집
-            </h2>
-            <p className='text-[11.5px] text-[#5C5E66]'>
-              시립대 주변 맛집 지도
-            </p>
-          </div>
-
-          {/* 프로젝트 설명 */}
-          <div className='absolute top-[221px] left-[173px] w-[228.5px]'>
-            <p className='text-[11.5px] text-[#5C5E66] leading-[1.2]'>
-              설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명
-            </p>
-          </div>
-
-          {/* 태그 */}
-          <div className='absolute top-[287px] left-[173px]'>
-            <p className='text-[11.5px] text-[#5C5E66] font-inter'>
-              #react #next #typescript
-            </p>
-          </div>
-
-          {/* 날짜 */}
-          <div className='absolute top-[13px] right-[18px]'>
-            <p className='text-[11.5px] font-bold text-[#5C5E66]'>
-              2025년 3월 2일 ~ 진행 중
-            </p>
-          </div>
-
-          {/* 팀 멤버 */}
-          <div className='absolute bottom-[26px] left-[173px] flex gap-[5px]'>
-            <div className='w-[50px] h-[20px] bg-[#FDBC2E] rounded-[15px] flex items-center justify-center'>
-              <span className='text-[11.5px] text-white'>이채우</span>
-            </div>
-            <div className='w-[50px] h-[20px] bg-white border border-[#A9ADB9] rounded-[15px] flex items-center justify-center'>
-              <span className='text-[11.5px] text-[#3C414C]'>김영현</span>
-            </div>
-            <div className='w-[50px] h-[20px] bg-white border border-[#A9ADB9] rounded-[15px] flex items-center justify-center'>
-              <span className='text-[11.5px] text-[#3C414C]'>백형우</span>
-            </div>
-            <div className='w-[50px] h-[20px] bg-white border border-[#A9ADB9] rounded-[15px] flex items-center justify-center'>
-              <span className='text-[11.5px] text-[#3C414C]'>정지윤</span>
-            </div>
-            <div className='w-[50px] h-[20px] bg-white border border-[#A9ADB9] rounded-[15px] flex items-center justify-center'>
-              <span className='text-[11.5px] text-[#3C414C]'>최문기</span>
+        <div className='flex h-full'>
+          {/* 프로젝트/스터디 목록 컨테이너 */}
+          <div className='flex flex-col items-center w-[200px] h-full border-r border-border-bright'>
+            <div className='mt-[15px] flex flex-col'>
+              {(selectedTab === 'project' ? projects : studies).map(
+                (item, index) => (
+                  <button
+                    key={item.id}
+                    onClick={() => setSelectedItem(item.id)}
+                    className={`w-[170px] h-[71px] flex flex-col justify-center items-start rounded-[7.5px] p-5 cursor-pointer transition-colors ${
+                      selectedItem === item.id
+                        ? 'bg-yellow-200'
+                        : 'bg-transparent'
+                    }`}
+                  >
+                    <h3 className='text-[15.5px] font-bold text-text-primary mb-[4.5px]'>
+                      {item.title}
+                    </h3>
+                    <p className='text-[14.5px] text-text-secondary'>
+                      {item.description}
+                    </p>
+                  </button>
+                ),
+              )}
             </div>
           </div>
 
-          {/* 이미지 갤러리 네비게이션 */}
-          <div className='absolute top-[145px] right-[24.5px] w-[96px] h-[15px] bg-white rounded-[5px] border border-[rgba(169,173,185,0.5)] flex items-center justify-between px-[9px]'>
-            <span className='text-[11.5px] text-[#A9ADB9]'>←</span>
-            <span className='text-[11.5px] text-black'>1/36</span>
-            <span className='text-[11.5px] text-black'>→</span>
+          {/* 프로젝트 상세 정보 컨테이너 */}
+          <div className='flex-1 flex flex-col items-center'>
+            {/* 날짜 및 이미지 컨테이너 */}
+            <div className='flex flex-col items-center gap-[10px] mt-5'>
+              {/* 날짜 */}
+              <div>
+                <p className='text-[15.5px] font-bold text-[#5C5E66]'>
+                  2025년 3월 2일 ~ 진행 중
+                </p>
+              </div>
+              {/* 프로젝트 이미지 */}
+              <div className='w-[413px] h-[168px] rounded-[25px] overflow-hidden'>
+                <Image
+                  src='/images/figma/project-image-2b1b0e.png'
+                  alt='프로젝트 이미지'
+                  width={213}
+                  height={98}
+                  className='w-full h-full object-cover'
+                />
+              </div>
+              {/* 이미지 갤러리 네비게이션 */}
+              <div className='w-[96px] h-[15px] bg-white rounded-[5px] border border-[rgba(169,173,185,0.5)] flex items-center justify-between px-[9px]'>
+                <span className='text-[11.5px] text-[#A9ADB9]'>←</span>
+                <span className='text-[11.5px] text-black'>1/36</span>
+                <span className='text-[11.5px] text-black'>→</span>
+              </div>
+            </div>
+
+            {/* 아이콘들 */}
+            <div className='flex-row flex justify-end w-full'>
+              <div className='w-[19px] h-[19.5px]'>
+                <Image
+                  src='/images/figma/images-icon.png'
+                  alt='이미지 아이콘'
+                  width={19}
+                  height={19.5}
+                  className='w-full h-full object-cover'
+                />
+              </div>
+              <div className='w-[20.5px] h-[20.5px]'>
+                <Image
+                  src='/images/figma/notion-logo.png'
+                  alt='Notion 로고'
+                  width={20.5}
+                  height={20.5}
+                  className='w-full h-full object-cover'
+                />
+              </div>
+            </div>
+
+            {/* 프로젝트 상세 정보 컨테이너 */}
+            <div className='flex flex-col items-start w-full p-5'>
+              {/* 프로젝트 상세 정보 */}
+              <div className='w-[103px]'>
+                <h2 className='text-[15px] font-bold text-[#3C414C] mb-[7.5px]'>
+                  이시대맛집
+                </h2>
+                <p className='text-[11.5px] text-[#5C5E66]'>
+                  시립대 주변 맛집 지도
+                </p>
+              </div>
+
+              {/* 프로젝트 설명 */}
+              <div className='w-[228.5px]'>
+                <p className='text-[11.5px] text-[#5C5E66] leading-[1.2]'>
+                  설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명
+                </p>
+              </div>
+
+              {/* 태그 */}
+              <div>
+                <p className='text-[11.5px] text-[#5C5E66] font-inter'>
+                  #react #next #typescript
+                </p>
+              </div>
+
+              {/* 팀 멤버 */}
+              <div className='flex gap-[5px]'>
+                <div className='w-[50px] h-[20px] bg-[#FDBC2E] rounded-[15px] flex items-center justify-center'>
+                  <span className='text-[11.5px] text-white'>이채우</span>
+                </div>
+                <div className='w-[50px] h-[20px] bg-white border border-[#A9ADB9] rounded-[15px] flex items-center justify-center'>
+                  <span className='text-[11.5px] text-[#3C414C]'>김영현</span>
+                </div>
+                <div className='w-[50px] h-[20px] bg-white border border-[#A9ADB9] rounded-[15px] flex items-center justify-center'>
+                  <span className='text-[11.5px] text-[#3C414C]'>백형우</span>
+                </div>
+                <div className='w-[50px] h-[20px] bg-white border border-[#A9ADB9] rounded-[15px] flex items-center justify-center'>
+                  <span className='text-[11.5px] text-[#3C414C]'>정지윤</span>
+                </div>
+                <div className='w-[50px] h-[20px] bg-white border border-[#A9ADB9] rounded-[15px] flex items-center justify-center'>
+                  <span className='text-[11.5px] text-[#3C414C]'>최문기</span>
+                </div>
+              </div>
+            </div>
           </div>
-
-          {/* 아이콘들 */}
-          <div className='absolute top-[160px] right-[56.5px] w-[19px] h-[19.5px]'>
-            <Image
-              src='/images/figma/images-icon.png'
-              alt='이미지 아이콘'
-              width={19}
-              height={19.5}
-              className='w-full h-full object-cover'
-            />
-          </div>
-        </div>
-
-        <div className='absolute top-[160px] right-[25.5px] w-[20.5px] h-[20.5px]'>
-          <Image
-            src='/images/figma/notion-logo.png'
-            alt='Notion 로고'
-            width={20.5}
-            height={20.5}
-            className='w-full h-full object-cover'
-          />
-        </div>
-
-        {/* 닫기 아이콘 */}
-        <div className='absolute top-[-16.5px] right-[9.5px] w-[14.34px] h-[17.5px]'>
-          <svg
-            width='14'
-            height='18'
-            viewBox='0 0 29 35'
-            fill='none'
-            xmlns='http://www.w3.org/2000/svg'
-          >
-            <path
-              d='M14.34 0L28.68 35H0L14.34 0Z'
-              stroke='#A9ADB9'
-              strokeWidth='2'
-            />
-          </svg>
         </div>
       </div>
     </div>
