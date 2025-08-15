@@ -117,14 +117,14 @@ export default function ProjectsPage() {
         </HeaderContainer>
         <div className='flex h-full'>
           {/* 프로젝트/스터디 목록 컨테이너 */}
-          <div className='flex flex-col items-center w-[200px] h-full border-r border-border-bright'>
+          <div className='flex flex-col items-center w-[220px] h-full border-r border-border-bright'>
             <div className='mt-[15px] flex flex-col'>
               {(selectedTab === 'project' ? projects : studies).map(
                 (item, index) => (
                   <button
                     key={item.id}
                     onClick={() => setSelectedItem(item.id)}
-                    className={`w-[170px] h-[71px] flex flex-col justify-center items-start rounded-[7.5px] p-5 cursor-pointer transition-colors ${
+                    className={`w-[170px] h-[80px] flex flex-col justify-center items-start rounded-[7.5px] p-5 cursor-pointer transition-colors ${
                       selectedItem === item.id
                         ? 'bg-yellow-200'
                         : 'bg-transparent'
@@ -148,12 +148,12 @@ export default function ProjectsPage() {
             <div className='flex flex-col items-center gap-[10px] mt-5'>
               {/* 날짜 */}
               <div>
-                <p className='text-[15.5px] font-bold text-[#5C5E66]'>
+                <p className='text-[15.5px] font-bold text-text-tertiary'>
                   2025년 3월 2일 ~ 진행 중
                 </p>
               </div>
               {/* 프로젝트 이미지 */}
-              <div className='w-[413px] h-[168px] rounded-[25px] overflow-hidden'>
+              <div className='w-[350px] h-[148px] rounded-[25px] overflow-hidden'>
                 <Image
                   src='/images/figma/project-image-2b1b0e.png'
                   alt='프로젝트 이미지'
@@ -171,8 +171,8 @@ export default function ProjectsPage() {
             </div>
 
             {/* 아이콘들 */}
-            <div className='flex-row flex justify-end w-full'>
-              <div className='w-[19px] h-[19.5px]'>
+            <div className='flex-row flex justify-end w-full space-x-5 mr-13'>
+              <div className='w-[40px] h-[40px]'>
                 <Image
                   src='/images/figma/images-icon.png'
                   alt='이미지 아이콘'
@@ -181,7 +181,7 @@ export default function ProjectsPage() {
                   className='w-full h-full object-cover'
                 />
               </div>
-              <div className='w-[20.5px] h-[20.5px]'>
+              <div className='w-[40px] h-[40px]'>
                 <Image
                   src='/images/figma/notion-logo.png'
                   alt='Notion 로고'
@@ -193,27 +193,27 @@ export default function ProjectsPage() {
             </div>
 
             {/* 프로젝트 상세 정보 컨테이너 */}
-            <div className='flex flex-col items-start w-full p-5'>
+            <div className='flex flex-col items-start w-full p-5 space-y-1'>
               {/* 프로젝트 상세 정보 */}
-              <div className='w-[103px]'>
-                <h2 className='text-[15px] font-bold text-[#3C414C] mb-[7.5px]'>
+              <div className='w-full'>
+                <h2 className='text-[28px] font-bold text-text-primary mb-[3.5px]'>
                   이시대맛집
                 </h2>
-                <p className='text-[11.5px] text-[#5C5E66]'>
+                <p className='text-[19px] text-text-secondary'>
                   시립대 주변 맛집 지도
                 </p>
               </div>
 
               {/* 프로젝트 설명 */}
-              <div className='w-[228.5px]'>
-                <p className='text-[11.5px] text-[#5C5E66] leading-[1.2]'>
+              <div className='w-full'>
+                <p className='mt-[10px] text-[14.5px] text-[#5C5E66] leading-[1.2]'>
                   설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명
                 </p>
               </div>
 
               {/* 태그 */}
               <div>
-                <p className='text-[11.5px] text-[#5C5E66] font-inter'>
+                <p className='text-[16.5px] text-[#5C5E66] font-inter'>
                   #react #next #typescript
                 </p>
               </div>
