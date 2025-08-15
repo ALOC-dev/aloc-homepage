@@ -145,7 +145,7 @@ export default function ProjectsPage() {
                 <button
                   key={item.id}
                   onClick={() => setSelectedItem(item.id)}
-                  className={`w-[170px] h-[80px] flex flex-col justify-center items-start rounded-[7.5px] p-5 cursor-pointer transition-colors ${
+                  className={`w-[170px] min-h-[80px] flex flex-col justify-center items-start rounded-[7.5px] p-5 cursor-pointer transition-colors ${
                     selectedItem === item.id
                       ? 'bg-yellow-200'
                       : 'bg-transparent'
@@ -154,7 +154,7 @@ export default function ProjectsPage() {
                   <h3 className='text-[15.5px] font-bold text-text-primary mb-[4.5px]'>
                     {item.title}
                   </h3>
-                  <p className='text-[14.5px] text-text-secondary'>
+                  <p className='text-[14.5px] text-text-secondary leading-tight text-left'>
                     {item.subtitle}
                   </p>
                 </button>
