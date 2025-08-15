@@ -34,9 +34,7 @@ export default function MemberDetail() {
       {/* 상단 헤더 바 */}
       <SmallHeaderContainer>
         {/* 페이지 타이틀 */}
-        <h1 className='absolute left-1/2 top-1/4 -translate-x-1/2 text-[20.49px] font-bold text-black center'>
-          {member.name}
-        </h1>
+        <h1 className='text-[20.49px] font-bold text-black'>{member.name}</h1>
       </SmallHeaderContainer>
 
       {/* 좌측 패널 */}

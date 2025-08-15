@@ -7,7 +7,7 @@ import { SidebarContainer } from '@/components/layout-components';
 import { HeaderContainer } from '@/components/layout-components';
 import { projects, studies } from '@/app/data/activities';
 
-export default function ProjectsPage() {
+export default function ActivityPage() {
   const [selectedTab, setSelectedTab] = useState<'project' | 'study'>(
     'project',
   );
