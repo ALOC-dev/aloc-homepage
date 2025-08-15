@@ -4,6 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import { getMemberById } from '@/app/data/members';
+import { SmallHeaderContainer } from '@/components/layout-components';
 
 export default function MemberDetail() {
   const searchParams = useSearchParams();
@@ -31,19 +32,12 @@ export default function MemberDetail() {
   return (
     <div className='relative w-full h-full bg-white'>
       {/* 상단 헤더 바 */}
-      <div className='w-full h-[63.1px] bg-bright-gray relative shadow-header z-30'>
-        {/* macOS 트래픽 라이트 */}
-        <div className='absolute top-[18.03px] left-[15.57px] flex space-x-[14.33px]'>
-          <div className='w-[24.58px] h-[24.58px] bg-brand-red rounded-full' />
-          <div className='w-[24.58px] h-[24.58px] bg-brand-yellow rounded-full' />
-          <div className='w-[24.58px] h-[24.58px] bg-brand-green rounded-full' />
-        </div>
-
+      <SmallHeaderContainer>
         {/* 페이지 타이틀 */}
         <h1 className='absolute left-1/2 top-1/4 -translate-x-1/2 text-[20.49px] font-bold text-black center'>
           {member.name}
         </h1>
-      </div>
+      </SmallHeaderContainer>
 
       {/* 좌측 패널 */}
       <div className='absolute w-[289.89px]'>

@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 import { SidebarContainer } from '@/components/layout-components';
 import { HeaderContainer } from '@/components/layout-components';
 import { projects, studies } from '@/app/data/activities';
@@ -173,15 +174,21 @@ export default function ProjectsPage() {
                 </p>
               </div>
               {/* 프로젝트 이미지 */}
-              <div className='w-[350px] h-[148px] rounded-[20px] overflow-hidden'>
+              <Link
+                href={`/activity/detail?id=${currentItem?.id}&type=${selectedTab}`}
+                className='w-[350px] h-[148px] rounded-[20px] overflow-hidden cursor-pointer hover:opacity-90 transition-opacity'
+              >
                 <Image
-                  src='/images/figma/project-image-2b1b0e.png'
+                  src={
+                    currentItem?.image ||
+                    '/images/figma/project-image-2b1b0e.png'
+                  }
                   alt='프로젝트 이미지'
                   width={213}
                   height={98}
                   className='w-full h-full object-cover'
                 />
-              </div>
+              </Link>
               {/* 미니 슬라이드 쇼 */}
               <div className='w-full mt-[10px] h-[15px] bg-white flex items-center justify-center gap-[15px]'>
                 <button

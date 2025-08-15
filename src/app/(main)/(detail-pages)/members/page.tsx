@@ -4,8 +4,10 @@ import React, { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { members, type Member } from '@/app/data/members';
-import SidebarContainer from '@/components/layout-components/SidebarContainer';
-import HeaderContainer from '@/components/layout-components/HeaderContainer';
+import {
+  SidebarContainer,
+  HeaderContainer,
+} from '@/components/layout-components';
 
 // 세대 타입 정의
 interface Generation {
