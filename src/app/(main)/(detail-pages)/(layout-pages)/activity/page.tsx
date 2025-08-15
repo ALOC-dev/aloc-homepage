@@ -11,6 +11,28 @@ export default function ProjectsPage() {
     'project',
   );
   const [selectedItem, setSelectedItem] = useState<string>('1');
+  const [currentSlide, setCurrentSlide] = useState<number>(1);
+  const currentList = selectedTab === 'project' ? projects : studies;
+  const currentItem =
+    currentList.find((item) => item.id === selectedItem) ?? currentList[0];
+
+  // 선택된 아이템이 변경될 때 슬라이드를 1로 리셋
+  React.useEffect(() => {
+    setCurrentSlide(1);
+  }, [selectedItem]);
+
+  // 슬라이드 네비게이션 함수들
+  const goToPreviousSlide = () => {
+    if (currentSlide > 1) {
+      setCurrentSlide(currentSlide - 1);
+    }
+  };
+
+  const goToNextSlide = () => {
+    if (currentItem?.slidesCount && currentSlide < currentItem.slidesCount) {
+      setCurrentSlide(currentSlide + 1);
+    }
+  };
   return (
     <div className='w-full h-full flex'>
       {/* 좌측 사이드바 */}
@@ -55,7 +77,7 @@ export default function ProjectsPage() {
             {/* 프로젝트 개수 - 선택된 상태에서만 보임 */}
             {selectedTab === 'project' && (
               <span className='ml-[15px] text-[17.84px] font-bold text-gray-400'>
-                2
+                {projects.length}
               </span>
             )}
           </button>
@@ -94,7 +116,7 @@ export default function ProjectsPage() {
             {/* 스터디 개수 - 선택된 상태에서만 보임 */}
             {selectedTab === 'study' && (
               <span className='ml-[27px] text-[17.84px] font-bold text-gray-400'>
-                1
+                {studies.length}
               </span>
             )}
           </button>
@@ -119,26 +141,24 @@ export default function ProjectsPage() {
           {/* 프로젝트/스터디 목록 컨테이너 */}
           <div className='flex flex-col items-center w-[220px] h-full border-r border-border-bright'>
             <div className='mt-[15px] flex flex-col'>
-              {(selectedTab === 'project' ? projects : studies).map(
-                (item, index) => (
-                  <button
-                    key={item.id}
-                    onClick={() => setSelectedItem(item.id)}
-                    className={`w-[170px] h-[80px] flex flex-col justify-center items-start rounded-[7.5px] p-5 cursor-pointer transition-colors ${
-                      selectedItem === item.id
-                        ? 'bg-yellow-200'
-                        : 'bg-transparent'
-                    }`}
-                  >
-                    <h3 className='text-[15.5px] font-bold text-text-primary mb-[4.5px]'>
-                      {item.title}
-                    </h3>
-                    <p className='text-[14.5px] text-text-secondary'>
-                      {item.description}
-                    </p>
-                  </button>
-                ),
-              )}
+              {currentList.map((item, index) => (
+                <button
+                  key={item.id}
+                  onClick={() => setSelectedItem(item.id)}
+                  className={`w-[170px] h-[80px] flex flex-col justify-center items-start rounded-[7.5px] p-5 cursor-pointer transition-colors ${
+                    selectedItem === item.id
+                      ? 'bg-yellow-200'
+                      : 'bg-transparent'
+                  }`}
+                >
+                  <h3 className='text-[15.5px] font-bold text-text-primary mb-[4.5px]'>
+                    {item.title}
+                  </h3>
+                  <p className='text-[14.5px] text-text-secondary'>
+                    {item.subtitle}
+                  </p>
+                </button>
+              ))}
             </div>
           </div>
 
@@ -149,11 +169,11 @@ export default function ProjectsPage() {
               {/* 날짜 */}
               <div>
                 <p className='text-[15.5px] font-bold text-text-tertiary'>
-                  2025년 3월 2일 ~ 진행 중
+                  {currentItem?.date}
                 </p>
               </div>
               {/* 프로젝트 이미지 */}
-              <div className='w-[350px] h-[148px] rounded-[25px] overflow-hidden'>
+              <div className='w-[350px] h-[148px] rounded-[20px] overflow-hidden'>
                 <Image
                   src='/images/figma/project-image-2b1b0e.png'
                   alt='프로젝트 이미지'
@@ -162,79 +182,133 @@ export default function ProjectsPage() {
                   className='w-full h-full object-cover'
                 />
               </div>
-              {/* 이미지 갤러리 네비게이션 */}
-              <div className='w-[96px] h-[15px] bg-white rounded-[5px] border border-[rgba(169,173,185,0.5)] flex items-center justify-between px-[9px]'>
-                <span className='text-[11.5px] text-[#A9ADB9]'>←</span>
-                <span className='text-[11.5px] text-black'>1/36</span>
-                <span className='text-[11.5px] text-black'>→</span>
-              </div>
-            </div>
-
-            {/* 아이콘들 */}
-            <div className='flex-row flex justify-end w-full space-x-5 mr-13'>
-              <div className='w-[40px] h-[40px]'>
-                <Image
-                  src='/images/figma/images-icon.png'
-                  alt='이미지 아이콘'
-                  width={19}
-                  height={19.5}
-                  className='w-full h-full object-cover'
-                />
-              </div>
-              <div className='w-[40px] h-[40px]'>
-                <Image
-                  src='/images/figma/notion-logo.png'
-                  alt='Notion 로고'
-                  width={20.5}
-                  height={20.5}
-                  className='w-full h-full object-cover'
-                />
+              {/* 미니 슬라이드 쇼 */}
+              <div className='w-full mt-[10px] h-[15px] bg-white flex items-center justify-center gap-[15px]'>
+                <button
+                  onClick={goToPreviousSlide}
+                  disabled={currentSlide === 1}
+                  className={`w-[51.5px] h-[51.5px] cursor-pointer transition-opacity ${
+                    currentSlide === 1
+                      ? 'opacity-20 cursor-not-allowed'
+                      : 'hover:opacity-80'
+                  }`}
+                >
+                  <Image
+                    src='/images/activity/left-arrow.svg'
+                    alt='이전 이미지'
+                    width={11.5}
+                    height={11.5}
+                    className='w-full h-full object-contain'
+                  />
+                </button>
+                <span className='text-[17.5px] text-black'>
+                  {currentSlide}/{currentItem?.slidesCount || 1}
+                </span>
+                <button
+                  onClick={goToNextSlide}
+                  disabled={currentSlide === (currentItem?.slidesCount || 1)}
+                  className={`w-[51.5px] h-[51.5px] cursor-pointer transition-opacity ${
+                    currentSlide === (currentItem?.slidesCount || 1)
+                      ? 'opacity-20 cursor-not-allowed'
+                      : 'hover:opacity-80'
+                  }`}
+                >
+                  <Image
+                    src='/images/activity/right-arrow.svg'
+                    alt='다음 이미지'
+                    width={11.5}
+                    height={11.5}
+                    className='w-full h-full object-contain'
+                  />
+                </button>
               </div>
             </div>
 
             {/* 프로젝트 상세 정보 컨테이너 */}
-            <div className='flex flex-col items-start w-full p-5 space-y-1'>
+            <div className='flex flex-col items-start w-full p-5'>
               {/* 프로젝트 상세 정보 */}
               <div className='w-full'>
-                <h2 className='text-[28px] font-bold text-text-primary mb-[3.5px]'>
-                  이시대맛집
-                </h2>
+                {/* 프로젝트 제목 */}
+                <div className='flex flex-row w-full'>
+                  <h2 className='text-[28px] font-bold text-text-primary mb-[3.5px] whitespace-nowrap'>
+                    {currentItem?.title}
+                  </h2>
+                  {/* 링크 버튼들 */}
+                  <div className='flex-row flex justify-end w-full space-x-5'>
+                    {/* GitHub 버튼 */}
+                    {currentItem?.github && (
+                      <a
+                        href={currentItem.github}
+                        target='_blank'
+                        rel='noopener noreferrer' // 외부 링크 열기
+                        className='w-[30px] h-[30px] cursor-pointer hover:opacity-80 transition-opacity'
+                      >
+                        <Image
+                          src='/images/figma/images-icon.png'
+                          alt='GitHub 링크'
+                          width={19}
+                          height={19.5}
+                          className='w-full h-full object-cover'
+                        />
+                      </a>
+                    )}
+                    {/* Notion 버튼 */}
+                    {currentItem?.notion && (
+                      <a
+                        href={currentItem.notion}
+                        target='_blank'
+                        rel='noopener noreferrer'
+                        className='w-[30px] h-[30px] cursor-pointer hover:opacity-80 transition-opacity'
+                      >
+                        <Image
+                          src='/images/figma/notion-logo.png'
+                          alt='Notion 링크'
+                          width={20.5}
+                          height={20.5}
+                          className='w-full h-full object-cover'
+                        />
+                      </a>
+                    )}
+                  </div>
+                </div>
+                {/* 프로젝트 부제목 */}
                 <p className='text-[19px] text-text-secondary'>
-                  시립대 주변 맛집 지도
+                  {currentItem?.subtitle}
                 </p>
               </div>
 
               {/* 프로젝트 설명 */}
               <div className='w-full'>
-                <p className='mt-[10px] text-[14.5px] text-[#5C5E66] leading-[1.2]'>
-                  설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명
+                <p className='mt-[10px] text-[16.5px] text-[#5C5E66] leading-[1.2]'>
+                  {currentItem?.description}
                 </p>
               </div>
 
               {/* 태그 */}
               <div>
                 <p className='text-[16.5px] text-[#5C5E66] font-inter'>
-                  #react #next #typescript
+                  {currentItem?.tags?.map((tag) => `#${tag}`).join(' ')}
                 </p>
               </div>
 
               {/* 팀 멤버 */}
-              <div className='flex gap-[5px]'>
-                <div className='w-[50px] h-[20px] bg-[#FDBC2E] rounded-[15px] flex items-center justify-center'>
-                  <span className='text-[11.5px] text-white'>이채우</span>
-                </div>
-                <div className='w-[50px] h-[20px] bg-white border border-[#A9ADB9] rounded-[15px] flex items-center justify-center'>
-                  <span className='text-[11.5px] text-[#3C414C]'>김영현</span>
-                </div>
-                <div className='w-[50px] h-[20px] bg-white border border-[#A9ADB9] rounded-[15px] flex items-center justify-center'>
-                  <span className='text-[11.5px] text-[#3C414C]'>백형우</span>
-                </div>
-                <div className='w-[50px] h-[20px] bg-white border border-[#A9ADB9] rounded-[15px] flex items-center justify-center'>
-                  <span className='text-[11.5px] text-[#3C414C]'>정지윤</span>
-                </div>
-                <div className='w-[50px] h-[20px] bg-white border border-[#A9ADB9] rounded-[15px] flex items-center justify-center'>
-                  <span className='text-[11.5px] text-[#3C414C]'>최문기</span>
-                </div>
+              <div className='flex mt-[10px] gap-[13px] flex-row w-full justify-center'>
+                {currentItem?.members?.map((name, index) => (
+                  <div
+                    key={name}
+                    className={`w-20 h-8 border border-[#A9ADB9] rounded-full flex items-center justify-center ${
+                      index === 0 ? 'bg-brand-yellow border-none' : 'bg-white'
+                    }`}
+                  >
+                    <span
+                      className={`text-[17.5px] ${
+                        index === 0 ? 'text-white' : 'text-text-primary'
+                      }`}
+                    >
+                      {name}
+                    </span>
+                  </div>
+                ))}
               </div>
             </div>
           </div>
