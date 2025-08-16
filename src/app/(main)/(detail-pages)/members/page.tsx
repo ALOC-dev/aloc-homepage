@@ -75,7 +75,7 @@ export default function Members() {
               <button
                 key={generation.id}
                 onClick={() => handleGenerationClick(generation.id)}
-                className={`flex items-center rounded-[12.28px] border-none gap-[15px] w-[150px] h-[41px] transition-opacity ${
+                className={`cursor-pointer flex items-center rounded-[12.28px] border-none gap-[15px] w-[150px] h-[41px] transition-opacity ${
                   selectedGeneration === generation.id
                     ? 'opacity-100 bg-border-bright'
                     : ' hover:opacity-100 bg-transparent'
