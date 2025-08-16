@@ -59,8 +59,8 @@ export const studies = [
     status: 'active',
     github: 'https://github.com/aloc-team/deep-study',
     notion: 'https://aloc.notion.site/deep-study',
-    slidesCount: 28,
-    pdfPath: 'pdfs/activities/studies/ALOC_최종발표회_Deep하게Deep스터디.pdf',
+    slidesCount: 47,
+    pdfPath: '/pdfs/activities/studies/ALOC_최종발표회_Deep하게Deep스터디.pdf',
   },
   {
     id: '2',
