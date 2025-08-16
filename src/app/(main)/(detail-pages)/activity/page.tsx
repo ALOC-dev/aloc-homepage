@@ -29,12 +29,27 @@ export default function ActivityPage() {
   // 선택된 아이템이 변경될 때 슬라이드를 1로 리셋
   React.useEffect(() => {
     setCurrentSlide(1);
+    setNumPages(0); // PDF 페이지 수도 리셋
   }, [selectedItem]);
+
+  // 컴포넌트 언마운트 시 cleanup
+  React.useEffect(() => {
+    return () => {
+      setCurrentSlide(1);
+      setNumPages(0);
+    };
+  }, []);
 
   // PDF 문서 로드 성공 핸들러
   function onDocumentLoadSuccess({ numPages }: { numPages: number }) {
     console.log(`numPages ${numPages}`);
     setNumPages(numPages);
+  }
+
+  // PDF 문서 로드 에러 핸들러
+  function onDocumentLoadError(error: Error) {
+    console.error('PDF 로드 에러:', error);
+    setNumPages(0);
   }
 
   // 슬라이드 네비게이션 함수들
@@ -202,6 +217,7 @@ export default function ActivityPage() {
                 <Document
                   file={pdfPath}
                   onLoadSuccess={onDocumentLoadSuccess}
+                  onLoadError={onDocumentLoadError}
                   loading={
                     <div className='w-full h-full rounded-[20px] overflow-hidden flex items-center justify-center bg-gray-200'>
                       <Image
@@ -213,11 +229,31 @@ export default function ActivityPage() {
                       />
                     </div>
                   }
+                  error={
+                    <div className='w-full h-full rounded-[20px] overflow-hidden flex items-center justify-center bg-gray-200'>
+                      <div className='text-red-500 text-sm'>PDF 로드 실패</div>
+                    </div>
+                  }
                 >
                   <Page
                     pageNumber={currentSlide}
                     width={350}
                     renderTextLayer={false}
+                    renderAnnotationLayer={false}
+                    loading={
+                      <div className='w-full h-full flex items-center justify-center'>
+                        <div className='text-gray-500 text-xs'>
+                          페이지 로딩 중...
+                        </div>
+                      </div>
+                    }
+                    error={
+                      <div className='w-full h-full flex items-center justify-center'>
+                        <div className='text-red-500 text-xs'>
+                          페이지 로드 실패
+                        </div>
+                      </div>
+                    }
                   />
                 </Document>
               </Link>

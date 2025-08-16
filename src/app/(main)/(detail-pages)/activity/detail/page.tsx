@@ -33,6 +33,12 @@ export default function ActivityDetail() {
     setNumPages(numPages);
   }
 
+  // PDF 문서 로드 에러 핸들러
+  function onDocumentLoadError(error: Error) {
+    console.error('PDF 로드 에러:', error);
+    setNumPages(0);
+  }
+
   if (!currentItem) {
     return (
       <div className='relative w-full h-full bg-white flex items-center justify-center'>
@@ -91,6 +97,7 @@ export default function ActivityDetail() {
           <Document
             file={pdfPath}
             onLoadSuccess={onDocumentLoadSuccess}
+            onLoadError={onDocumentLoadError}
             loading={
               <div className='w-full h-full flex items-center justify-center'>
                 <div className='text-gray-500'>PDF 로딩 중...</div>
@@ -106,9 +113,16 @@ export default function ActivityDetail() {
               pageNumber={currentSlide}
               width={850}
               height={478}
+              renderTextLayer={false}
+              renderAnnotationLayer={false}
               loading={
                 <div className='w-full h-full flex items-center justify-center'>
                   <div className='text-gray-500'>페이지 로딩 중...</div>
+                </div>
+              }
+              error={
+                <div className='w-full h-full flex items-center justify-center'>
+                  <div className='text-red-500'>페이지 로드 실패</div>
                 </div>
               }
             />
