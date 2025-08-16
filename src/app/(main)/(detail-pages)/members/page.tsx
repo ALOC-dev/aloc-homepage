@@ -99,9 +99,6 @@ export default function Members() {
         {/* 상단 헤더바 그룹 */}
         <HeaderContainer>
           {/* 제목 */}
-          <h1 className='absolute top-[42.14px] left-[182.81px] text-[24.57px] font-bold text-text-primary'>
-            멤버 소개
-          </h1>
 
           {/* 네비게이션 아이콘들 */}
           <div className='absolute top-[49.14px] left-[78.81px] flex space-x-[45px]'>
