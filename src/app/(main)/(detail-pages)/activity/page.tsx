@@ -171,7 +171,7 @@ export default function ActivityPage() {
                       : 'bg-transparent'
                   }`}
                 >
-                  <h3 className='text-[15.5px] font-bold text-text-primary mb-[4.5px]'>
+                  <h3 className='text-[15.5px] font-bold text-text-primary mb-[4.5px] text-left'>
                     {item.title}
                   </h3>
                   <p className='text-[14.5px] text-text-secondary leading-tight text-left'>
@@ -195,7 +195,7 @@ export default function ActivityPage() {
               {/* 프로젝트 이미지 */}
               <Link
                 href={`/activity/detail?id=${currentItem?.id}&type=${selectedTab}`}
-                className='w-[350px] h-[148px] rounded-[20px] overflow-hidden cursor-pointer hover:opacity-90 transition-opacity'
+                className='w-[350px] h-[148px] border border-border-bright rounded-[20px] overflow-hidden cursor-pointer hover:opacity-90 transition-opacity'
               >
                 <Document
                   file={pdfPath}
@@ -203,7 +203,7 @@ export default function ActivityPage() {
                   loading={
                     <div className='w-full h-full rounded-[20px] overflow-hidden flex items-center justify-center bg-gray-200'>
                       <Image
-                        src='/images/figma/project-image-2b1b0e.png'
+                        src='/images/activity/loading.png'
                         alt='PDF 로딩 중'
                         width={350}
                         height={148}
@@ -267,7 +267,7 @@ export default function ActivityPage() {
               <div className='w-full'>
                 {/* 프로젝트 제목 */}
                 <div className='flex flex-row w-full'>
-                  <h2 className='text-[28px] font-bold text-text-primary mb-[3.5px] whitespace-nowrap'>
+                  <h2 className='text-[25px] font-bold text-text-primary mb-[3.5px] whitespace-nowrap'>
                     {currentItem?.title}
                   </h2>
                   {/* 링크 버튼들 */}
