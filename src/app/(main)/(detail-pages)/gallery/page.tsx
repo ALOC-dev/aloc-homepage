@@ -65,7 +65,7 @@ export default function Gallery() {
               <div
                 key={index}
                 className={`w-[120px] h-[78px] mx-[1.5px] overflow-hidden cursor-pointer flex-shrink-0 ${
-                  currentImageIndex === index ? 'ring-2 ring-blue-500' : ''
+                  currentImageIndex === index ? 'ring-3 ring-blue-500' : ''
                 }`}
                 onClick={() => setCurrentImageIndex(index)}
               >
