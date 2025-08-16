@@ -2,36 +2,35 @@
 
 import React, { useState } from 'react';
 import Image from 'next/image';
+import { folderData, type FolderType } from '@/app/data/gallery';
 
 export default function Gallery() {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [selectedFolder, setSelectedFolder] = useState<FolderType>('all');
 
-  // 갤러리 이미지 데이터
-  const galleryImages = [
-    '/images/gallery/gallery-1.jpg',
-    '/images/gallery/gallery-2.jpg',
-    '/images/gallery/gallery-3.jpg',
-    '/images/gallery/gallery-4.jpg',
-    '/images/gallery/gallery-5-4eaa59.jpg',
-    '/images/gallery/gallery-6.jpg',
-    '/images/gallery/gallery-7.jpg',
-    '/images/gallery/gallery-1.jpg',
-  ];
+  // 현재 선택된 폴더의 이미지들
+  const currentImages = folderData[selectedFolder].images;
 
   const nextImage = () => {
-    setCurrentImageIndex((prev) => (prev + 1) % galleryImages.length);
+    setCurrentImageIndex((prev) => (prev + 1) % currentImages.length);
   };
 
   const prevImage = () => {
     setCurrentImageIndex((prev) =>
-      prev === 0 ? galleryImages.length - 1 : prev - 1,
+      prev === 0 ? currentImages.length - 1 : prev - 1,
     );
   };
 
+  // 폴더 변경 시 이미지 인덱스 초기화
+  const handleFolderChange = (folderId: FolderType) => {
+    setSelectedFolder(folderId);
+    setCurrentImageIndex(0);
+  };
+
   return (
-    <div className='w-full h-full bg-white'>
+    <div className='w-full h-full bg-white flex flex-col'>
       {/* 상단 헤더 바 (macOS 스타일) */}
-      <div className='w-full h-10 bg-bright-gray relative flex items-center justify-center'>
+      <div className='w-full min-h-10 bg-bright-gray relative flex items-center justify-center'>
         {/* macOS 트래픽 라이트 */}
         <div className='absolute top-1/2 -translate-y-1/2 left-[13px] flex space-x-[12px]'>
           <div className='w-[21px] h-[21px] bg-[#FF5F56] rounded-full' />
@@ -45,6 +44,24 @@ export default function Gallery() {
 
       {/* 메인 이미지 영역 */}
       <div className='relative bg-black w-full h-[403px] overflow-hidden'>
+        {/* 폴더 선택 위젯 (iOS 스타일) */}
+        <div className='w-[150px] absolute top-0 left-0 z-30'>
+          <div className='flex flex-col items-start px-4 py-3 space-y-3'>
+            {Object.values(folderData).map((folder) => (
+              <button
+                key={folder.id}
+                onClick={() => handleFolderChange(folder.id)}
+                className={`px-4 py-2 rounded-xl transition-all duration-200 ${
+                  selectedFolder === folder.id
+                    ? 'bg-blue-500 text-white shadow-lg shadow-blue-500/30'
+                    : 'bg-white/70 text-gray-600 hover:bg-white hover:shadow-md'
+                }`}
+              >
+                <span className='text-sm font-medium'>{folder.name}</span>
+              </button>
+            ))}
+          </div>
+        </div>
         <Image
           src='/images/gallery/main-photo-23236a.jpg'
           alt='ALOC 1기 단체사진'
@@ -59,7 +76,7 @@ export default function Gallery() {
         {/* 갤러리 썸네일들 */}
         <div className='flex px-[1.5px] py-[3px] justify-center h-full'>
           {/* 메인 썸네일들 */}
-          {galleryImages.map((image, index) => (
+          {currentImages.map((image, index) => (
             <div
               key={index}
               className={`w-[150px] h-[78px] mx-[1.5px] overflow-hidden cursor-pointer  ${
