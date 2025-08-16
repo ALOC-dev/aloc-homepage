@@ -19,7 +19,7 @@ export default function Gallery() {
   };
 
   return (
-    <div className='w-full h-full bg-white flex flex-col'>
+    <div className='w-full h-full bg-gray-100 flex flex-col'>
       <SmallHeaderContainer>
         <h1 className='text-[20px] font-bold text-black'>
           {folderData[selectedFolder].name}
@@ -27,7 +27,7 @@ export default function Gallery() {
       </SmallHeaderContainer>
 
       {/* 메인 이미지 영역 */}
-      <div className='relative bg-black w-full h-[403px] overflow-hidden'>
+      <div className='relative bg-black w-full h-[343px] overflow-hidden'>
         {/* 폴더 선택 위젯 (iOS 스타일) */}
         <div className='w-[150px] absolute top-0 left-0 z-30'>
           <div className='flex flex-col items-start px-4 py-3 space-y-3'>
@@ -56,15 +56,15 @@ export default function Gallery() {
       </div>
 
       {/* 하단 갤러리 영역 */}
-      <div className='flex flex-col w-full h-[105px] bg-gray-200'>
+      <div className='relative w-full h-[100px]'>
         {/* 갤러리 썸네일들 */}
-        <div className='flex-1 overflow-x-auto overflow-y-hidden px-[1.5px] py-[3px] justify-center h-full'>
-          <div className='flex px-[1.5px] py-[3px] min-w-max'>
+        <div className='w-full h-full overflow-x-auto overflow-y-hidden'>
+          <div className='flex h-full items-center'>
             {/* 메인 썸네일들 */}
             {currentImages.map((image, index) => (
               <div
                 key={index}
-                className={`w-[150px] h-[78px] mx-[1.5px] overflow-hidden cursor-pointer flex-shrink-0 ${
+                className={`w-[120px] h-[78px] mx-[1.5px] overflow-hidden cursor-pointer flex-shrink-0 ${
                   currentImageIndex === index ? 'ring-2 ring-blue-500' : ''
                 }`}
                 onClick={() => setCurrentImageIndex(index)}
@@ -82,8 +82,8 @@ export default function Gallery() {
         </div>
 
         {/* 중앙 카메라 버튼 */}
-        <div className='flex justify-center items-center h-full'>
-          <div className='w-[60px] h-[60px] bg-white rounded-full border-2 border-gray-300 flex items-center justify-center cursor-pointer hover:bg-gray-50 transition-colors'>
+        <div className='w-full h-full flex justify-center items-center'>
+          <div className='mb-5 w-[60px] h-[60px] bg-white rounded-full border-2 border-gray-300 flex items-center justify-center cursor-pointer hover:bg-gray-50 transition-colors'>
             <Image
               src='/images/gallery/camera.svg'
               alt='camera'
