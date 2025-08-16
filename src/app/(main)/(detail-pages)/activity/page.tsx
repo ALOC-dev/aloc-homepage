@@ -7,6 +7,8 @@ import { Document, Page, pdfjs } from 'react-pdf';
 import { SidebarContainer } from '@/components/layout-components';
 import { HeaderContainer } from '@/components/layout-components';
 import { projects, studies } from '@/app/data/activities';
+import 'react-pdf/dist/Page/TextLayer.css';
+import 'react-pdf/dist/Page/AnnotationLayer.css';
 
 // PDF.js 워커 설정 (CDN 사용 - 공식 문서 권장 방법)
 pdfjs.GlobalWorkerOptions.workerSrc = new URL(

@@ -8,7 +8,7 @@ import { SmallHeaderContainer } from '@/components/layout-components';
 
 export default function MemberDetail() {
   const searchParams = useSearchParams();
-  const memberId = searchParams.get('id');
+  const memberId = searchParams?.get('id') || '';
   const member = memberId ? getMemberById(parseInt(memberId)) : null;
 
   if (!member) {

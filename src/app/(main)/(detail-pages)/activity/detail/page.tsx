@@ -7,6 +7,8 @@ import { Document, Page, pdfjs } from 'react-pdf';
 import { SmallHeaderContainer } from '@/components/layout-components';
 import { useSearchParams } from 'next/navigation';
 import { projects, studies } from '@/app/data/activities';
+import 'react-pdf/dist/Page/TextLayer.css';
+import 'react-pdf/dist/Page/AnnotationLayer.css';
 
 // PDF.js 워커 설정 (공식 문서 권장 방법)
 pdfjs.GlobalWorkerOptions.workerSrc = new URL(
@@ -16,8 +18,9 @@ pdfjs.GlobalWorkerOptions.workerSrc = new URL(
 
 export default function ActivityDetail() {
   const searchParams = useSearchParams();
-  const activityId = searchParams.get('id');
-  const activityType = searchParams.get('type') as 'project' | 'study';
+  const activityId = searchParams?.get('id') || '';
+  const activityType =
+    (searchParams?.get('type') as 'project' | 'study') || 'project';
 
   const currentList = activityType === 'project' ? projects : studies;
   const currentItem = currentList.find((item) => item.id === activityId);
