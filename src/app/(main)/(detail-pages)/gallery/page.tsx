@@ -2,24 +2,15 @@
 
 import React, { useState } from 'react';
 import Image from 'next/image';
-import { folderData, type FolderType } from '@/app/data/gallery';
+import { folderData, folderImages, type FolderType } from '@/app/data/gallery';
+import { SmallHeaderContainer } from '@/components/layout-components/SmallHeaderContainer';
 
 export default function Gallery() {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [selectedFolder, setSelectedFolder] = useState<FolderType>('all');
 
   // 현재 선택된 폴더의 이미지들
-  const currentImages = folderData[selectedFolder].images;
-
-  const nextImage = () => {
-    setCurrentImageIndex((prev) => (prev + 1) % currentImages.length);
-  };
-
-  const prevImage = () => {
-    setCurrentImageIndex((prev) =>
-      prev === 0 ? currentImages.length - 1 : prev - 1,
-    );
-  };
+  const currentImages = folderImages[selectedFolder];
 
   // 폴더 변경 시 이미지 인덱스 초기화
   const handleFolderChange = (folderId: FolderType) => {
@@ -29,18 +20,11 @@ export default function Gallery() {
 
   return (
     <div className='w-full h-full bg-white flex flex-col'>
-      {/* 상단 헤더 바 (macOS 스타일) */}
-      <div className='w-full min-h-10 bg-bright-gray relative flex items-center justify-center'>
-        {/* macOS 트래픽 라이트 */}
-        <div className='absolute top-1/2 -translate-y-1/2 left-[13px] flex space-x-[12px]'>
-          <div className='w-[21px] h-[21px] bg-[#FF5F56] rounded-full' />
-          <div className='w-[21px] h-[21px] bg-[#FDBC2E] rounded-full' />
-          <div className='w-[21px] h-[21px] bg-[#28C83E] rounded-full' />
-        </div>
-
-        {/* 제목 */}
-        <h1 className='text-[17px] font-bold text-black'>ALOC 1기 단체사진</h1>
-      </div>
+      <SmallHeaderContainer>
+        <h1 className='text-[20px] font-bold text-black'>
+          {folderData[selectedFolder].name}
+        </h1>
+      </SmallHeaderContainer>
 
       {/* 메인 이미지 영역 */}
       <div className='relative bg-black w-full h-[403px] overflow-hidden'>
@@ -63,8 +47,8 @@ export default function Gallery() {
           </div>
         </div>
         <Image
-          src='/images/gallery/main-photo-23236a.jpg'
-          alt='ALOC 1기 단체사진'
+          src={currentImages[currentImageIndex]}
+          alt={`Gallery image ${currentImageIndex + 1}`}
           fill
           className='object-contain'
           priority
@@ -72,32 +56,34 @@ export default function Gallery() {
       </div>
 
       {/* 하단 갤러리 영역 */}
-      <div className='relative w-full h-[165px] bg-gray-200'>
+      <div className='flex flex-col w-full h-[105px] bg-gray-200'>
         {/* 갤러리 썸네일들 */}
-        <div className='flex px-[1.5px] py-[3px] justify-center h-full'>
-          {/* 메인 썸네일들 */}
-          {currentImages.map((image, index) => (
-            <div
-              key={index}
-              className={`w-[150px] h-[78px] mx-[1.5px] overflow-hidden cursor-pointer  ${
-                currentImageIndex === index ? 'ring-2 ring-blue-500' : ''
-              }`}
-              onClick={() => setCurrentImageIndex(index)}
-            >
-              <Image
-                src={image}
-                alt={`Gallery image ${index + 2}`}
-                width={125}
-                height={88}
-                className='w-full h-full object-cover'
-              />
-            </div>
-          ))}
+        <div className='flex-1 overflow-x-auto overflow-y-hidden px-[1.5px] py-[3px] justify-center h-full'>
+          <div className='flex px-[1.5px] py-[3px] min-w-max'>
+            {/* 메인 썸네일들 */}
+            {currentImages.map((image, index) => (
+              <div
+                key={index}
+                className={`w-[150px] h-[78px] mx-[1.5px] overflow-hidden cursor-pointer flex-shrink-0 ${
+                  currentImageIndex === index ? 'ring-2 ring-blue-500' : ''
+                }`}
+                onClick={() => setCurrentImageIndex(index)}
+              >
+                <Image
+                  src={image}
+                  alt={`Gallery image ${index + 1}`}
+                  width={125}
+                  height={88}
+                  className='w-full h-full object-cover'
+                />
+              </div>
+            ))}
+          </div>
         </div>
 
         {/* 중앙 카메라 버튼 */}
-        <div className='absolute top-[88px] left-1/2 transform -translate-x-1/2'>
-          <div className='w-[60px] h-[60px] bg-white rounded-full border-2 border-[#A9ADB9] flex items-center justify-center cursor-pointer hover:bg-gray-50 transition-colors'>
+        <div className='flex justify-center items-center h-full'>
+          <div className='w-[60px] h-[60px] bg-white rounded-full border-2 border-gray-300 flex items-center justify-center cursor-pointer hover:bg-gray-50 transition-colors'>
             <Image
               src='/images/gallery/camera.svg'
               alt='camera'
@@ -106,37 +92,6 @@ export default function Gallery() {
             />
           </div>
         </div>
-
-        {/* 좌우 네비게이션 버튼 */}
-        <button
-          onClick={prevImage}
-          className='absolute top-[54px] left-[22px] w-[45px] h-[40px] flex items-center justify-center hover:bg-white/20 rounded-lg transition-colors'
-        >
-          <svg width='22' height='22' viewBox='0 0 32 32' fill='none'>
-            <path
-              d='M20 8L12 16L20 24'
-              stroke='#A9ADB9'
-              strokeWidth='4'
-              strokeLinecap='round'
-              strokeLinejoin='round'
-            />
-          </svg>
-        </button>
-
-        <button
-          onClick={nextImage}
-          className='absolute top-[54px] right-[22px] w-[45px] h-[40px] flex items-center justify-center hover:bg-white/20 rounded-lg transition-colors'
-        >
-          <svg width='22' height='22' viewBox='0 0 32 32' fill='none'>
-            <path
-              d='M12 8L20 16L12 24'
-              stroke='#A9ADB9'
-              strokeWidth='4'
-              strokeLinecap='round'
-              strokeLinejoin='round'
-            />
-          </svg>
-        </button>
       </div>
     </div>
   );
