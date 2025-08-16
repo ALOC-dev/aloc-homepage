@@ -3,16 +3,23 @@
 import React, { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { Document, Page, pdfjs } from 'react-pdf';
 import { SidebarContainer } from '@/components/layout-components';
 import { HeaderContainer } from '@/components/layout-components';
 import { projects, studies } from '@/app/data/activities';
 
+// PDF.js 워커 설정 (CDN 사용 - 공식 문서 권장 방법)
+pdfjs.GlobalWorkerOptions.workerSrc = new URL(
+  'pdfjs-dist/build/pdf.worker.min.mjs',
+  import.meta.url,
+).toString();
 export default function ActivityPage() {
   const [selectedTab, setSelectedTab] = useState<'project' | 'study'>(
     'project',
   );
   const [selectedItem, setSelectedItem] = useState<string>('1');
   const [currentSlide, setCurrentSlide] = useState<number>(1);
+  const [numPages, setNumPages] = useState<number>(0);
   const currentList = selectedTab === 'project' ? projects : studies;
   const currentItem =
     currentList.find((item) => item.id === selectedItem) ?? currentList[0];
@@ -22,6 +29,12 @@ export default function ActivityPage() {
     setCurrentSlide(1);
   }, [selectedItem]);
 
+  // PDF 문서 로드 성공 핸들러
+  function onDocumentLoadSuccess({ numPages }: { numPages: number }) {
+    console.log(`numPages ${numPages}`);
+    setNumPages(numPages);
+  }
+
   // 슬라이드 네비게이션 함수들
   const goToPreviousSlide = () => {
     if (currentSlide > 1) {
@@ -30,10 +43,16 @@ export default function ActivityPage() {
   };
 
   const goToNextSlide = () => {
-    if (currentItem?.slidesCount && currentSlide < currentItem.slidesCount) {
+    const maxPages = numPages || currentItem?.slidesCount || 1;
+    if (currentSlide < maxPages) {
       setCurrentSlide(currentSlide + 1);
     }
   };
+
+  // PDF 파일 경로 (activities 데이터에서 가져오거나 기본값 사용)
+  const pdfPath =
+    currentItem?.pdfPath ||
+    '/pdfs/activities/projects/ALOC_최종발표회_UOScholar.pdf';
   return (
     <div className='w-full h-full flex'>
       {/* 좌측 사이드바 */}
@@ -178,16 +197,27 @@ export default function ActivityPage() {
                 href={`/activity/detail?id=${currentItem?.id}&type=${selectedTab}`}
                 className='w-[350px] h-[148px] rounded-[20px] overflow-hidden cursor-pointer hover:opacity-90 transition-opacity'
               >
-                <Image
-                  src={
-                    currentItem?.image ||
-                    '/images/figma/project-image-2b1b0e.png'
+                <Document
+                  file={pdfPath}
+                  onLoadSuccess={onDocumentLoadSuccess}
+                  loading={
+                    <div className='w-full h-full rounded-[20px] overflow-hidden flex items-center justify-center bg-gray-200'>
+                      <Image
+                        src='/images/figma/project-image-2b1b0e.png'
+                        alt='PDF 로딩 중'
+                        width={350}
+                        height={148}
+                        className='w-full h-full object-cover'
+                      />
+                    </div>
                   }
-                  alt='프로젝트 이미지'
-                  width={213}
-                  height={98}
-                  className='w-full h-full object-cover'
-                />
+                >
+                  <Page
+                    pageNumber={currentSlide}
+                    width={350}
+                    renderTextLayer={false}
+                  />
+                </Document>
               </Link>
               {/* 미니 슬라이드 쇼 */}
               <div className='w-full mt-[10px] h-[15px] bg-white flex items-center justify-center gap-[15px]'>
@@ -209,13 +239,13 @@ export default function ActivityPage() {
                   />
                 </button>
                 <span className='text-[17.5px] text-black'>
-                  {currentSlide}/{currentItem?.slidesCount || 1}
+                  {currentSlide}/{numPages || 1}
                 </span>
                 <button
                   onClick={goToNextSlide}
-                  disabled={currentSlide === (currentItem?.slidesCount || 1)}
+                  disabled={currentSlide === (numPages || 1)}
                   className={`w-[51.5px] h-[51.5px] cursor-pointer transition-opacity ${
-                    currentSlide === (currentItem?.slidesCount || 1)
+                    currentSlide === (numPages || 1)
                       ? 'opacity-20 cursor-not-allowed'
                       : 'hover:opacity-80'
                   }`}
