@@ -8,6 +8,9 @@ export default function Introduction() {
   const [isScrollLocked, setIsScrollLocked] = useState(true);
 
   useEffect(() => {
+    // 페이지 로드 시 스크롤 위치를 최상단으로 이동
+    window.scrollTo(0, 0);
+
     const handleWheel = (e: WheelEvent) => {
       // 게이지바가 100% 미만일 때만 스크롤 방지
       if (scrollProgress < 100) {
@@ -62,79 +65,60 @@ export default function Introduction() {
 
   return (
     <div className='min-h-screen bg-black'>
-      {/* Hero Section */}
-      <div className='relative min-h-screen flex flex-col items-center justify-center px-4'>
-        {/* 배경 이미지 */}
-        <div className='absolute inset-0'>
-          <Image
-            src='/images/introduction/aloc-logo.png'
-            alt='ALOC Logo'
-            fill
-            className='object-cover opacity-20'
-            priority
-          />
-        </div>
-
-        {/* 메인 콘텐츠 */}
-        <div className='relative z-10 flex flex-col items-center justify-center'>
-          {/* 중앙 이미지 */}
-          <div className='w-64 h-64 mb-16 relative'>
-            <Image
-              src='/images/introduction/aloc-logo.png'
-              alt='ALOC'
-              fill
-              className='object-contain'
-              priority
-            />
-          </div>
-
-          {/* 텍스트 콘텐츠 */}
-          <div className='text-center text-white max-w-2xl mx-auto'>
-            <h1 className='text-4xl md:text-6xl font-bold mb-6'>ALOC</h1>
-            <p className='text-lg md:text-xl text-gray-300 leading-relaxed'>
-              서울시립대학교 컴퓨터과학부 학술동아리
-            </p>
-            <p className='text-base md:text-lg text-gray-400 mt-4 leading-relaxed'>
-              함께 성장하며 컴퓨터 과학의 깊이를 탐구하는 공간
-            </p>
-          </div>
-
+      {/* 게이지바 페이지 */}
+      <div className='min-h-screen flex flex-col items-center justify-center px-4'>
+        {/* 스크롤바 콘텐츠 */}
+        <div className='z-10 flex flex-col items-center justify-center'>
           {/* 스크롤 안내 */}
-          {scrollProgress < 100 && (
+          <div
+            className={`mt-36 transition-all duration-1500 ease-in-out ${
+              scrollProgress >= 100
+                ? 'opacity-0 transform translate-y-[-30px]'
+                : 'opacity-100 transform translate-y-0'
+            }`}
+          >
+            {/* 중앙 이미지 */}
+            <div className='w-full h-64 mb-16 relative'>
+              <Image
+                src='/images/introduction/aloc-logo.png'
+                alt='ALOC'
+                fill
+                className='object-contain'
+                priority
+              />
+            </div>
+            {/* 스크롤 게이지바 */}
+            <div
+              className={`z-20 transition-all duration-1000 ease-in-out ${
+                scrollProgress >= 100
+                  ? 'opacity-0 pointer-events-none'
+                  : 'opacity-100'
+              }`}
+            >
+              <div className='w-72 md:w-96 h-4 bg-gray-600 rounded-full overflow-hidden'>
+                <div
+                  className='h-full bg-white transition-all duration-300 ease-out'
+                  style={{ width: `${scrollProgress}%` }}
+                />
+              </div>
+            </div>
+            {/* 스크롤 안내 */}
             <div className='text-center text-white mt-8 animate-bounce'>
               <p className='text-sm text-gray-400 mb-2'>스크롤하여 계속하기</p>
               <div className='w-6 h-10 border-2 border-gray-400 rounded-full mx-auto flex justify-center'>
                 <div className='w-1 h-3 bg-gray-400 rounded-full mt-2 animate-pulse'></div>
               </div>
             </div>
-          )}
-        </div>
-
-        {/* 스크롤 게이지바 */}
-        <div
-          className={`fixed bottom-8 left-1/2 transform -translate-x-1/2 z-20 transition-all duration-1000 ease-in-out ${
-            scrollProgress >= 100
-              ? 'opacity-0 pointer-events-none'
-              : 'opacity-100'
-          }`}
-        >
-          <div className='w-72 md:w-96 h-5 bg-gray-600 rounded-full overflow-hidden'>
-            <div
-              className='h-full bg-gradient-to-r from-blue-500 to-purple-600 transition-all duration-300 ease-out'
-              style={{ width: `${scrollProgress}%` }}
-            />
           </div>
-          <div className='text-center mt-2'>
-            <span className='text-white text-sm font-medium'>
-              {Math.round(scrollProgress)}%
-            </span>
-          </div>
-
-          {/* 게이지바가 완성되면 표시되는 메시지 */}
-          {scrollProgress >= 100 && (
-            <div className='text-center mt-4'>
-              <p className='text-green-400 text-sm font-medium'>
-                스크롤을 계속하세요!
+          {/* 동아리 소개 메인 텍스트 */}
+          {scrollProgress === 100 && (
+            <div className='text-center text-white max-w-2xl mx-auto'>
+              <h1 className='text-4xl md:text-6xl font-bold mb-6'>ALOC</h1>
+              <p className='text-lg md:text-xl text-gray-300 leading-relaxed'>
+                서울시립대학교 컴퓨터과학부 학술동아리
+              </p>
+              <p className='text-base md:text-lg text-gray-400 mt-4 leading-relaxed'>
+                함께 성장하며 컴퓨터 과학의 깊이를 탐구하는 공간
               </p>
             </div>
           )}
