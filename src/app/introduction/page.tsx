@@ -23,9 +23,12 @@ export default function Introduction() {
 
           // 게이지바가 100%에 도달하면 스크롤 잠금 해제
           if (newProgress >= 100) {
-            setIsScrollLocked(false);
-            // body 스크롤 복원
-            document.body.style.overflow = 'auto';
+            // 3초 후에 스크롤 잠금 해제
+            setTimeout(() => {
+              setIsScrollLocked(false);
+              // body 스크롤 복원
+              document.body.style.overflow = 'auto';
+            }, 1000);
           }
 
           return newProgress;
@@ -68,13 +71,11 @@ export default function Introduction() {
       {/* 게이지바 페이지 */}
       <div className='min-h-screen flex flex-col items-center justify-center px-4'>
         {/* 스크롤바 콘텐츠 */}
-        <div className='z-10 flex flex-col items-center justify-center'>
+        <div className='z-10 flex flex-col items-center justify-center relative'>
           {/* 스크롤 안내 */}
           <div
             className={`mt-36 transition-all duration-1500 ease-in-out ${
-              scrollProgress >= 100
-                ? 'opacity-0 transform translate-y-[-30px]'
-                : 'opacity-100 transform translate-y-0'
+              scrollProgress >= 100 ? 'opacity-0 ' : 'opacity-100 '
             }`}
           >
             {/* 중앙 이미지 */}
@@ -111,17 +112,21 @@ export default function Introduction() {
             </div>
           </div>
           {/* 동아리 소개 메인 텍스트 */}
-          {scrollProgress === 100 && (
-            <div className='text-center text-white max-w-2xl mx-auto'>
-              <h1 className='text-4xl md:text-6xl font-bold mb-6'>ALOC</h1>
-              <p className='text-lg md:text-xl text-gray-300 leading-relaxed'>
-                서울시립대학교 컴퓨터과학부 학술동아리
-              </p>
-              <p className='text-base md:text-lg text-gray-400 mt-4 leading-relaxed'>
-                함께 성장하며 컴퓨터 과학의 깊이를 탐구하는 공간
-              </p>
-            </div>
-          )}
+          <div
+            className={`transition-all duration-1500 ease-in-out text-center text-white max-w-2xl mx-auto absolute ${
+              scrollProgress === 100
+                ? 'opacity-100 transform translate-y-0'
+                : 'opacity-0 transform translate-y-[40px]'
+            }`}
+          >
+            <h1 className='text-4xl md:text-6xl font-bold mb-6'>ALOC</h1>
+            <p className='text-lg md:text-xl text-gray-300 leading-relaxed'>
+              서울시립대학교 컴퓨터과학부 학술동아리
+            </p>
+            <p className='text-base md:text-lg text-gray-400 mt-4 leading-relaxed'>
+              함께 성장하며 컴퓨터 과학의 깊이를 탐구하는 공간
+            </p>
+          </div>
         </div>
       </div>
 
