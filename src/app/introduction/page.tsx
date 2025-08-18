@@ -67,9 +67,9 @@ export default function Introduction() {
   }, [scrollProgress, isScrollLocked]);
 
   return (
-    <div className='min-h-screen bg-black'>
+    <div className='min-h-screen bg-white'>
       {/* 게이지바 페이지 */}
-      <div className='min-h-screen flex flex-col items-center justify-center px-4'>
+      <div className='min-h-screen flex flex-col items-center justify-center px-4 bg-black'>
         {/* 스크롤바 콘텐츠 */}
         <div className='z-10 flex flex-col items-center justify-center relative'>
           {/* 스크롤 안내 */}
@@ -121,17 +121,14 @@ export default function Introduction() {
           >
             <h1 className='text-4xl md:text-6xl font-bold mb-6'>ALOC</h1>
             <p className='text-lg md:text-xl text-gray-300 leading-relaxed'>
-              서울시립대학교 컴퓨터과학부 학술동아리
-            </p>
-            <p className='text-base md:text-lg text-gray-400 mt-4 leading-relaxed'>
-              함께 성장하며 컴퓨터 과학의 깊이를 탐구하는 공간
+              서울시립대학교 컴퓨터과학부 학술 소모임
             </p>
           </div>
         </div>
       </div>
 
       {/* 추가 콘텐츠 섹션 */}
-      <div className='bg-gradient-to-b from-black to-gray-900 py-20'>
+      <div className='bg-white to-gray-900 py-20'>
         <div className='container mx-auto px-4'>
           <div className='text-white text-center mb-16'>
             <h2 className='text-3xl md:text-4xl font-bold mb-8'>ALOC 소개</h2>
