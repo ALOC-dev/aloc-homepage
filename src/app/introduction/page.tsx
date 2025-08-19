@@ -67,7 +67,7 @@ export default function Introduction() {
   }, [scrollProgress, isScrollLocked]);
 
   return (
-    <div className='min-h-screen bg-white'>
+    <div className='min-h-screen bg-white w-[1440px] h-[1080px]'>
       {/* 게이지바 페이지 */}
       <div className='min-h-screen flex flex-col items-center justify-center px-4 bg-black'>
         {/* 스크롤바 콘텐츠 */}
@@ -127,115 +127,154 @@ export default function Introduction() {
         </div>
       </div>
 
-      {/* 추가 콘텐츠 섹션 */}
-      <div className='bg-white to-gray-900 py-20'>
-        <div className='container mx-auto px-4'>
-          <div className='text-white text-center mb-16'>
-            <h2 className='text-3xl md:text-4xl font-bold mb-8'>ALOC 소개</h2>
-            <p className='text-lg text-gray-300 max-w-3xl mx-auto'>
-              서울시립대학교 컴퓨터과학부에서 운영하는 학술동아리로, 컴퓨터
-              과학의 다양한 분야를 탐구하며 함께 성장하는 공간입니다.
-            </p>
+      {/* 알록이란? 섹션 */}
+      <div className='bg-white relative min-h-screen w-[1440px] h-[1080px]'>
+        {/* 전체 프레임 기준으로 카드들을 겹쳐서 배치 */}
+
+        {/* 1. 노트 스타일 카드 (우상단) */}
+        <div className='absolute top-[61px] right-[106px] w-[439px] h-[224px] bg-yellow-50 rounded-xl shadow-lg border-l-4 border-yellow-400'>
+          <div className='bg-yellow-100 rounded-lg p-6 h-full'>
+            <h3 className='text-2xl font-medium text-gray-800 mb-4'>
+              ALOC, All Linked One Code. 하나의 연결된~
+            </h3>
           </div>
+        </div>
 
-          {/* 주요 활동 카드 */}
-          <div className='grid md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto mb-16'>
-            <div className='bg-gray-800 p-6 rounded-lg hover:bg-gray-700 transition-colors'>
-              <div className='w-12 h-12 bg-blue-500 rounded-lg flex items-center justify-center mb-4 mx-auto'>
-                <span className='text-white font-bold text-xl'>📚</span>
+        {/* 2. 조직도 스타일 카드 (좌하단) */}
+        <div className='absolute bottom-[93px] left-[67px] w-[511px] h-[320px] bg-gray-100 rounded-xl p-8 shadow-lg z-20'>
+          <div className='grid grid-cols-1 md:grid-cols-2 gap-8 h-full'>
+            {/* 왼쪽: 조직도 */}
+            <div className='space-y-4'>
+              <div className='flex items-center justify-between p-3 bg-white rounded-lg shadow-sm'>
+                <span className='text-lg font-medium'>Univ Of Seoul</span>
+                <div className='w-2 h-2 bg-black rounded-full'></div>
               </div>
-              <h3 className='text-xl font-semibold mb-4 text-center'>
-                학술 활동
-              </h3>
-              <p className='text-gray-300 text-center'>
-                컴퓨터 과학의 다양한 분야를 탐구하며 깊이 있는 학습을
-                진행합니다.
-              </p>
+              <div className='flex items-center justify-between p-3 bg-white rounded-lg shadow-sm'>
+                <span className='text-lg font-medium'>Computer Science</span>
+                <div className='w-2 h-2 bg-black rounded-full'></div>
+              </div>
+              <div className='flex items-center justify-between p-3 bg-white rounded-lg shadow-sm'>
+                <span className='text-lg font-medium'>ALOC</span>
+                <div className='w-2 h-2 bg-black rounded-full'></div>
+              </div>
+              <div className='flex items-center justify-between p-3 bg-white rounded-lg shadow-sm'>
+                <span className='text-lg font-medium'>All Linked One Code</span>
+                <div className='w-2 h-2 bg-black rounded-full'></div>
+              </div>
             </div>
 
-            <div className='bg-gray-800 p-6 rounded-lg hover:bg-gray-700 transition-colors'>
-              <div className='w-12 h-12 bg-purple-500 rounded-lg flex items-center justify-center mb-4 mx-auto'>
-                <span className='text-white font-bold text-xl'>💻</span>
+            {/* 오른쪽: 활동 분야 */}
+            <div className='space-y-4'>
+              <div className='p-3 bg-blue-500 text-white rounded-lg shadow-sm'>
+                <span className='text-lg font-medium'>Activity</span>
               </div>
-              <h3 className='text-xl font-semibold mb-4 text-center'>
-                프로젝트
-              </h3>
-              <p className='text-gray-300 text-center'>
-                실무에 적용 가능한 프로젝트를 통해 실전 경험을 쌓습니다.
-              </p>
-            </div>
-
-            <div className='bg-gray-800 p-6 rounded-lg hover:bg-gray-700 transition-colors'>
-              <div className='w-12 h-12 bg-green-500 rounded-lg flex items-center justify-center mb-4 mx-auto'>
-                <span className='text-white font-bold text-xl'>🤝</span>
+              <div className='grid grid-cols-1 gap-3'>
+                <div className='p-3 bg-white rounded-lg shadow-sm'>
+                  <span className='text-lg font-medium'>Study</span>
+                </div>
+                <div className='p-3 bg-white rounded-lg shadow-sm'>
+                  <span className='text-lg font-medium'>Project</span>
+                </div>
+                <div className='p-3 bg-white rounded-lg shadow-sm'>
+                  <span className='text-lg font-medium'>Networking</span>
+                </div>
               </div>
-              <h3 className='text-xl font-semibold mb-4 text-center'>
-                네트워킹
-              </h3>
-              <p className='text-gray-300 text-center'>
-                동료들과의 협력을 통해 함께 성장하는 환경을 제공합니다.
-              </p>
-            </div>
-
-            <div className='bg-gray-800 p-6 rounded-lg hover:bg-gray-700 transition-colors'>
-              <div className='w-12 h-12 bg-orange-500 rounded-lg flex items-center justify-center mb-4 mx-auto'>
-                <span className='text-white font-bold text-xl'>👥</span>
-              </div>
-              <h3 className='text-xl font-semibold mb-4 text-center'>
-                커뮤니티
-              </h3>
-              <p className='text-gray-300 text-center'>
-                열정적인 학생들이 모여 지식을 공유하고 발전시키는 공간입니다.
-              </p>
             </div>
           </div>
+        </div>
 
-          {/* 상세 정보 섹션 */}
-          <div className='grid md:grid-cols-2 gap-12 max-w-4xl mx-auto'>
-            <div className='bg-gray-800 p-8 rounded-lg'>
-              <h3 className='text-2xl font-bold mb-6 text-center'>
-                우리의 목표
-              </h3>
-              <ul className='text-gray-300 space-y-3'>
-                <li className='flex items-start'>
-                  <span className='text-blue-400 mr-2'>•</span>
-                  컴퓨터 과학의 깊이 있는 이해와 실무 적용 능력 향상
-                </li>
-                <li className='flex items-start'>
-                  <span className='text-blue-400 mr-2'>•</span>
-                  동료들과의 협력을 통한 지식 공유와 성장
-                </li>
-                <li className='flex items-start'>
-                  <span className='text-blue-400 mr-2'>•</span>
-                  혁신적인 프로젝트를 통한 실전 경험 축적
-                </li>
-                <li className='flex items-start'>
-                  <span className='text-blue-400 mr-2'>•</span>
-                  학술적 토론과 연구를 통한 사고력 개발
-                </li>
-              </ul>
+        {/* 3. 중앙 탭 */}
+        <div className='absolute top-[166px] left-[310px] z-10'>
+          <div className='w-[794px] h-[649px] bg-gray-100 rounded-t-xl overflow-hidden shadow-lg'>
+            <div className='bg-gray-200 px-4 py-2 flex items-center justify-between'>
+              <div className='flex items-center gap-2'>
+                <div className='w-3 h-3 bg-red-400 rounded-full'></div>
+                <div className='w-3 h-3 bg-yellow-400 rounded-full'></div>
+                <div className='w-3 h-3 bg-green-400 rounded-full'></div>
+              </div>
+              <span className='text-xs text-gray-600'>ALOC</span>
+            </div>
+            <div className='h-full bg-gradient-to-br from-blue-50 to-gray-100 flex items-center justify-center'>
+              <div className='text-center'>
+                <div className='w-16 h-16 bg-blue-500 rounded-full mx-auto mb-4 flex items-center justify-center'>
+                  <span className='text-white text-2xl font-bold'>A</span>
+                </div>
+                <p className='text-gray-600 font-medium'>ALOC 소개</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* 4. 좌 상단 탭 */}
+        <div className='absolute top-[196px] left-[75px] w-[299px] h-[290px] bg-gray-100 rounded-t-xl overflow-hidden shadow-lg'>
+          <div className='bg-gray-200 px-4 py-2 flex items-center justify-between'>
+            <div className='flex items-center gap-2'>
+              <div className='w-3 h-3 bg-red-400 rounded-full'></div>
+              <div className='w-3 h-3 bg-yellow-400 rounded-full'></div>
+              <div className='w-3 h-3 bg-green-400 rounded-full'></div>
+            </div>
+            <span className='text-xs text-gray-600'>ALOC</span>
+          </div>
+          <div className='h-full bg-gradient-to-br from-purple-50 to-gray-100 flex items-center justify-center'>
+            <div className='text-center'>
+              <div className='w-16 h-16 bg-purple-500 rounded-full mx-auto mb-4 flex items-center justify-center'>
+                <span className='text-white text-2xl font-bold'>S</span>
+              </div>
+              <p className='text-gray-600 font-medium'>Study</p>
+            </div>
+          </div>
+        </div>
+
+        {/* 5. 메인 소개 카드 (우하단) */}
+        <div className='absolute bottom-[59px] right-[200px] w-[335px] h-[445px] bg-gray-100 rounded-3xl p-8 shadow-lg overflow-hidden z-40'>
+          {/* 메인 콘텐츠 */}
+          <div className='relative z-10 flex flex-col items-center text-center'>
+            {/* 로고 이미지 */}
+            <div className='w-28 h-28 rounded-full overflow-hidden bg-white shadow-md flex-shrink-0 mb-6'>
+              <Image
+                src='/images/introduction/aloc-logo.png'
+                alt='ALOC Logo'
+                width={112}
+                height={112}
+                className='object-cover'
+              />
             </div>
 
-            <div className='bg-gray-800 p-8 rounded-lg'>
-              <h3 className='text-2xl font-bold mb-6 text-center'>주요 활동</h3>
-              <ul className='text-gray-300 space-y-3'>
-                <li className='flex items-start'>
-                  <span className='text-purple-400 mr-2'>•</span>
-                  정기적인 스터디 세션 및 기술 세미나
-                </li>
-                <li className='flex items-start'>
-                  <span className='text-purple-400 mr-2'>•</span>팀 프로젝트 및
-                  해커톤 참여
-                </li>
-                <li className='flex items-start'>
-                  <span className='text-purple-400 mr-2'>•</span>
-                  학술 대회 및 논문 발표
-                </li>
-                <li className='flex items-start'>
-                  <span className='text-purple-400 mr-2'>•</span>
-                  산업체 연계 프로그램 및 인턴십
-                </li>
-              </ul>
+            {/* 텍스트 콘텐츠 */}
+            <div className='mb-8'>
+              <h2 className='text-4xl font-bold text-black mb-4'>ALOC</h2>
+              <p className='text-lg text-gray-600 leading-relaxed'>
+                ALOC은 서울시립대학교 컴퓨터과학부
+                <br />
+                학술 소모임입니다.
+                <br />
+                함께 성장하는 개발 문화를 만듭니다.
+              </p>
+            </div>
+
+            {/* 버튼 그룹 */}
+            <div className='w-full space-y-3'>
+              <button className='w-full bg-gradient-to-b from-blue-500 to-blue-600 text-white px-8 py-3 rounded-lg font-medium hover:from-blue-600 hover:to-blue-700 transition-all duration-300 shadow-md'>
+                가입하기!
+              </button>
+              <button className='w-full bg-gray-300 text-black px-8 py-3 rounded-lg font-medium hover:bg-gray-400 transition-all duration-300'>
+                재밌겠다!
+              </button>
+            </div>
+
+            {/* 도움말 버튼 */}
+            <div className='absolute top-6 right-6'>
+              <button className='w-6 h-6 bg-gray-300 rounded-full flex items-center justify-center text-black text-sm hover:bg-gray-400 transition-colors'>
+                ?
+              </button>
+            </div>
+
+            {/* 체크박스 */}
+            <div className='absolute bottom-6 left-1/2 transform -translate-x-1/2 flex items-center gap-2'>
+              <input type='checkbox' id='dontAsk' className='w-4 h-4' />
+              <label htmlFor='dontAsk' className='text-sm text-gray-600'>
+                다시 묻지 않기
+              </label>
             </div>
           </div>
         </div>
