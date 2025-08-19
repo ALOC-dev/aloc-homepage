@@ -6,6 +6,7 @@ import Image from 'next/image';
 export default function Introduction() {
   const [scrollProgress, setScrollProgress] = useState(0);
   const [isScrollLocked, setIsScrollLocked] = useState(true);
+  const [showModalSection, setShowModalSection] = useState(false);
 
   useEffect(() => {
     // 페이지 로드 시 스크롤 위치를 최상단으로 이동
@@ -65,6 +66,25 @@ export default function Introduction() {
       document.body.style.overflow = 'auto';
     };
   }, [scrollProgress, isScrollLocked]);
+
+  // 모달 섹션 애니메이션을 위한 useEffect
+  useEffect(() => {
+    const handleScroll = () => {
+      const modalSection = document.getElementById('modal-section');
+      if (modalSection) {
+        const rect = modalSection.getBoundingClientRect();
+        const windowHeight = window.innerHeight;
+
+        // 화면의 80% 지점에 도달하면 애니메이션 시작
+        if (rect.top <= windowHeight * 0.8) {
+          setShowModalSection(true);
+        }
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   return (
     <div className='min-h-screen bg-white min-w-[1440px]'>
@@ -128,7 +148,7 @@ export default function Introduction() {
       </div>
 
       {/* 알록이란? 섹션 */}
-      <div className='bg-white relative min-h-[1080px] w-[1440px] left-1/2 -translate-x-1/2'>
+      <div className='bg-white relative min-h-[1080px] w-[1440px] left-1/2 -translate-x-1/2 mb-100'>
         {/* 전체 프레임 기준으로 카드들을 겹쳐서 배치 */}
 
         {/* 1. 노트 스타일 카드 (우상단) */}
@@ -343,6 +363,41 @@ export default function Introduction() {
               <label htmlFor='dontAsk' className='text-sm text-gray-600'>
                 다시 묻지 않기
               </label>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* 무엇을 하나요? 섹션 */}
+      <div id='modal-section' className='bg-white relative py-20'>
+        <div className='container mx-auto px-4'>
+          <div className='w-[769px] h-[460px] mx-auto'>
+            {/* 모달 카드 */}
+            <div
+              className={`w-full h-full bg-gray-200 rounded-3xl p-24 shadow-lg relative overflow-hidden transition-all duration-1000 ease-out ${
+                showModalSection
+                  ? 'opacity-100 transform translate-y-0'
+                  : 'opacity-0 transform translate-y-20'
+              }`}
+            >
+              {/* 상단 헤더 */}
+              <div className='text-center mb-20'>
+                <h2 className='text-6xl font-bold text-black mb-6'>Activity</h2>
+                <p className='text-4xl text-black'>ALOC에서는 무엇을 하나요?</p>
+              </div>
+
+              {/* 구분선 */}
+              <div className='border-t-4 border-gray-300 mb-8'></div>
+
+              {/* 하단 버튼 영역 */}
+              <div className='flex flex-row justify-center items-center w-full'>
+                <div className='border-r-3 border-gray-400 pr-8'>
+                  <span className='text-4xl text-blue-500'>options</span>
+                </div>
+                <div className='pl-8'>
+                  <span className='text-4xl text-blue-500'>close</span>
+                </div>
+              </div>
             </div>
           </div>
         </div>
