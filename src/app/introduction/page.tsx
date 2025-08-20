@@ -368,33 +368,33 @@ export default function Introduction() {
         </div>
       </div>
 
-      {/* 무엇을 하나요? 섹션 */}
+      {/* 무엇을 하나요?(모달) 섹션 */}
       <div id='modal-section' className='bg-white relative py-20'>
         <div className='container mx-auto px-4'>
-          <div className='w-[769px] h-[460px] mx-auto'>
+          <div className='w-[769px] h-[460px] mx-auto flex flex-col justify-center items-center'>
             {/* 모달 카드 */}
             <div
-              className={`w-full h-full bg-gray-200 rounded-3xl p-24 shadow-lg relative overflow-hidden transition-all duration-1000 ease-out ${
+              className={`w-full h-full bg-gray-200 rounded-3xl shadow-lg relative overflow-hidden transition-all duration-1000 ease-out ${
                 showModalSection
                   ? 'opacity-100 transform translate-y-0'
                   : 'opacity-0 transform translate-y-20'
               }`}
             >
               {/* 상단 헤더 */}
-              <div className='text-center mb-20'>
+              <div className='text-center w-full h-[329px] flex flex-col justify-center items-center'>
                 <h2 className='text-6xl font-bold text-black mb-6'>Activity</h2>
                 <p className='text-4xl text-black'>ALOC에서는 무엇을 하나요?</p>
               </div>
 
               {/* 구분선 */}
-              <div className='border-t-4 border-gray-300 mb-8'></div>
+              <div className='border-t-4 border-gray-300'></div>
 
               {/* 하단 버튼 영역 */}
-              <div className='flex flex-row justify-center items-center w-full'>
-                <div className='border-r-3 border-gray-400 pr-8'>
+              <div className='flex flex-row w-full h-[131px]'>
+                <div className='basis-1/2 border-r-4 border-gray-300 flex justify-center items-center'>
                   <span className='text-4xl text-blue-500'>options</span>
                 </div>
-                <div className='pl-8'>
+                <div className='basis-1/2 flex justify-center items-center'>
                   <span className='text-4xl text-blue-500'>close</span>
                 </div>
               </div>
