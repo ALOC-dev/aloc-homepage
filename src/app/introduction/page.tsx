@@ -76,7 +76,7 @@ export default function Introduction() {
         const windowHeight = window.innerHeight;
 
         // 화면의 80% 지점에 도달하면 애니메이션 시작
-        if (rect.top <= windowHeight * 0.8) {
+        if (rect.top <= windowHeight * 0.01) {
           setShowModalSection(true);
         }
       }
@@ -397,6 +397,78 @@ export default function Introduction() {
                 <div className='basis-1/2 flex justify-center items-center'>
                   <span className='text-4xl text-blue-500'>close</span>
                 </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* 알록의 활동 섹션 */}
+      <div className='bg-white relative py-20'>
+        <div className='container mx-auto px-4'>
+          <div className='w-[1440px] h-[1352px] mx-auto relative'>
+            {/* 메인 브라우저 탭 (노란색 배경) */}
+            <div className='absolute top-[104px] left-[664px] w-[676px] h-[425px] bg-yellow-200 rounded-lg shadow-lg'>
+              {/* 브라우저 헤더 */}
+              <div className='w-full h-[29px] bg-yellow-300 rounded-t-lg flex items-center px-3'>
+                <div className='flex items-center gap-1'>
+                  <div className='w-[19px] h-[18px] bg-yellow-200 border-2 border-yellow-600 rounded'></div>
+                </div>
+                <div className='flex-1'></div>
+                <div className='flex items-center gap-1'>
+                  <div className='w-[19px] h-[18px] border-2 border-yellow-600 rounded'></div>
+                  <div className='w-[19px] h-[18px] border-2 border-yellow-600 rounded'></div>
+                </div>
+              </div>
+              {/* 콘텐츠 영역 */}
+              <div className='w-full h-[396px] bg-yellow-100 p-6'>
+                <p className='text-[36px] leading-[1.33] tracking-[-3.33%] text-gray-800'>
+                  어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구
+                </p>
+              </div>
+            </div>
+
+            {/* 활동 작은 카드들 (재사용) */}
+            {(() => {
+              const activityCards = [
+                { topClass: 'top-[114px]', label: '지식공유회' },
+                { topClass: 'top-[450px]', label: '스터디/프로젝트' },
+                { topClass: 'top-[763px]', label: '네트워킹' },
+              ] as const;
+
+              return activityCards.map((card, index) => (
+                <div
+                  key={index}
+                  className={`absolute ${card.topClass} left-[111px] w-[289px] items-center flex flex-col gap-2`}
+                >
+                  <div className='relative w-[189px] h-[155px]'>
+                    <Image
+                      src='/images/introduction/folder.svg'
+                      alt='folder'
+                      fill
+                      className='object-cover'
+                    />
+                  </div>
+                  <div className='text-[36px] text-black text-center'>
+                    {card.label}
+                  </div>
+                </div>
+              ));
+            })()}
+
+            {/* 우측 하단 알림 카드 */}
+            <div className='absolute top-[958px] left-[801px] w-[521px] h-[312px] bg-gray-200 rounded-[24px] relative'>
+              {/* 느낌표 아이콘 */}
+              <div className='absolute top-[41px] left-[201px] w-[132px] h-[132px] bg-gradient-to-b from-yellow-300 to-yellow-500 rounded-full border-[10px] border-white shadow-lg flex items-center justify-center'>
+                <span className='text-[60px] font-bold text-white'>!</span>
+              </div>
+              {/* 텍스트 */}
+              <div className='absolute top-[165px] left-[90px] text-[24px] text-black'>
+                ALOC의 지식공유회가 궁금하신가요?
+              </div>
+              {/* 더보기 버튼 */}
+              <div className='absolute top-[219px] left-[37px] w-[461px] h-[48px] bg-gradient-to-b from-blue-500 to-blue-600 rounded-[16px] flex items-center justify-center'>
+                <span className='text-[24px] text-white'>더보기</span>
               </div>
             </div>
           </div>
