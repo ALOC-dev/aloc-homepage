@@ -88,7 +88,7 @@ export default function Introduction() {
 
   return (
     <div className='min-h-screen bg-white min-w-[1440px]'>
-      {/* 게이지바 페이지 */}
+      {/* 게이지바 섹션 */}
       <div className='min-h-screen flex flex-col items-center justify-center px-4 bg-black'>
         {/* 스크롤바 콘텐츠 */}
         <div className='z-10 flex flex-col items-center justify-center relative'>
@@ -148,7 +148,7 @@ export default function Introduction() {
       </div>
 
       {/* 알록이란? 섹션 */}
-      <div className='bg-white relative min-h-[1080px] w-[1440px] left-1/2 -translate-x-1/2 mb-100'>
+      <div className='bg-white relative min-h-[1080px] w-[1440px] left-1/2 -translate-x-1/2 mb-100 scale-[0.8]'>
         {/* 전체 프레임 기준으로 카드들을 겹쳐서 배치 */}
 
         {/* 1. 노트 스타일 카드 (우상단) */}
@@ -369,7 +369,7 @@ export default function Introduction() {
       </div>
 
       {/* 무엇을 하나요?(모달) 섹션 */}
-      <div id='modal-section' className='bg-white relative py-20'>
+      <div id='modal-section' className='bg-white relative py-20 scale-[0.6]'>
         <div className='container mx-auto px-4'>
           <div className='w-[769px] h-[460px] mx-auto flex flex-col justify-center items-center'>
             {/* 모달 카드 */}
@@ -404,31 +404,10 @@ export default function Introduction() {
       </div>
 
       {/* 알록의 활동 섹션 */}
-      <div className='bg-white relative py-20'>
-        <div className='container mx-auto px-4'>
-          <div className='w-[1440px] h-[1352px] mx-auto relative'>
-            {/* 메인 브라우저 탭 (노란색 배경) */}
-            <div className='absolute top-[104px] left-[664px] w-[676px] h-[425px] bg-yellow-200 rounded-lg shadow-lg'>
-              {/* 브라우저 헤더 */}
-              <div className='w-full h-[29px] bg-yellow-300 rounded-t-lg flex items-center px-3'>
-                <div className='flex items-center gap-1'>
-                  <div className='w-[19px] h-[18px] bg-yellow-200 border-2 border-yellow-600 rounded'></div>
-                </div>
-                <div className='flex-1'></div>
-                <div className='flex items-center gap-1'>
-                  <div className='w-[19px] h-[18px] border-2 border-yellow-600 rounded'></div>
-                  <div className='w-[19px] h-[18px] border-2 border-yellow-600 rounded'></div>
-                </div>
-              </div>
-              {/* 콘텐츠 영역 */}
-              <div className='w-full h-[396px] bg-yellow-100 p-6'>
-                <p className='text-[36px] leading-[1.33] tracking-[-3.33%] text-gray-800'>
-                  어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구
-                </p>
-              </div>
-            </div>
-
-            {/* 활동 작은 카드들 (재사용) */}
+      <div className='bg-white relative py-20 scale-[0.7]'>
+        <div className='container px-4'>
+          <div className='w-[1440px] h-[1352px] relative'>
+            {/* 활동 폴더들 */}
             {(() => {
               const activityCards = [
                 { topClass: 'top-[114px]', label: '지식공유회' },
@@ -439,7 +418,7 @@ export default function Introduction() {
               return activityCards.map((card, index) => (
                 <div
                   key={index}
-                  className={`absolute ${card.topClass} left-[111px] w-[289px] items-center flex flex-col gap-2`}
+                  className={`absolute ${card.topClass} left-[0px] w-[289px] items-center flex flex-col gap-2`}
                 >
                   <div className='relative w-[189px] h-[155px]'>
                     <Image
@@ -456,11 +435,67 @@ export default function Introduction() {
               ));
             })()}
 
+            {/* 메모 탭 (노란색 배경) */}
+            <div className='absolute top-[104px] left-[664px] w-[676px] h-[425px] bg-yellow-200 rounded-lg shadow-lg'>
+              {/* 브라우저 헤더 */}
+              <div className='w-full h-[29px] bg-yellow-300 rounded-t-lg flex items-center px-3'>
+                <div className='flex items-center gap-1'>
+                  <div className='w-[19px] h-[18px] bg-yellow-200 border-2 border-yellow-600 rounded'></div>
+                </div>
+                <div className='flex-1'></div>
+                <div className='flex items-center gap-1'>
+                  <div className='w-[19px] h-[18px] border-2 border-yellow-600 rounded'></div>
+                  <div className='w-[19px] h-[18px] border-2 border-yellow-600 rounded'></div>
+                </div>
+              </div>
+              {/* 콘텐츠 영역 */}
+              <div className='w-full h-[396px] bg-yellow-100 p-6'>
+                <p className='text-[30px] leading-[1.33] tracking-[-3.33%] text-gray-800'>
+                  어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구
+                </p>
+              </div>
+            </div>
+
+            {/* 중앙 사진 탭*/}
+            <div className='absolute top-[296px] left-[440px] z-10'>
+              <div className='w-[748px] h-[584px] bg-gray-100 rounded-xl overflow-hidden shadow-lg'>
+                <div className='bg-gray-200 px-4 py-2 flex items-center justify-between'>
+                  {/* 3개 원 그룹 - 좌측 배치 */}
+                  <div className='flex items-center gap-3'>
+                    <div className='w-3 h-3 bg-red-400 rounded-full'></div>
+                    <div className='w-3 h-3 bg-yellow-400 rounded-full'></div>
+                    <div className='w-3 h-3 bg-green-400 rounded-full'></div>
+                  </div>
+                  {/* span - 중앙 배치 */}
+                  <div className='absolute left-1/2 transform -translate-x-1/2'>
+                    <span className='text-m text-gray-600'>
+                      중앙 사진 탭 텍스트
+                    </span>
+                  </div>
+                </div>
+                <div className='h-full flex items-center justify-center'>
+                  <Image
+                    src='/images/introduction/알록이란2.png'
+                    alt='ALOC 소개'
+                    width={748}
+                    height={584}
+                    className='w-full h-full object-cover'
+                  />
+                </div>
+              </div>
+            </div>
+
             {/* 우측 하단 알림 카드 */}
-            <div className='absolute top-[958px] left-[801px] w-[521px] h-[312px] bg-gray-200 rounded-[24px] relative'>
-              {/* 느낌표 아이콘 */}
-              <div className='absolute top-[41px] left-[201px] w-[132px] h-[132px] bg-gradient-to-b from-yellow-300 to-yellow-500 rounded-full border-[10px] border-white shadow-lg flex items-center justify-center'>
-                <span className='text-[60px] font-bold text-white'>!</span>
+            <div className='absolute top-[778px] left-[771px] w-[521px] h-[312px] bg-gray-200 rounded-[24px] relative z-20'>
+              {/* 느낌표 아이콘 → alert.png 이미지로 대체 */}
+              <div className='absolute top-[41px] left-[201px] w-[132px] h-[132px]'>
+                <Image
+                  src='/images/introduction/alert.png'
+                  alt='alert'
+                  width={132}
+                  height={132}
+                  className='w-full h-full object-cover'
+                />
               </div>
               {/* 텍스트 */}
               <div className='absolute top-[165px] left-[90px] text-[24px] text-black'>
