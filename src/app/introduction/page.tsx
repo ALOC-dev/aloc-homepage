@@ -596,7 +596,7 @@ export default function Introduction() {
               {/* 더보기 버튼 */}
               <Link
                 href={activityConfigMap[selectedActivity].alertCard.link}
-                className='absolute top-[219px] left-[37px] w-[461px] h-[48px] bg-gradient-to-b from-blue-500 to-blue-600 rounded-[16px] flex items-center justify-center'
+                className='absolute top-[219px] left-[37px] w-[461px] h-[48px] bg-gradient-to-b from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 rounded-[16px] flex items-center justify-center cursor-pointer transition-all duration-200'
               >
                 <span className='text-[24px] text-white'>더보기</span>
               </Link>
