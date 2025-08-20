@@ -35,6 +35,10 @@ function BrowserTabHeader({
 }
 
 export default function Introduction() {
+  // 알록이란? 섹션 공통 애니메이션 클래스
+  const INTRO_ANIM_BASE = 'transition-all duration-1500 ease-out';
+  const INTRO_ANIM_HIDDEN = 'opacity-0 translate-x-50';
+  const INTRO_ANIM_VISIBLE = 'opacity-100 translate-x-0';
   const [scrollProgress, setScrollProgress] = useState(0);
   const [isScrollLocked, setIsScrollLocked] = useState(true);
   const [showModalSection, setShowModalSection] = useState(false);
@@ -232,7 +236,7 @@ export default function Introduction() {
 
         {/* 1. 노트 스타일 카드 (우상단) */}
         <div
-          className={`absolute top-[61px] right-[106px] w-[389px] h-[224px] bg-yellow-50 rounded-xl shadow-lg border-l-4 border-yellow-400 transition-all duration-700 ease-out ${showIntroSection ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
+          className={`absolute top-[61px] right-[106px] w-[389px] h-[224px] bg-yellow-50 rounded-xl shadow-lg border-l-4 border-yellow-400 ${INTRO_ANIM_BASE} ${showIntroSection ? INTRO_ANIM_VISIBLE : INTRO_ANIM_HIDDEN}`}
         >
           <div className='bg-yellow-100 rounded-lg p-6 h-full'>
             <h3 className='text-2xl font-medium text-gray-800 mb-4'>
@@ -254,7 +258,7 @@ export default function Introduction() {
 
         {/* 2. 조직도 스타일 카드 (좌하단) */}
         <div
-          className={`absolute bottom-[93px] left-[67px] w-[511px] h-[320px] transition-all duration-700 ease-out ${showIntroSection ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
+          className={`absolute bottom-[93px] left-[67px] w-[511px] h-[320px] ${INTRO_ANIM_BASE} ${showIntroSection ? INTRO_ANIM_VISIBLE : INTRO_ANIM_HIDDEN}`}
         >
           <div className='inset-0 p-5 w-[346px] h-[298px] grid grid-rows-3 bg-gray-100 rounded-xl shadow-lg'>
             {(() => {
@@ -347,7 +351,7 @@ export default function Introduction() {
 
         {/* 3. 중앙 탭 */}
         <div
-          className={`absolute top-[166px] left-[310px] z-10 transition-all duration-700 ease-out ${showIntroSection ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
+          className={`absolute top-[166px] left-[310px] z-10 ${INTRO_ANIM_BASE} ${showIntroSection ? INTRO_ANIM_VISIBLE : INTRO_ANIM_HIDDEN}`}
         >
           <div className='w-[794px] h-[649px] bg-gray-100 rounded-xl overflow-hidden shadow-lg'>
             <BrowserTabHeader label='ALOC' />
@@ -365,7 +369,7 @@ export default function Introduction() {
 
         {/* 4. 좌 상단 탭 */}
         <div
-          className={`absolute top-[30px] left-[75px] w-[299px] h-[290px] bg-gray-100 rounded-xl overflow-hidden shadow-lg z-20 transition-all duration-700 ease-out ${showIntroSection ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
+          className={`absolute top-[30px] left-[75px] w-[299px] h-[290px] bg-gray-100 rounded-xl overflow-hidden shadow-lg z-20 ${INTRO_ANIM_BASE} ${showIntroSection ? INTRO_ANIM_VISIBLE : INTRO_ANIM_HIDDEN}`}
         >
           <BrowserTabHeader
             label='ALOC'
@@ -385,7 +389,7 @@ export default function Introduction() {
 
         {/* 5. 메인 소개 카드 (우하단) */}
         <div
-          className={`absolute bottom-[59px] right-[200px] w-[335px] h-[520px] bg-gray-100 rounded-3xl p-8 shadow-lg overflow-hidden z-40 transition-all duration-700 ease-out ${showIntroSection ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
+          className={`absolute bottom-[59px] right-[200px] w-[335px] h-[520px] bg-gray-100 rounded-3xl p-8 shadow-lg overflow-hidden z-40 ${INTRO_ANIM_BASE} ${showIntroSection ? INTRO_ANIM_VISIBLE : INTRO_ANIM_HIDDEN}`}
         >
           {/* 도움말 버튼 */}
           <div className='absolute top-4 right-4'>
