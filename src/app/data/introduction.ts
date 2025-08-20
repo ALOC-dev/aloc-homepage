@@ -26,7 +26,7 @@ export const activityConfigMap: Record<ActivityLabel, ActivityConfig> = {
     alertCard: {
       positionClass: 'absolute top-[760px] left-[740px]',
       text: 'ALOC의 지식공유회가 궁금하신가요?',
-      link: '#',
+      link: '/',
     },
   },
   '스터디/프로젝트': {
@@ -42,7 +42,7 @@ export const activityConfigMap: Record<ActivityLabel, ActivityConfig> = {
     alertCard: {
       positionClass: 'absolute top-[820px] left-[400px]',
       text: 'ALOC의 스터디/프로젝트가 궁금하신가요?',
-      link: '#',
+      link: '/',
     },
   },
   네트워킹: {
@@ -58,7 +58,7 @@ export const activityConfigMap: Record<ActivityLabel, ActivityConfig> = {
     alertCard: {
       positionClass: 'absolute top-[760px] left-[1060px]',
       text: 'ALOC의 네트워킹이 궁금하신가요?',
-      link: '#',
+      link: '/',
     },
   },
 };

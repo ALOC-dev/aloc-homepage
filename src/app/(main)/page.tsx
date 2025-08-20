@@ -18,7 +18,7 @@ export default function Main() {
       </div>
       {/* Login 버튼 */}
       <div className='absolute right-[1%] top-[1%] z-20'>
-        <button className='text-[9vh] font-bold font-inter hover:text-blue-600 transition-colors bg-transparent border-none outline-none focus:outline-none'>
+        <button className='text-[30px] cursor-pointer font-bold font-inter hover:text-blue-600 transition-colors bg-transparent border-none outline-none focus:outline-none'>
           Login
         </button>
       </div>
@@ -42,9 +42,9 @@ export default function Main() {
               <Image
                 src='/images/main/activity.png'
                 alt='Activity Sticker'
-                width={2050}
-                height={1000}
-                className='w-[34.1%] h-[15.7%] hover:scale-110 transition-transform duration-200 cursor-pointer'
+                width={400}
+                height={100}
+                className='w-[54.1%] h-[35.7%] hover:scale-110 transition-transform duration-200 cursor-pointer object-contain'
               />
             </Link>
           </div>
