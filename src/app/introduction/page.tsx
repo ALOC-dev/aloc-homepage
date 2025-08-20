@@ -2,11 +2,43 @@
 
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
+import {
+  ActivityLabel,
+  activityImageMap,
+  activityConfigMap,
+} from '@/app/data/introduction';
+
+interface BrowserTabHeaderProps {
+  label: string;
+  gapClass?: string;
+  labelClassName?: string;
+}
+
+function BrowserTabHeader({
+  label,
+  gapClass = 'gap-3',
+  labelClassName = 'text-xs',
+}: BrowserTabHeaderProps) {
+  return (
+    <div className='bg-gray-200 px-4 py-2 flex items-center justify-between'>
+      <div className={`flex items-center ${gapClass}`}>
+        <div className='w-3 h-3 bg-red-400 rounded-full'></div>
+        <div className='w-3 h-3 bg-yellow-400 rounded-full'></div>
+        <div className='w-3 h-3 bg-green-400 rounded-full'></div>
+      </div>
+      <div className='absolute left-1/2 transform -translate-x-1/2'>
+        <span className={`${labelClassName} text-gray-600`}>{label}</span>
+      </div>
+    </div>
+  );
+}
 
 export default function Introduction() {
   const [scrollProgress, setScrollProgress] = useState(0);
   const [isScrollLocked, setIsScrollLocked] = useState(true);
   const [showModalSection, setShowModalSection] = useState(false);
+  const [selectedActivity, setSelectedActivity] =
+    useState<ActivityLabel>('지식공유회');
 
   useEffect(() => {
     // 페이지 로드 시 스크롤 위치를 최상단으로 이동
@@ -265,18 +297,7 @@ export default function Introduction() {
         {/* 3. 중앙 탭 */}
         <div className='absolute top-[166px] left-[310px] z-10'>
           <div className='w-[794px] h-[649px] bg-gray-100 rounded-xl overflow-hidden shadow-lg'>
-            <div className='bg-gray-200 px-4 py-2 flex items-center justify-between'>
-              {/* 3개 원 그룹 - 좌측 배치 */}
-              <div className='flex items-center gap-3'>
-                <div className='w-3 h-3 bg-red-400 rounded-full'></div>
-                <div className='w-3 h-3 bg-yellow-400 rounded-full'></div>
-                <div className='w-3 h-3 bg-green-400 rounded-full'></div>
-              </div>
-              {/* span - 중앙 배치 */}
-              <div className='absolute left-1/2 transform -translate-x-1/2'>
-                <span className='text-xs text-gray-600'>ALOC</span>
-              </div>
-            </div>
+            <BrowserTabHeader label='ALOC' />
             <div className='h-full flex items-center justify-center'>
               <Image
                 src='/images/introduction/알록이란2.png'
@@ -291,18 +312,11 @@ export default function Introduction() {
 
         {/* 4. 좌 상단 탭 */}
         <div className='absolute top-[30px] left-[75px] w-[299px] h-[290px] bg-gray-100 rounded-xl overflow-hidden shadow-lg z-20'>
-          <div className='bg-gray-200 px-4 py-2 flex items-center justify-between'>
-            {/* 3개 원 그룹 - 좌측 배치 */}
-            <div className='flex items-center gap-2'>
-              <div className='w-3 h-3 bg-red-400 rounded-full'></div>
-              <div className='w-3 h-3 bg-yellow-400 rounded-full'></div>
-              <div className='w-3 h-3 bg-green-400 rounded-full'></div>
-            </div>
-            {/* span - 중앙 배치 */}
-            <div className='absolute left-1/2 transform -translate-x-1/2'>
-              <span className='text-xs text-gray-600'>ALOC</span>
-            </div>
-          </div>
+          <BrowserTabHeader
+            label='ALOC'
+            gapClass='gap-2'
+            labelClassName='text-xs'
+          />
           <div className='h-full flex items-center justify-center'>
             <Image
               src='/images/introduction/알록이란1.png'
@@ -410,33 +424,45 @@ export default function Introduction() {
             {/* 활동 폴더들 */}
             {(() => {
               const activityCards = [
-                { topClass: 'top-[114px]', label: '지식공유회' },
-                { topClass: 'top-[450px]', label: '스터디/프로젝트' },
-                { topClass: 'top-[763px]', label: '네트워킹' },
+                { label: '지식공유회' },
+                { label: '스터디/프로젝트' },
+                { label: '네트워킹' },
               ] as const;
 
-              return activityCards.map((card, index) => (
-                <div
-                  key={index}
-                  className={`absolute ${card.topClass} left-[0px] w-[289px] items-center flex flex-col gap-2`}
-                >
-                  <div className='relative w-[189px] h-[155px]'>
-                    <Image
-                      src='/images/introduction/folder.svg'
-                      alt='folder'
-                      fill
-                      className='object-cover'
-                    />
-                  </div>
-                  <div className='text-[36px] text-black text-center'>
-                    {card.label}
-                  </div>
+              return (
+                <div className='absolute left-[0px] top-[214px] w-[289px] flex flex-col items-center gap-[80px]'>
+                  {activityCards.map((card, index) => (
+                    <button
+                      key={index}
+                      type='button'
+                      onClick={() =>
+                        setSelectedActivity(card.label as ActivityLabel)
+                      }
+                      className='flex flex-col items-center gap-2 focus:outline-none'
+                    >
+                      <div className='relative w-[189px] h-[155px] scale-[0.8]'>
+                        <Image
+                          src='/images/introduction/folder.svg'
+                          alt='folder'
+                          fill
+                          className='object-cover'
+                        />
+                      </div>
+                      <div
+                        className={`text-[30px] text-center ${selectedActivity === card.label ? 'text-blue-600' : 'text-black'}`}
+                      >
+                        {card.label}
+                      </div>
+                    </button>
+                  ))}
                 </div>
-              ));
+              );
             })()}
 
             {/* 메모 탭 (노란색 배경) */}
-            <div className='absolute top-[104px] left-[664px] w-[676px] h-[425px] bg-yellow-200 rounded-lg shadow-lg'>
+            <div
+              className={`${activityConfigMap[selectedActivity].memoTab.positionClass} w-[676px] h-[425px] bg-yellow-200 rounded-lg shadow-lg`}
+            >
               {/* 브라우저 헤더 */}
               <div className='w-full h-[29px] bg-yellow-300 rounded-t-lg flex items-center px-3'>
                 <div className='flex items-center gap-1'>
@@ -451,13 +477,15 @@ export default function Introduction() {
               {/* 콘텐츠 영역 */}
               <div className='w-full h-[396px] bg-yellow-100 p-6'>
                 <p className='text-[30px] leading-[1.33] tracking-[-3.33%] text-gray-800'>
-                  어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구
+                  {activityConfigMap[selectedActivity].memoTab.content}
                 </p>
               </div>
             </div>
 
-            {/* 중앙 사진 탭*/}
-            <div className='absolute top-[296px] left-[440px] z-10'>
+            {/* 중앙 사진 탭 - 선택된 활동 이미지 표시 */}
+            <div
+              className={`${activityConfigMap[selectedActivity].centralPhotoTab.positionClass} z-10`}
+            >
               <div className='w-[748px] h-[584px] bg-gray-100 rounded-xl overflow-hidden shadow-lg'>
                 <div className='bg-gray-200 px-4 py-2 flex items-center justify-between'>
                   {/* 3개 원 그룹 - 좌측 배치 */}
@@ -469,14 +497,17 @@ export default function Introduction() {
                   {/* span - 중앙 배치 */}
                   <div className='absolute left-1/2 transform -translate-x-1/2'>
                     <span className='text-m text-gray-600'>
-                      중앙 사진 탭 텍스트
+                      {
+                        activityConfigMap[selectedActivity].centralPhotoTab
+                          .headerText
+                      }
                     </span>
                   </div>
                 </div>
                 <div className='h-full flex items-center justify-center'>
                   <Image
-                    src='/images/introduction/알록이란2.png'
-                    alt='ALOC 소개'
+                    src={activityImageMap[selectedActivity]}
+                    alt={selectedActivity}
                     width={748}
                     height={584}
                     className='w-full h-full object-cover'
@@ -486,7 +517,9 @@ export default function Introduction() {
             </div>
 
             {/* 우측 하단 알림 카드 */}
-            <div className='absolute top-[778px] left-[771px] w-[521px] h-[312px] bg-gray-200 rounded-[24px] relative z-20'>
+            <div
+              className={`${activityConfigMap[selectedActivity].alertCard.positionClass} w-[521px] h-[312px] bg-gray-200 rounded-[24px] relative z-20`}
+            >
               {/* 느낌표 아이콘 → alert.png 이미지로 대체 */}
               <div className='absolute top-[41px] left-[201px] w-[132px] h-[132px]'>
                 <Image
@@ -499,7 +532,7 @@ export default function Introduction() {
               </div>
               {/* 텍스트 */}
               <div className='absolute top-[165px] left-[90px] text-[24px] text-black'>
-                ALOC의 지식공유회가 궁금하신가요?
+                {activityConfigMap[selectedActivity].alertCard.text}
               </div>
               {/* 더보기 버튼 */}
               <div className='absolute top-[219px] left-[37px] w-[461px] h-[48px] bg-gradient-to-b from-blue-500 to-blue-600 rounded-[16px] flex items-center justify-center'>
