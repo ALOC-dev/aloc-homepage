@@ -1,7 +1,8 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 import {
   ActivityLabel,
   activityImageMap,
@@ -39,6 +40,46 @@ export default function Introduction() {
   const [showModalSection, setShowModalSection] = useState(false);
   const [selectedActivity, setSelectedActivity] =
     useState<ActivityLabel>('지식공유회');
+  const [showIntroSection, setShowIntroSection] = useState(false);
+  const [transitionStage, setTransitionStage] = useState<'idle' | 'out' | 'in'>(
+    'idle',
+  );
+  const [inActive, setInActive] = useState(false);
+  const timeoutsRef = useRef<number[]>([]);
+
+  const clearAllTimers = () => {
+    timeoutsRef.current.forEach((id) => window.clearTimeout(id));
+    timeoutsRef.current = [];
+  };
+
+  const handleSelectActivity = (next: ActivityLabel) => {
+    if (next === selectedActivity) return;
+    clearAllTimers();
+    setTransitionStage('out');
+    setInActive(false);
+    const t1 = window.setTimeout(() => {
+      setSelectedActivity(next);
+      setTransitionStage('in');
+      const t2 = window.setTimeout(() => {
+        setInActive(true);
+      }, 10);
+      timeoutsRef.current.push(t2);
+      const t3 = window.setTimeout(() => {
+        setTransitionStage('idle');
+        setInActive(false);
+      }, 500);
+      timeoutsRef.current.push(t3);
+    }, 250);
+    timeoutsRef.current.push(t1);
+  };
+
+  const getAnimClasses = () => {
+    const base = 'transition-all duration-500 ease-out will-change-transform';
+    if (transitionStage === 'out') return `${base} opacity-0 translate-y-4`;
+    if (transitionStage === 'in')
+      return `${base} ${inActive ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`;
+    return `${base} opacity-100 translate-y-0`;
+  };
 
   useEffect(() => {
     // 페이지 로드 시 스크롤 위치를 최상단으로 이동
@@ -99,18 +140,21 @@ export default function Introduction() {
     };
   }, [scrollProgress, isScrollLocked]);
 
-  // 모달 섹션 애니메이션을 위한 useEffect
+  // 모달/알록이란? 섹션 애니메이션 트리거를 위한 useEffect
   useEffect(() => {
     const handleScroll = () => {
+      const windowHeight = window.innerHeight;
+
       const modalSection = document.getElementById('modal-section');
       if (modalSection) {
         const rect = modalSection.getBoundingClientRect();
-        const windowHeight = window.innerHeight;
+        if (rect.top <= windowHeight * 0.5) setShowModalSection(true);
+      }
 
-        // 화면의 80% 지점에 도달하면 애니메이션 시작
-        if (rect.top <= windowHeight * 0.01) {
-          setShowModalSection(true);
-        }
+      const introSection = document.getElementById('intro-section');
+      if (introSection) {
+        const rect = introSection.getBoundingClientRect();
+        if (rect.top <= windowHeight * 0.5) setShowIntroSection(true);
       }
     };
 
@@ -180,11 +224,16 @@ export default function Introduction() {
       </div>
 
       {/* 알록이란? 섹션 */}
-      <div className='bg-white relative min-h-[1080px] w-[1440px] left-1/2 -translate-x-1/2 mb-100 scale-[0.8]'>
+      <div
+        id='intro-section'
+        className='bg-white relative min-h-[1080px] w-[1440px] left-1/2 -translate-x-1/2 mb-10 scale-[0.8]'
+      >
         {/* 전체 프레임 기준으로 카드들을 겹쳐서 배치 */}
 
         {/* 1. 노트 스타일 카드 (우상단) */}
-        <div className='absolute top-[61px] right-[106px] w-[389px] h-[224px] bg-yellow-50 rounded-xl shadow-lg border-l-4 border-yellow-400'>
+        <div
+          className={`absolute top-[61px] right-[106px] w-[389px] h-[224px] bg-yellow-50 rounded-xl shadow-lg border-l-4 border-yellow-400 transition-all duration-700 ease-out ${showIntroSection ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
+        >
           <div className='bg-yellow-100 rounded-lg p-6 h-full'>
             <h3 className='text-2xl font-medium text-gray-800 mb-4'>
               <span className='text-blue-600'>A</span>
@@ -204,7 +253,9 @@ export default function Introduction() {
         </div>
 
         {/* 2. 조직도 스타일 카드 (좌하단) */}
-        <div className='absolute bottom-[93px] left-[67px] w-[511px] h-[320px] '>
+        <div
+          className={`absolute bottom-[93px] left-[67px] w-[511px] h-[320px] transition-all duration-700 ease-out ${showIntroSection ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
+        >
           <div className='inset-0 p-5 w-[346px] h-[298px] grid grid-rows-3 bg-gray-100 rounded-xl shadow-lg'>
             {(() => {
               // 조직도 데이터 정의
@@ -295,7 +346,9 @@ export default function Introduction() {
         </div>
 
         {/* 3. 중앙 탭 */}
-        <div className='absolute top-[166px] left-[310px] z-10'>
+        <div
+          className={`absolute top-[166px] left-[310px] z-10 transition-all duration-700 ease-out ${showIntroSection ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
+        >
           <div className='w-[794px] h-[649px] bg-gray-100 rounded-xl overflow-hidden shadow-lg'>
             <BrowserTabHeader label='ALOC' />
             <div className='h-full flex items-center justify-center'>
@@ -311,7 +364,9 @@ export default function Introduction() {
         </div>
 
         {/* 4. 좌 상단 탭 */}
-        <div className='absolute top-[30px] left-[75px] w-[299px] h-[290px] bg-gray-100 rounded-xl overflow-hidden shadow-lg z-20'>
+        <div
+          className={`absolute top-[30px] left-[75px] w-[299px] h-[290px] bg-gray-100 rounded-xl overflow-hidden shadow-lg z-20 transition-all duration-700 ease-out ${showIntroSection ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
+        >
           <BrowserTabHeader
             label='ALOC'
             gapClass='gap-2'
@@ -329,7 +384,9 @@ export default function Introduction() {
         </div>
 
         {/* 5. 메인 소개 카드 (우하단) */}
-        <div className='absolute bottom-[59px] right-[200px] w-[335px] h-[520px] bg-gray-100 rounded-3xl p-8 shadow-lg overflow-hidden z-40'>
+        <div
+          className={`absolute bottom-[59px] right-[200px] w-[335px] h-[520px] bg-gray-100 rounded-3xl p-8 shadow-lg overflow-hidden z-40 transition-all duration-700 ease-out ${showIntroSection ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
+        >
           {/* 도움말 버튼 */}
           <div className='absolute top-4 right-4'>
             <button className='w-6 h-6 bg-gray-300 rounded-full flex items-center justify-center text-black text-sm hover:bg-gray-400 transition-colors'>
@@ -388,10 +445,10 @@ export default function Introduction() {
           <div className='w-[769px] h-[460px] mx-auto flex flex-col justify-center items-center'>
             {/* 모달 카드 */}
             <div
-              className={`w-full h-full bg-gray-200 rounded-3xl shadow-lg relative overflow-hidden transition-all duration-1000 ease-out ${
+              className={`w-full h-full bg-gray-200 rounded-3xl shadow-lg relative overflow-hidden transition-all duration-1500 ease-out ${
                 showModalSection
                   ? 'opacity-100 transform translate-y-0'
-                  : 'opacity-0 transform translate-y-20'
+                  : 'opacity-0 transform translate-y-150'
               }`}
             >
               {/* 상단 헤더 */}
@@ -418,9 +475,9 @@ export default function Introduction() {
       </div>
 
       {/* 알록의 활동 섹션 */}
-      <div className='bg-white relative py-20 scale-[0.7]'>
+      <div className='bg-white relative pb-20 scale-[0.7]'>
         <div className='container px-4'>
-          <div className='w-[1440px] h-[1352px] relative'>
+          <div className='w-[1440px] h-[950px] relative'>
             {/* 활동 폴더들 */}
             {(() => {
               const activityCards = [
@@ -436,11 +493,11 @@ export default function Introduction() {
                       key={index}
                       type='button'
                       onClick={() =>
-                        setSelectedActivity(card.label as ActivityLabel)
+                        handleSelectActivity(card.label as ActivityLabel)
                       }
-                      className='flex flex-col items-center gap-2 focus:outline-none'
+                      className='group cursor-pointer flex flex-col items-center gap-2 focus:outline-none'
                     >
-                      <div className='relative w-[189px] h-[155px] scale-[0.8]'>
+                      <div className='relative w-[189px] h-[155px] scale-[0.8] transition-transform duration-200 ease-out group-hover:scale-105'>
                         <Image
                           src='/images/introduction/folder.svg'
                           alt='folder'
@@ -449,7 +506,7 @@ export default function Introduction() {
                         />
                       </div>
                       <div
-                        className={`text-[30px] text-center ${selectedActivity === card.label ? 'text-blue-600' : 'text-black'}`}
+                        className={`text-[30px] text-center transition-[font-weight] duration-150 ${selectedActivity === card.label ? 'text-blue-600' : 'text-black'} group-hover:font-bold`}
                       >
                         {card.label}
                       </div>
@@ -461,7 +518,7 @@ export default function Introduction() {
 
             {/* 메모 탭 (노란색 배경) */}
             <div
-              className={`${activityConfigMap[selectedActivity].memoTab.positionClass} w-[676px] h-[425px] bg-yellow-200 rounded-lg shadow-lg`}
+              className={`${activityConfigMap[selectedActivity].memoTab.positionClass} w-[676px] h-[425px] bg-yellow-200 rounded-lg shadow-lg ${getAnimClasses()}`}
             >
               {/* 브라우저 헤더 */}
               <div className='w-full h-[29px] bg-yellow-300 rounded-t-lg flex items-center px-3'>
@@ -469,10 +526,6 @@ export default function Introduction() {
                   <div className='w-[19px] h-[18px] bg-yellow-200 border-2 border-yellow-600 rounded'></div>
                 </div>
                 <div className='flex-1'></div>
-                <div className='flex items-center gap-1'>
-                  <div className='w-[19px] h-[18px] border-2 border-yellow-600 rounded'></div>
-                  <div className='w-[19px] h-[18px] border-2 border-yellow-600 rounded'></div>
-                </div>
               </div>
               {/* 콘텐츠 영역 */}
               <div className='w-full h-[396px] bg-yellow-100 p-6'>
@@ -484,9 +537,11 @@ export default function Introduction() {
 
             {/* 중앙 사진 탭 - 선택된 활동 이미지 표시 */}
             <div
-              className={`${activityConfigMap[selectedActivity].centralPhotoTab.positionClass} z-10`}
+              className={`${activityConfigMap[selectedActivity].centralPhotoTab.positionClass}`}
             >
-              <div className='w-[748px] h-[584px] bg-gray-100 rounded-xl overflow-hidden shadow-lg'>
+              <div
+                className={`w-[748px] h-[584px] bg-gray-100 rounded-xl overflow-hidden shadow-lg ${getAnimClasses()}`}
+              >
                 <div className='bg-gray-200 px-4 py-2 flex items-center justify-between'>
                   {/* 3개 원 그룹 - 좌측 배치 */}
                   <div className='flex items-center gap-3'>
@@ -518,7 +573,7 @@ export default function Introduction() {
 
             {/* 우측 하단 알림 카드 */}
             <div
-              className={`${activityConfigMap[selectedActivity].alertCard.positionClass} w-[521px] h-[312px] bg-gray-200 rounded-[24px] relative z-20`}
+              className={`${activityConfigMap[selectedActivity].alertCard.positionClass} shadow-lg w-[521px] h-[312px] bg-gray-200 rounded-[24px] flex justify-center relative ${getAnimClasses()}`}
             >
               {/* 느낌표 아이콘 → alert.png 이미지로 대체 */}
               <div className='absolute top-[41px] left-[201px] w-[132px] h-[132px]'>
@@ -531,35 +586,17 @@ export default function Introduction() {
                 />
               </div>
               {/* 텍스트 */}
-              <div className='absolute top-[165px] left-[90px] text-[24px] text-black'>
+              <div className='absolute top-[165px]  text-[24px] text-black text-center'>
                 {activityConfigMap[selectedActivity].alertCard.text}
               </div>
               {/* 더보기 버튼 */}
-              <div className='absolute top-[219px] left-[37px] w-[461px] h-[48px] bg-gradient-to-b from-blue-500 to-blue-600 rounded-[16px] flex items-center justify-center'>
+              <Link
+                href={activityConfigMap[selectedActivity].alertCard.link}
+                className='absolute top-[219px] left-[37px] w-[461px] h-[48px] bg-gradient-to-b from-blue-500 to-blue-600 rounded-[16px] flex items-center justify-center'
+              >
                 <span className='text-[24px] text-white'>더보기</span>
-              </div>
+              </Link>
             </div>
-          </div>
-        </div>
-      </div>
-
-      {/* 연락처 섹션 */}
-      <div className='bg-gray-900 py-16'>
-        <div className='container mx-auto px-4 text-center'>
-          <h2 className='text-2xl md:text-3xl font-bold text-white mb-8'>
-            함께 성장할 동료를 찾고 있습니다
-          </h2>
-          <p className='text-gray-300 mb-8 max-w-2xl mx-auto'>
-            컴퓨터 과학에 대한 열정과 호기심을 가진 모든 학생들을 환영합니다.
-            함께 배우고 성장하며 미래를 만들어가요.
-          </p>
-          <div className='flex flex-col sm:flex-row gap-4 justify-center'>
-            <button className='bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-lg font-semibold transition-colors'>
-              지원하기
-            </button>
-            <button className='bg-gray-700 hover:bg-gray-600 text-white px-8 py-3 rounded-lg font-semibold transition-colors'>
-              더 알아보기
-            </button>
           </div>
         </div>
       </div>
