@@ -219,8 +219,8 @@ export default function Introduction() {
                 : 'opacity-0 transform translate-y-[40px]'
             }`}
           >
-            <h1 className='text-4xl md:text-6xl font-bold mb-6'>ALOC</h1>
-            <p className='text-lg md:text-xl text-gray-300 leading-relaxed'>
+            <h1 className='text-[120px]  font-bold mb-6'>ALOC</h1>
+            <p className='text-[20px]  text-gray-300 leading-relaxed'>
               서울시립대학교 컴퓨터과학부 학술 소모임
             </p>
           </div>
