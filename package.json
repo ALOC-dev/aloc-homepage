@@ -15,7 +15,10 @@
     "next": "15.4.4",
     "pnpm": "^10.13.1",
     "react": "19.1.0",
-    "react-dom": "19.1.0"
+    "react-dom": "19.1.0",
+    "react-pdf": "^7.7.1",
+    "canvas": "^2.11.2",
+    "pdfjs-dist": "^4.0.379"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
