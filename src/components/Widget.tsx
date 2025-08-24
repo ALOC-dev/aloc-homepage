@@ -30,6 +30,15 @@ const Widget: React.FC<WidgetProps> = ({ className = '' }) => {
       className: 'w-[67px] h-[67px] overflow-hidden',
     },
     {
+      id: 'about',
+      label: 'About',
+      icon: '/images/widget/about-icon.png',
+      alt: 'About',
+      href: '/introduction',
+      width: 67,
+      height: 67,
+    },
+    {
       id: 'activity',
       label: 'Activity',
       icon: '/images/widget/activity-icon.png',
@@ -63,7 +72,7 @@ const Widget: React.FC<WidgetProps> = ({ className = '' }) => {
 
   return (
     <div
-      className={`fixed w-[110px] h-[441px] right-[30px] top-[104px] rounded-[30px] z-50 ${className}`}
+      className={`fixed w-[110px] h-fit pb-5 right-[30px] top-[104px] rounded-[30px] z-50 ${className}`}
       style={{ background: 'rgba(255, 255, 255, 0.70)' }}
     >
       <div className='flex flex-col items-center '>
