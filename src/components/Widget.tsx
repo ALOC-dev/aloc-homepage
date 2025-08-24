@@ -49,8 +49,8 @@ const Widget: React.FC<WidgetProps> = ({ className = '' }) => {
       className: 'w-[68px] h-[68px] overflow-hidden',
     },
     {
-      id: 'members',
-      label: '멤버 소개',
+      id: 'member',
+      label: 'Member',
       icon: '/images/members/member-icon.svg',
       alt: '멤버 소개',
       href: '/members',
@@ -60,7 +60,7 @@ const Widget: React.FC<WidgetProps> = ({ className = '' }) => {
     },
     {
       id: 'photos',
-      label: '활동 사진',
+      label: 'Photo',
       icon: '/images/widget/activity-photo.png',
       alt: '활동 사진',
       href: '/gallery',
