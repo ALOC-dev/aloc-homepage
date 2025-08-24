@@ -35,15 +35,8 @@ export default function MemberDetail() {
       <SmallHeaderContainer>
         {/* 페이지 타이틀 */}
         <h1 className='text-[20.49px] font-bold text-black'>{member.name}</h1>
-      </SmallHeaderContainer>
-
-      {/* 메인 콘텐츠 영역 */}
-      <div className='flex flex-1 relative'>
         {/* 뒤로가기 버튼 - 우측 상단 고정 */}
-        <Link
-          href='/members'
-          className='absolute top-[20px] right-[20px] flex z-10'
-        >
+        <Link href='/members' className='absolute  right-[20px] flex z-10'>
           <Image
             src='/images/members/arrow-back-up.svg'
             alt='뒤로가기'
@@ -52,7 +45,10 @@ export default function MemberDetail() {
             className='object-contain'
           />
         </Link>
+      </SmallHeaderContainer>
 
+      {/* 메인 콘텐츠 영역 */}
+      <div className='flex flex-1 relative'>
         {/* 좌측 패널 */}
         <div className='flex flex-col w-[289.89px] min-w-[289.89px] p-[40.97px]'>
           {/* 프로필 이미지 */}

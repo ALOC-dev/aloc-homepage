@@ -75,12 +75,8 @@ export default function ActivityDetail() {
         <h1 className='h-full text-[25.49px] font-bold text-text-primary justify-center items-center flex'>
           {currentItem.title}
         </h1>
-      </SmallHeaderContainer>
-
-      {/* 메인 콘텐츠 영역 */}
-      <div className='relative '>
         {/* 뒤로가기 버튼 */}
-        <div className='absolute top-5 right-4 z-10'>
+        <div className='absolute right-4 z-10'>
           <Link href='/activity'>
             <Image
               src='/images/members/arrow-back-up.svg'
@@ -91,7 +87,10 @@ export default function ActivityDetail() {
             />
           </Link>
         </div>
+      </SmallHeaderContainer>
 
+      {/* 메인 콘텐츠 영역 */}
+      <div className='relative '>
         {/* PDF 뷰어 */}
         <div className=' mt-[20px] w-[850px] h-[478px] overflow-hidden bg-white object-contain mx-auto'>
           <Document
