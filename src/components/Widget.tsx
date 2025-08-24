@@ -22,7 +22,7 @@ const Widget: React.FC<WidgetProps> = ({ className = '' }) => {
     {
       id: 'home',
       label: 'Home',
-      icon: '/images/figma/home-icon.png',
+      icon: '/images/widget/home-icon.png',
       alt: 'Home',
       href: '/',
       width: 67,
@@ -32,7 +32,7 @@ const Widget: React.FC<WidgetProps> = ({ className = '' }) => {
     {
       id: 'activity',
       label: 'Activity',
-      icon: '/images/figma/activity-icon.png',
+      icon: '/images/widget/activity-icon.png',
       alt: 'Activity',
       href: '/activity',
       width: 68,
@@ -52,7 +52,7 @@ const Widget: React.FC<WidgetProps> = ({ className = '' }) => {
     {
       id: 'photos',
       label: '활동 사진',
-      icon: '/images/figma/activity-photo.png',
+      icon: '/images/widget/activity-photo.png',
       alt: '활동 사진',
       href: '/gallery',
       width: 64,

@@ -319,7 +319,7 @@ export default function ActivityPage() {
                         className='w-[30px] h-[30px] cursor-pointer hover:opacity-80 transition-opacity'
                       >
                         <Image
-                          src='/images/figma/images-icon.png'
+                          src='/images/common/github-logo.png'
                           alt='GitHub 링크'
                           width={19}
                           height={19.5}
@@ -336,7 +336,7 @@ export default function ActivityPage() {
                         className='w-[30px] h-[30px] cursor-pointer hover:opacity-80 transition-opacity'
                       >
                         <Image
-                          src='/images/figma/notion-logo.png'
+                          src='/images/common/notion-logo.png'
                           alt='Notion 링크'
                           width={20.5}
                           height={20.5}
