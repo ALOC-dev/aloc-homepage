@@ -188,10 +188,10 @@ export default function ActivityPage() {
                       : 'bg-transparent'
                   }`}
                 >
-                  <h3 className='text-[15.5px] font-bold text-text-primary mb-[4.5px] text-left'>
+                  <h3 className='text-[15.5px] font-bold text-text-primary mb-[4.5px] text-left truncate w-full'>
                     {item.title}
                   </h3>
-                  <p className='text-[14.5px] text-text-secondary leading-tight text-left'>
+                  <p className='text-[14.5px] text-text-secondary leading-tight text-left truncate w-full'>
                     {item.subtitle}
                   </p>
                 </button>
