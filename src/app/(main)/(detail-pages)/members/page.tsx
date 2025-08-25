@@ -32,6 +32,7 @@ export default function Members() {
     handleGenerationClick,
     goToPrevGeneration,
     goToNextGeneration,
+    toggleAllOrCurrent,
   } = useGenerationNavigation(generations);
 
   // 멤버 데이터는 외부 파일에서 가져옴
@@ -53,7 +54,15 @@ export default function Members() {
           <h2 className='text-[15.84px] font-bold text-border-dark'>
             즐겨찾기
           </h2>
-          <div className='bg-border-bright w-[150px] h-[41px] rounded-[12.28px] flex items-center'>
+          <button
+            type='button'
+            onClick={toggleAllOrCurrent}
+            className={`w-[150px] h-[41px] rounded-[12.28px] flex items-center cursor-pointer transition-colors ${
+              !selectedGeneration
+                ? 'bg-border-bright'
+                : 'bg-transparent hover:bg-gray-100'
+            }`}
+          >
             <div className='w-[24.57px] h-[19.66px] ml-[13px]'>
               <Image
                 src='/images/members/member-folder-icon.svg'
@@ -66,7 +75,7 @@ export default function Members() {
             <span className='ml-[10px] text-[18.84px] font-bold text-text-primary'>
               멤버 소개
             </span>
-          </div>
+          </button>
         </div>
 
         {/* 기수 필터 섹션 */}

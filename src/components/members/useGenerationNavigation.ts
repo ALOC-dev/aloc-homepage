@@ -1,6 +1,6 @@
 'use client';
 
-import { useMemo } from 'react';
+import { useMemo, useRef } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 
 export interface Generation {
@@ -12,6 +12,7 @@ export interface Generation {
 export const useGenerationNavigation = (generations: Generation[]) => {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const lastSelectedRef = useRef<number | null>(null);
 
   // URL 쿼리에서 selectedGeneration 파생
   const selectedGeneration = useMemo<number | null>(() => {
@@ -34,8 +35,18 @@ export const useGenerationNavigation = (generations: Generation[]) => {
 
   // 세대 버튼 클릭
   const handleGenerationClick = (generationId: number) => {
-    const next = selectedGeneration === generationId ? null : generationId;
-    pushGenerationToUrl(next);
+    // 동일 기수를 다시 눌러도 해제하지 않고 그대로 유지
+    lastSelectedRef.current = generationId;
+    pushGenerationToUrl(generationId);
+  };
+
+  // 즐겨찾기 컨테이너 토글: 전체 보기 <-> 마지막 선택 기수 보기
+  const toggleAllOrCurrent = () => {
+    if (selectedGeneration === null && lastSelectedRef.current) {
+      pushGenerationToUrl(lastSelectedRef.current);
+    } else {
+      pushGenerationToUrl(null);
+    }
   };
 
   // 좌우 이동 핸들러 (이전/다음 기수)
@@ -67,5 +78,6 @@ export const useGenerationNavigation = (generations: Generation[]) => {
     handleGenerationClick,
     goToPrevGeneration,
     goToNextGeneration,
+    toggleAllOrCurrent,
   } as const;
 };
