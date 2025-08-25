@@ -7,6 +7,7 @@ import { Document, Page, pdfjs } from 'react-pdf';
 import { SidebarContainer } from '@/components/layout-components';
 import { HeaderContainer } from '@/components/layout-components';
 import { projects, studies } from '@/app/data/activities';
+import { members } from '@/app/data/members';
 import 'react-pdf/dist/Page/TextLayer.css';
 import 'react-pdf/dist/Page/AnnotationLayer.css';
 
@@ -368,22 +369,32 @@ export default function ActivityPage() {
 
               {/* 팀 멤버 */}
               <div className='flex mt-[25px] gap-[13px] flex-row w-full justify-center'>
-                {currentItem?.members?.map((name, index) => (
-                  <div
-                    key={name}
-                    className={`w-20 h-8 border border-[#A9ADB9] rounded-full flex items-center justify-center ${
-                      index === 0 ? 'bg-brand-yellow border-none' : 'bg-white'
-                    }`}
-                  >
-                    <span
-                      className={`text-[17.5px] ${
-                        index === 0 ? 'text-white' : 'text-text-primary'
+                {currentItem?.members?.map((name, index) => {
+                  // 멤버 이름으로 ID 찾기
+                  const member = members.find(
+                    (m) =>
+                      m.name.includes(name) ||
+                      name.includes(m.name.split(' ').slice(-1)[0]),
+                  );
+
+                  return (
+                    <Link
+                      key={name}
+                      href={member ? `/members/detail?id=${member.id}` : '#'}
+                      className={`w-20 h-8 border border-[#A9ADB9] rounded-full flex items-center justify-center cursor-pointer hover:opacity-80 transition-opacity ${
+                        index === 0 ? 'bg-brand-yellow border-none' : 'bg-white'
                       }`}
                     >
-                      {name}
-                    </span>
-                  </div>
-                ))}
+                      <span
+                        className={`text-[17.5px] ${
+                          index === 0 ? 'text-white' : 'text-text-primary'
+                        }`}
+                      >
+                        {name}
+                      </span>
+                    </Link>
+                  );
+                })}
               </div>
             </div>
           </div>

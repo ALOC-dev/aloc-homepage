@@ -2,14 +2,20 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import { useSearchParams } from 'next/navigation';
+import { useSearchParams, useRouter } from 'next/navigation';
 import { getMemberById } from '@/app/data/members';
 import { SmallHeaderContainer } from '@/components/layout-components';
 
 export default function MemberDetail() {
   const searchParams = useSearchParams();
+  const router = useRouter();
   const memberId = searchParams?.get('id') || '';
   const member = memberId ? getMemberById(parseInt(memberId)) : null;
+
+  // 뒤로가기 함수
+  const handleGoBack = () => {
+    router.back();
+  };
 
   if (!member) {
     return (
@@ -18,12 +24,12 @@ export default function MemberDetail() {
           <h1 className='text-[24px] font-bold text-text-primary mb-4'>
             멤버를 찾을 수 없습니다
           </h1>
-          <Link
-            href='/members'
+          <button
+            onClick={handleGoBack}
             className='text-brand-blue-link hover:underline'
           >
-            멤버 목록으로 돌아가기
-          </Link>
+            이전 페이지로 돌아가기
+          </button>
         </div>
       </div>
     );
@@ -36,7 +42,10 @@ export default function MemberDetail() {
         {/* 페이지 타이틀 */}
         <h1 className='text-[20.49px] font-bold text-black'>{member.name}</h1>
         {/* 뒤로가기 버튼 - 우측 상단 고정 */}
-        <Link href='/members' className='absolute  right-[20px] flex z-10'>
+        <button
+          onClick={handleGoBack}
+          className='absolute right-[20px] flex z-10'
+        >
           <Image
             src='/images/members/arrow-back-up.svg'
             alt='뒤로가기'
@@ -44,7 +53,7 @@ export default function MemberDetail() {
             height={34}
             className='object-contain'
           />
-        </Link>
+        </button>
       </SmallHeaderContainer>
 
       {/* 메인 콘텐츠 영역 */}
