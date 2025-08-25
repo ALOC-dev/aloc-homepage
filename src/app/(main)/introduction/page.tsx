@@ -46,7 +46,7 @@ export default function Introduction() {
   const INTRO_ANIM_VISIBLE = 'opacity-100 translate-x-0';
   const [scrollProgress, setScrollProgress] = useState(0);
   const [isScrollLocked, setIsScrollLocked] = useState(true);
-  const [showModalSection, setShowModalSection] = useState(false);
+  const modalSectionRef = useRef<HTMLDivElement>(null);
   const [selectedActivity, setSelectedActivity] =
     useState<ActivityLabel>('지식공유회');
   const [showIntroSection, setShowIntroSection] = useState(false);
@@ -157,26 +157,37 @@ export default function Introduction() {
     };
   }, [scrollProgress, isScrollLocked]);
 
-  // 모달/알록이란? 섹션 애니메이션 트리거를 위한 useEffect
+  // [GSAP] 모달 섹션 애니메이션
   useEffect(() => {
-    const handleScroll = () => {
-      const windowHeight = window.innerHeight;
+    if (!modalSectionRef.current) return;
 
-      const modalSection = document.getElementById('modal-section');
-      if (modalSection) {
-        const rect = modalSection.getBoundingClientRect();
-        if (rect.top <= windowHeight * 0.5) setShowModalSection(true);
-      }
+    // 초기 상태 설정
+    gsap.set(modalSectionRef.current, {
+      opacity: 0,
+      y: 150
+    });
 
-      const introSection = document.getElementById('intro-section');
-      if (introSection) {
-        const rect = introSection.getBoundingClientRect();
-        if (rect.top <= windowHeight * 0.5) setShowIntroSection(true);
+    // ScrollTrigger로 애니메이션 트리거
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: modalSectionRef.current,
+        start: 'top 80%',
+        end: 'bottom 20%',
+        toggleActions: 'play none none reverse'
       }
+    });
+
+    tl.to(modalSectionRef.current, {
+      opacity: 1,
+      y: 0,
+      duration: 1.5,
+      ease: 'power2.out'
+    });
+
+    return () => {
+      tl.kill();
+      ScrollTrigger.getAll().forEach(trigger => trigger.kill());
     };
-
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   // [GSAP] ScrollTrigger를 사용한 배경색 변화 애니메이션
@@ -374,7 +385,7 @@ export default function Introduction() {
         </div>
       </div>
       {/* 알록이란? 섹션 */}
-      <div className='flex justify-center -mt-100'>
+      <div className='flex justify-center -mt-50'>
         <div
           id='intro-section'
           className='relative min-h-[1080px] w-[1440px] scale-[0.8] z-20'
@@ -597,17 +608,14 @@ export default function Introduction() {
       </div>
 
       {/* 무엇을 하나요?(모달) 섹션 */}
-      <div className='relative bg-red-500 py-20 flex justify-center'>
+      <div className='relative py-20 flex justify-center'>
         <div id='modal-section' className='relative py-20 scale-[0.6]'>
           <div className='container mx-auto px-4'>
             <div className='w-[769px] h-[460px] mx-auto flex flex-col justify-center items-center'>
               {/* 모달 카드 */}
               <div
-                className={`w-full h-full bg-gray-200 rounded-3xl shadow-lg relative overflow-hidden transition-all duration-1500 ease-out ${
-                  showModalSection
-                  ? 'opacity-100 transform translate-y-0'
-                  : 'opacity-0 transform translate-y-150'
-                }`}
+                ref={modalSectionRef}
+                className='w-full h-full bg-gray-200 rounded-3xl shadow-lg relative overflow-hidden'
                 >
                 {/* 상단 헤더 */}
                 <div className='text-center w-full h-[329px] flex flex-col justify-center items-center'>
@@ -634,7 +642,7 @@ export default function Introduction() {
       </div>
 
       {/* 알록의 활동 섹션 */}
-      <div className='relative bg-yellow-500 py-20 flex justify-center'>
+      <div className='relative py-20 flex justify-center'>
         <div className='relative pb-20 scale-[0.7]'>
           <div className='container px-4'>
             <div className='w-[1440px] h-[950px] relative'>
