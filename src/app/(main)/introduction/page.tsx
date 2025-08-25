@@ -719,7 +719,7 @@ export default function Introduction() {
       {/* 무엇을 하나요?(모달) 섹션 */}
       <div className='relative py-20 flex justify-center'>
         <div id='modal-section' className='relative py-20 scale-[0.6]'>
-          <div className='container mx-auto px-4'>
+          <div className='mx-auto px-4'>
             <div className='w-[769px] h-[460px] mx-auto flex flex-col justify-center items-center'>
               {/* 모달 카드 */}
               <div
