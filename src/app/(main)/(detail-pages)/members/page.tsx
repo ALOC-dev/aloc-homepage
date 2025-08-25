@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useMemo, useState } from 'react';
+import React, { useMemo } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { members, type Member } from '@/app/data/members';
@@ -9,6 +9,7 @@ import {
   HeaderContainer,
 } from '@/components/layout-components';
 import { useGenerationNavigation } from '@/components/members/useGenerationNavigation';
+import { useMemberSearch } from '@/components/members/useMemberSearch';
 
 // 세대 타입 정의
 interface Generation {
@@ -35,25 +36,16 @@ export default function Members() {
     toggleAllOrCurrent,
   } = useGenerationNavigation(generations);
 
-  // 검색 상태
-  const [isSearchOpen, setIsSearchOpen] = useState(false);
-  const [searchQuery, setSearchQuery] = useState('');
+  // 검색 기능
+  const {
+    isSearchOpen,
+    searchQuery,
+    filteredMembers,
+    toggleSearch,
+    handleSearchChange,
+  } = useMemberSearch(members, selectedGeneration);
 
   // 멤버 데이터는 외부 파일에서 가져옴
-
-  // 필터링된 멤버 목록
-  const filteredMembers = (
-    selectedGeneration
-      ? members.filter((member) => member.generation === selectedGeneration)
-      : members
-  ).filter((member) =>
-    searchQuery.trim() === ''
-      ? true
-      : member.name.toLowerCase().includes(searchQuery.toLowerCase()),
-  );
-
-  // 세대 필터 클릭 핸들러
-  // 기존 뷰 코드가 사용하는 핸들러/상태를 훅에서 가져온 것으로 대체
 
   return (
     <div className='w-full h-full flex'>
@@ -161,7 +153,7 @@ export default function Members() {
               <input
                 type='text'
                 value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
+                onChange={(e) => handleSearchChange(e.target.value)}
                 placeholder='이름 검색'
                 className='h-[32px] w-[160px] px-2 rounded-md border border-border-gray text-[14px] outline-none'
               />
@@ -169,7 +161,7 @@ export default function Members() {
             <button
               type='button'
               aria-label='검색'
-              onClick={() => setIsSearchOpen((p) => !p)}
+              onClick={toggleSearch}
               className='w-[32.76px] h-[32.76px] flex items-center justify-center hover:opacity-80 transition-opacity cursor-pointer'
             >
               <Image
