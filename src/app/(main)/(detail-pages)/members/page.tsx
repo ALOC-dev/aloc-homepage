@@ -58,14 +58,16 @@ export default function Members() {
             type='button'
             onClick={toggleAllOrCurrent}
             className={`w-[150px] h-[41px] rounded-[12.28px] flex items-center cursor-pointer transition-colors ${
-              !selectedGeneration
-                ? 'bg-border-bright'
-                : 'bg-transparent hover:bg-gray-100'
+              !selectedGeneration ? 'bg-border-bright' : 'bg-transparent'
             }`}
           >
             <div className='w-[24.57px] h-[19.66px] ml-[13px]'>
               <Image
-                src='/images/members/member-folder-icon.svg'
+                src={
+                  !selectedGeneration
+                    ? '/images/members/folder-icon1.svg'
+                    : '/images/members/folder-icon2.svg'
+                }
                 alt='멤버폴더'
                 width={24.57}
                 height={19.66}
