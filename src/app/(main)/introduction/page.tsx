@@ -665,7 +665,9 @@ export default function Introduction() {
                       }
                       className='group cursor-pointer flex flex-col items-center gap-2 focus:outline-none'
                       >
-                        <div className='relative w-[189px] h-[155px] scale-[0.8] transition-transform duration-200 ease-out group-hover:scale-105'>
+                        <div className={`relative w-[189px] h-[155px] transition-transform duration-200 ease-out ${
+                          selectedActivity === card.label ? 'scale-105' : 'scale-[0.8]'
+                        } group-hover:scale-105`}>
                           <Image
                             src='/images/introduction/folder.svg'
                             alt='folder'
@@ -674,7 +676,9 @@ export default function Introduction() {
                             />
                         </div>
                         <div
-                          className={`text-[30px] text-center transition-[font-weight] duration-150 ${selectedActivity === card.label ? 'text-blue-600' : 'text-black'} group-hover:font-bold`}
+                          className={`text-[30px] text-center transition-[font-weight] duration-150 ${
+                            selectedActivity === card.label ? 'text-blue-600 font-bold' : 'text-black'
+                          } group-hover:font-bold`}
                           >
                           {card.label}
                         </div>
