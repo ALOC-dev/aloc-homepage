@@ -15,20 +15,24 @@ interface DragOffset {
 interface UseDraggableProps {
   containerWidth: number;
   containerHeight: number;
+  scale?: number;
   dragColor?: string;
 }
 
 export const useDraggable = ({
   containerWidth,
   containerHeight,
+  scale = 1,
   dragColor = '#f2f2f4',
 }: UseDraggableProps) => {
   const [position, setPosition] = useState<Position>(() => {
     if (typeof window === 'undefined') {
       return { x: 0, y: 0 };
     }
-    const centerX = (window.innerWidth - containerWidth) / 2;
-    const centerY = (window.innerHeight - containerHeight) / 2;
+    const scaledWidth = containerWidth * scale;
+    const scaledHeight = containerHeight * scale;
+    const centerX = (window.innerWidth - scaledWidth) / 2;
+    const centerY = (window.innerHeight - scaledHeight) / 2;
     return { x: centerX, y: centerY };
   });
 
@@ -84,9 +88,11 @@ export const useDraggable = ({
       const newX = e.clientX - dragOffset.x;
       const newY = e.clientY - dragOffset.y;
 
-      // 화면 경계 내에서만 이동하도록 제한
-      const maxX = window.innerWidth - containerWidth;
-      const maxY = window.innerHeight - containerHeight;
+      // 스케일된 실제 크기를 사용하여 화면 경계 계산
+      const scaledWidth = containerWidth * scale;
+      const scaledHeight = containerHeight * scale;
+      const maxX = window.innerWidth - scaledWidth;
+      const maxY = window.innerHeight - scaledHeight;
 
       setPosition({
         x: Math.max(0, Math.min(newX, maxX)),
@@ -109,7 +115,7 @@ export const useDraggable = ({
         document.removeEventListener('mouseup', handleMouseUp);
       };
     }
-  }, [isDragging, dragOffset]);
+  }, [isDragging, dragOffset, scale]);
 
   return {
     position,

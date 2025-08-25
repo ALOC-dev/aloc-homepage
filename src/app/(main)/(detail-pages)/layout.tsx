@@ -12,23 +12,16 @@ interface DetailPageLayoutProps {
 }
 
 function DetailPageLayout({ children }: DetailPageLayoutProps) {
-  const containerWidth = 1000;
-  const containerHeight = 600;
-
   // HTML/body 기본 여백 제거로 배경 이미지 흰색선 해결
   useBodyStyle();
 
   return (
-    <div className='w-screen h-screen fixed object-cover'>
+    <div className='w-screen h-screen fixed'>
       {/* 배경 이미지 */}
       <BackgroundImage />
 
       {/* 내부 페이지 윈도우 */}
-      <DraggableContainer
-        width={containerWidth}
-        height={containerHeight}
-        dragColor='var(--color-border-bright)'
-      >
+      <DraggableContainer dragColor='var(--color-border-bright)'>
         {children}
       </DraggableContainer>
 
