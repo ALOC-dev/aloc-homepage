@@ -5,25 +5,29 @@ import Link from 'next/link';
 
 export default function Main() {
   return (
-    <div className='fixed w-screen h-screen bg-white overflow-hidden flex items-center justify-center'>
-      {/* 로고 아이콘 */}
-      <div className='absolute left-[1.1%] top-[3%] z-20'>
-        <Image
-          src='/images/common/아이콘.png'
-          alt='ALOC Logo'
-          width={80}
-          height={80}
-          className='object-contain'
-        />
+    <div className='fixed w-screen h-screen bg-white overflow-hidden'>
+      {/* 헤더 영역 - flexbox 밖으로 분리 */}
+      <div className='absolute top-0 left-0 right-0 h-[10%] z-20'>
+        {/* 로고 아이콘 */}
+        <div className='absolute left-[1.1%] top-[20%]'>
+          <Image
+            src='/images/common/아이콘.png'
+            alt='ALOC Logo'
+            width={80}
+            height={80}
+            className='object-contain'
+          />
+        </div>
+        {/* Login 버튼 */}
+        <div className='absolute right-[2%] top-[10%]'>
+          <button className='text-[30px] cursor-pointer font-bold font-inter hover:text-blue-600 transition-colors bg-transparent border-none outline-none focus:outline-none'>
+            login
+          </button>
+        </div>
       </div>
-      {/* Login 버튼 */}
-      <div className='absolute right-[2%] top-[1%] z-20'>
-        <button className='text-[30px] cursor-pointer font-bold font-inter hover:text-blue-600 transition-colors bg-transparent border-none outline-none focus:outline-none'>
-          login
-        </button>
-      </div>
-      {/* 배경 이미지와 스티커들을 포함하는 컨테이너 */}
-      <div className='w-[60%] relative aspect-[2054/1377] rounded-4xl bg-gradient-to-t from-gray-800 via-gray-700 to-gray-600 shadow-2xl'>
+
+      {/* 맥북 컨테이너 - 중앙 정렬 */}
+      <div className='absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[60%] aspect-[2054/1377] rounded-4xl bg-gradient-to-t from-gray-800 via-gray-700 to-gray-600 shadow-2xl'>
         {/* 메인 로고 - 정중앙 */}
         <div className='absolute inset-0 left-[50%] top-[50%] -translate-x-1/2 -translate-y-1/2 w-[15%] aspect-[1/1] z-5'>
           <Image
