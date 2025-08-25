@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { members, type Member } from '@/app/data/members';
@@ -35,12 +35,22 @@ export default function Members() {
     toggleAllOrCurrent,
   } = useGenerationNavigation(generations);
 
+  // 검색 상태
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
+
   // 멤버 데이터는 외부 파일에서 가져옴
 
   // 필터링된 멤버 목록
-  const filteredMembers = selectedGeneration
-    ? members.filter((member) => member.generation === selectedGeneration)
-    : members;
+  const filteredMembers = (
+    selectedGeneration
+      ? members.filter((member) => member.generation === selectedGeneration)
+      : members
+  ).filter((member) =>
+    searchQuery.trim() === ''
+      ? true
+      : member.name.toLowerCase().includes(searchQuery.toLowerCase()),
+  );
 
   // 세대 필터 클릭 핸들러
   // 기존 뷰 코드가 사용하는 핸들러/상태를 훅에서 가져온 것으로 대체
@@ -145,15 +155,31 @@ export default function Members() {
             </button>
           </div>
 
-          {/* 검색 아이콘 */}
-          <div className='absolute top-1/2 -translate-y-1/2 right-[50px] w-[32.76px] h-[32.76px]  flex items-center justify-center'>
-            <Image
-              src='/images/members/search-icon.svg'
-              alt='검색'
-              width={26.62}
-              height={26.62}
-              className='object-contain'
-            />
+          {/* 검색 아이콘 및 검색창 */}
+          <div className='absolute top-1/2 -translate-y-1/2 right-[50px] flex items-center gap-2'>
+            {isSearchOpen && (
+              <input
+                type='text'
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder='이름 검색'
+                className='h-[32px] w-[160px] px-2 rounded-md border border-border-gray text-[14px] outline-none'
+              />
+            )}
+            <button
+              type='button'
+              aria-label='검색'
+              onClick={() => setIsSearchOpen((p) => !p)}
+              className='w-[32.76px] h-[32.76px] flex items-center justify-center hover:opacity-80 transition-opacity cursor-pointer'
+            >
+              <Image
+                src='/images/members/search-icon.svg'
+                alt='검색'
+                width={26.62}
+                height={26.62}
+                className='object-contain'
+              />
+            </button>
           </div>
         </HeaderContainer>
 
