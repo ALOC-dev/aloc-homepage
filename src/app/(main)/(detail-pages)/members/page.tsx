@@ -82,7 +82,7 @@ export default function Members() {
           </button>
         </div>
 
-        {/* 기수 필터 섹션 */}
+        {/* 기수 선택 섹션 */}
         <div className='mt-[10px]'>
           <h2 className='text-[15.84px] font-bold text-border-dark'>기수</h2>
           <div>
@@ -113,9 +113,7 @@ export default function Members() {
       <div className='flex-1 h-full flex flex-col'>
         {/* 상단 헤더바 그룹 */}
         <HeaderContainer>
-          {/* 제목 */}
-
-          {/* 네비게이션 아이콘들 */}
+          {/* 네비게이션 아이콘 */}
           <div className='absolute top-1/2 -translate-y-1/2 left-[50px] flex space-x-[45px]'>
             <button
               type='button'
@@ -148,16 +146,13 @@ export default function Members() {
           </div>
 
           {/* 검색 아이콘 및 검색창 */}
-          <div className='absolute top-1/2 -translate-y-1/2 right-[50px] flex items-center gap-2'>
-            {isSearchOpen && (
-              <input
-                type='text'
-                value={searchQuery}
-                onChange={(e) => handleSearchChange(e.target.value)}
-                placeholder='이름 검색'
-                className='h-[32px] w-[160px] px-2 rounded-md border border-border-gray text-[14px] outline-none'
-              />
-            )}
+          <div
+            className={`absolute top-1/2 -translate-y-1/2 right-[50px] flex items-center rounded-2xl transition-all duration-300 ${
+              isSearchOpen
+                ? 'border-blue-500 border-4 opacity-70'
+                : 'border-transparent border-2'
+            }`}
+          >
             <button
               type='button'
               aria-label='검색'
@@ -172,6 +167,19 @@ export default function Members() {
                 className='object-contain'
               />
             </button>
+            <div
+              className={`overflow-hidden transition-all duration-500 ease-in-out ${
+                isSearchOpen ? 'w-[150px] opacity-100' : 'w-0 opacity-0'
+              }`}
+            >
+              <input
+                type='text'
+                value={searchQuery}
+                onChange={(e) => handleSearchChange(e.target.value)}
+                placeholder='이름 검색'
+                className='h-[32px] w-[150px] px-2 rounded-md text-[15px] outline-none'
+              />
+            </div>
           </div>
         </HeaderContainer>
 
