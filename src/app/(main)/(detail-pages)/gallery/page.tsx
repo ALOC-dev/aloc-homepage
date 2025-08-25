@@ -8,11 +8,17 @@ import { SmallHeaderContainer } from '@/components/layout-components/SmallHeader
 export default function Gallery() {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [selectedFolder, setSelectedFolder] = useState<FolderType>('all');
-  const [selectedGeneration, setSelectedGeneration] = useState<string>('전체');
+  const [selectedCategory, setSelectedCategory] = useState<string>('전체');
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
-  // 기수 옵션들
-  const generationOptions = ['전체', '1기', '2기', '3기'];
+  // 카테고리 옵션들
+  const categoryOptions = [
+    '전체',
+    '지식공유회',
+    '최종발표회',
+    '뒷풀이',
+    '일상사진',
+  ];
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   // 드롭다운 외부 클릭 시 닫기
@@ -51,24 +57,6 @@ export default function Gallery() {
 
       {/* 메인 이미지 영역 */}
       <div className='relative bg-black w-full h-[343px] overflow-hidden'>
-        {/* 폴더 선택 위젯 (iOS 스타일) */}
-        <div className='w-[150px] absolute top-0 left-0 z-30'>
-          <div className='flex flex-col items-start px-4 py-3 space-y-3'>
-            {Object.values(folderData).map((folder) => (
-              <button
-                key={folder.id}
-                onClick={() => handleFolderChange(folder.id)}
-                className={`px-4 py-2 rounded-xl transition-all duration-200 ${
-                  selectedFolder === folder.id
-                    ? 'bg-blue-500 text-white shadow-lg shadow-blue-500/30'
-                    : 'bg-white/70 text-gray-600 hover:bg-white hover:shadow-md'
-                }`}
-              >
-                <span className='text-sm font-medium'>{folder.name}</span>
-              </button>
-            ))}
-          </div>
-        </div>
         <Image
           src={currentImages[currentImageIndex]}
           alt={`Gallery image ${currentImageIndex + 1}`}
@@ -78,19 +66,19 @@ export default function Gallery() {
         />
       </div>
 
-      {/* 기수 선택 드롭다운 */}
-      <div className='w-full px-3 py-1'>
+      {/* 카테고리 선택 드롭다운 */}
+      <div className='w-full px-3 py-1 h-7'>
         <div className='relative' ref={dropdownRef}>
           <button
             onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-            className='w-23 flex justify-center items-center gap-2 rounded-lg hover:bg-gray-100 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500'
+            className='w-30 flex justify-center items-center gap-2 rounded-lg hover:bg-gray-100 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500'
           >
             <span className='text-md font-medium text-gray-700'>
-              {selectedGeneration}
+              {selectedCategory}
             </span>
             <svg
               className={`w-4 h-4 text-gray-500 transition-transform duration-200 ${
-                isDropdownOpen ? 'rotate-180' : ''
+                isDropdownOpen ? '' : 'rotate-180'
               }`}
               fill='none'
               stroke='currentColor'
@@ -106,26 +94,42 @@ export default function Gallery() {
           </button>
 
           {/* 드롭다운 메뉴 */}
-          {isDropdownOpen && (
-            <div className='absolute w-23 top-full left-0 right-0 mt-1 bg-white border border-gray-300 rounded-lg shadow-lg z-50'>
-              {generationOptions.map((option) => (
-                <button
-                  key={option}
-                  onClick={() => {
-                    setSelectedGeneration(option);
-                    setIsDropdownOpen(false);
-                  }}
-                  className={`w-full px-4 py-2 text-left text-sm hover:bg-gray-50 transition-colors ${
-                    selectedGeneration === option
-                      ? 'bg-blue-50 text-blue-600 font-medium'
-                      : 'text-gray-700'
-                  }`}
-                >
-                  {option}
-                </button>
-              ))}
-            </div>
-          )}
+          <div
+            className={`absolute w-30 bottom-full left-0 right-0 mb-3 bg-white border border-gray-300 rounded-2xl z-50 transition-all duration-300 ease-in-out transform ${
+              isDropdownOpen
+                ? 'opacity-100 scale-100 translate-y-0'
+                : 'opacity-0 scale-95 translate-y-2 pointer-events-none'
+            }`}
+          >
+            {categoryOptions.map((option: string) => (
+              <button
+                key={option}
+                onClick={() => {
+                  setSelectedCategory(option);
+                  setIsDropdownOpen(false);
+                  // 카테고리에 따라 폴더 변경
+                  if (option === '전체') {
+                    handleFolderChange('all');
+                  } else if (option === '지식공유회') {
+                    handleFolderChange('knowledge-sharing');
+                  } else if (option === '최종발표회') {
+                    handleFolderChange('final-presentation');
+                  } else if (option === '뒷풀이') {
+                    handleFolderChange('after-party');
+                  } else if (option === '일상사진') {
+                    handleFolderChange('daily-life');
+                  }
+                }}
+                className={`w-full px-4 py-2 text-left text-sm hover:text-blue-600 transition-colors ${
+                  selectedCategory === option
+                    ? 'text-blue-600 font-medium'
+                    : 'text-gray-700'
+                }`}
+              >
+                {option}
+              </button>
+            ))}
+          </div>
         </div>
       </div>
 
