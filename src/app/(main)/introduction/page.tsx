@@ -757,8 +757,8 @@ export default function Introduction() {
       {/* 알록의 활동 섹션 */}
       <div className='relative py-20 flex justify-center'>
         <div className='relative pb-20 scale-[0.7]'>
-          <div className='container px-4'>
-            <div className='w-[1440px] h-[950px] relative'>
+          <div className='mx-auto px-4'>
+            <div className='w-[1440px] mx-auto h-[950px]'>
               {/* 활동 폴더들 */}
               {(() => {
                 const activityCards = [
