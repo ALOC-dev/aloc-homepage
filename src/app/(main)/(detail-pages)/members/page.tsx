@@ -101,7 +101,7 @@ export default function Members() {
           {/* 제목 */}
 
           {/* 네비게이션 아이콘들 */}
-          <div className='absolute top-[49.14px] left-[78.81px] flex space-x-[45px]'>
+          <div className='absolute top-1/2 -translate-y-1/2 left-[50px] flex space-x-[45px]'>
             <Image
               src='/images/members/arrow-left.svg'
               alt='이전'
@@ -119,7 +119,7 @@ export default function Members() {
           </div>
 
           {/* 검색 아이콘 */}
-          <div className='absolute top-[39.31px] right-[32.76px] w-[32.76px] h-[32.76px]  flex items-center justify-center'>
+          <div className='absolute top-1/2 -translate-y-1/2 right-[50px] w-[32.76px] h-[32.76px]  flex items-center justify-center'>
             <Image
               src='/images/members/search-icon.svg'
               alt='검색'

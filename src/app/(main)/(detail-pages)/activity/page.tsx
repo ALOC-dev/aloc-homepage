@@ -354,20 +354,20 @@ export default function ActivityPage() {
 
               {/* 프로젝트 설명 */}
               <div className='w-full'>
-                <p className='mt-[10px] text-[16.5px] text-[#5C5E66] leading-[1.2]'>
+                <p className='mt-[18px] text-[17.6px] text-[#5C5E66] leading-[1.2]'>
                   {currentItem?.description}
                 </p>
               </div>
 
               {/* 태그 */}
               <div>
-                <p className='text-[16.5px] text-[#5C5E66] font-inter'>
+                <p className='text-[17.5px] text-[#5C5E66] font-inter'>
                   {currentItem?.tags?.map((tag) => `#${tag}`).join(' ')}
                 </p>
               </div>
 
               {/* 팀 멤버 */}
-              <div className='flex mt-[10px] gap-[13px] flex-row w-full justify-center'>
+              <div className='flex mt-[25px] gap-[13px] flex-row w-full justify-center'>
                 {currentItem?.members?.map((name, index) => (
                   <div
                     key={name}

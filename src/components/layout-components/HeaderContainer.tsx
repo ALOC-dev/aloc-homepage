@@ -8,7 +8,7 @@ interface HeaderContainerProps {
 
 export default function HeaderContainer({ children }: HeaderContainerProps) {
   return (
-    <div className='w-full h-[118.75px] z-20 bg-bright-gray shadow-header flex-shrink-0 relative'>
+    <div className='w-full h-[94.75px] z-20 bg-bright-gray shadow-header flex-shrink-0 flex relative'>
       {children}
     </div>
   );
