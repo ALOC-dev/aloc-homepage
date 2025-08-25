@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useMemo } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { members, type Member } from '@/app/data/members';
@@ -8,7 +8,7 @@ import {
   SidebarContainer,
   HeaderContainer,
 } from '@/components/layout-components';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useGenerationNavigation } from '@/components/members/useGenerationNavigation';
 
 // 세대 타입 정의
 interface Generation {
@@ -17,41 +17,22 @@ interface Generation {
   color: string;
 }
 
+// 세대 데이터 (레퍼런스 안정화를 위해 컴포넌트 외부에 정의)
+const generations: Generation[] = [
+  { id: 3, name: '3기', color: 'var(--color-brand-orange)' },
+  { id: 2, name: '2기', color: 'var(--color-brand-green-bright)' },
+  { id: 1, name: '1기', color: 'var(--color-brand-blue)' },
+];
+
 export default function Members() {
-  const router = useRouter();
-  const searchParams = useSearchParams();
-  const [selectedGeneration, setSelectedGeneration] = useState<number | null>(
-    null,
-  );
+  // 세대 데이터는 상단 모듈 레벨 상수 사용
 
-  // 세대 데이터
-  const generations: Generation[] = [
-    { id: 3, name: '3기', color: 'var(--color-brand-orange)' },
-    { id: 2, name: '2기', color: 'var(--color-brand-green-bright)' },
-    { id: 1, name: '1기', color: 'var(--color-brand-blue)' },
-  ];
-
-  // URL 쿼리로부터 generation 동기화
-  useEffect(() => {
-    const genParam = searchParams?.get('generation');
-    if (genParam) {
-      const genNum = parseInt(genParam, 10);
-      if (generations.some((g) => g.id === genNum)) {
-        setSelectedGeneration(genNum);
-      }
-    }
-  }, [searchParams]);
-
-  // generation 변경 시 URL 업데이트
-  const pushGenerationToUrl = (gen: number | null) => {
-    const params = new URLSearchParams(searchParams?.toString());
-    if (gen) {
-      params.set('generation', String(gen));
-    } else {
-      params.delete('generation');
-    }
-    router.push(`/members?${params.toString()}`);
-  };
+  const {
+    selectedGeneration,
+    handleGenerationClick,
+    goToPrevGeneration,
+    goToNextGeneration,
+  } = useGenerationNavigation(generations);
 
   // 멤버 데이터는 외부 파일에서 가져옴
 
@@ -61,37 +42,7 @@ export default function Members() {
     : members;
 
   // 세대 필터 클릭 핸들러
-  const handleGenerationClick = (generationId: number) => {
-    const next = selectedGeneration === generationId ? null : generationId;
-    setSelectedGeneration(next);
-    pushGenerationToUrl(next);
-  };
-
-  // 좌우 이동 핸들러 (이전/다음 기수)
-  const orderedGenIds = useMemo(
-    () => generations.map((g) => g.id),
-    [generations],
-  );
-
-  const goToPrevGeneration = () => {
-    if (!orderedGenIds.length) return;
-    const current = selectedGeneration ?? orderedGenIds[0];
-    const idx = orderedGenIds.indexOf(current);
-    const prevIdx = (idx - 1 + orderedGenIds.length) % orderedGenIds.length;
-    const target = orderedGenIds[prevIdx];
-    setSelectedGeneration(target);
-    pushGenerationToUrl(target);
-  };
-
-  const goToNextGeneration = () => {
-    if (!orderedGenIds.length) return;
-    const current = selectedGeneration ?? orderedGenIds[0];
-    const idx = orderedGenIds.indexOf(current);
-    const nextIdx = (idx + 1) % orderedGenIds.length;
-    const target = orderedGenIds[nextIdx];
-    setSelectedGeneration(target);
-    pushGenerationToUrl(target);
-  };
+  // 기존 뷰 코드가 사용하는 핸들러/상태를 훅에서 가져온 것으로 대체
 
   return (
     <div className='w-full h-full flex'>
