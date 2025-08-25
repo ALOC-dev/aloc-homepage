@@ -58,7 +58,7 @@ export default function Introduction() {
   const [inActive, setInActive] = useState(false);
   const timeoutsRef = useRef<number[]>([]);
   const backgroundRef = useRef<HTMLDivElement>(null); // [GSAP]
-  
+
   // 알록이란? 섹션 카드들에 대한 ref
   const noteCardRef = useRef<HTMLDivElement>(null);
   const orgChartCardRef = useRef<HTMLDivElement>(null);
@@ -168,7 +168,7 @@ export default function Introduction() {
     // 초기 상태 설정
     gsap.set(modalSectionRef.current, {
       opacity: 0,
-      y: 150
+      y: 150,
     });
 
     // ScrollTrigger로 애니메이션 트리거
@@ -177,20 +177,20 @@ export default function Introduction() {
         trigger: modalSectionRef.current,
         start: 'top 80%',
         end: 'bottom 20%',
-        toggleActions: 'play none none reverse'
-      }
+        toggleActions: 'play none none reverse',
+      },
     });
 
     tl.to(modalSectionRef.current, {
       opacity: 1,
       y: 0,
       duration: 1.5,
-      ease: 'power2.out'
+      ease: 'power2.out',
     });
 
     return () => {
       tl.kill();
-      ScrollTrigger.getAll().forEach(trigger => trigger.kill());
+      ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
     };
   }, []);
 
@@ -198,10 +198,10 @@ export default function Introduction() {
   useEffect(() => {
     const handleScroll = () => {
       if (!introSectionRef.current) return;
-      
+
       const rect = introSectionRef.current.getBoundingClientRect();
       const windowHeight = window.innerHeight;
-      
+
       // "알록이란?" 섹션이 화면에 보이기 시작하면 Widget 표시
       if (rect.top <= windowHeight * 0.8) {
         setShowWidget(true);
@@ -222,7 +222,7 @@ export default function Introduction() {
     gsap.set(widgetRef.current, {
       opacity: 0,
       x: 50,
-      scale: 0.8
+      scale: 0.8,
     });
 
     if (showWidget) {
@@ -238,7 +238,7 @@ export default function Introduction() {
           if (widgetRef.current) {
             widgetRef.current.style.visibility = 'visible';
           }
-        }
+        },
       });
     } else {
       // Widget이 사라질 때 애니메이션
@@ -253,7 +253,7 @@ export default function Introduction() {
           if (widgetRef.current) {
             widgetRef.current.style.visibility = 'hidden';
           }
-        }
+        },
       });
     }
   }, [showWidget]);
@@ -264,7 +264,7 @@ export default function Introduction() {
 
     // 초기 배경색을 검은색으로 설정 (깜빡임 방지)
     backgroundRef.current.style.backgroundColor = 'rgb(0, 0, 0)';
-    
+
     // 약간의 지연 후 다시 한번 설정하여 확실하게 적용
     const initialTimer = setTimeout(() => {
       if (backgroundRef.current) {
@@ -276,14 +276,14 @@ export default function Introduction() {
       scrollTrigger: {
         trigger: backgroundRef.current,
         start: 'top top', // 트리거 요소 상단이 화면 상단에 있을 때 시작
-        end: 'bottom top',   // 트리거 요소 하단이 화면 상단에 있을 때 끝
+        end: 'bottom top', // 트리거 요소 하단이 화면 상단에 있을 때 끝
         scrub: 1, // 더 부드러운 스크러빙
         onUpdate: (self) => {
           const progress = self.progress;
           // 검은색에서 흰색으로 점점 바뀌는 효과 (더 부드럽게)
           const blackToWhite = Math.round(1500 * progress);
           const backgroundColor = `rgb(${blackToWhite}, ${blackToWhite}, ${blackToWhite})`;
-          
+
           // 전체 페이지 배경색 변경
           if (backgroundRef.current) {
             backgroundRef.current.style.backgroundColor = backgroundColor;
@@ -300,14 +300,14 @@ export default function Introduction() {
           if (backgroundRef.current) {
             backgroundRef.current.style.backgroundColor = 'rgb(255, 255, 255)';
           }
-        }
-      }
+        },
+      },
     });
 
     return () => {
       clearTimeout(initialTimer);
       tl.kill();
-      ScrollTrigger.getAll().forEach(trigger => trigger.kill());
+      ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
       // 컴포넌트 언마운트 시 배경색 복원
       if (backgroundRef.current) {
         backgroundRef.current.style.backgroundColor = '';
@@ -317,15 +317,31 @@ export default function Introduction() {
 
   // [GSAP] 알록이란? 섹션 카드들 애니메이션
   useEffect(() => {
-    if (!noteCardRef.current || !orgChartCardRef.current || !centerTabRef.current || !leftTopTabRef.current || !mainIntroCardRef.current) return;
+    if (
+      !noteCardRef.current ||
+      !orgChartCardRef.current ||
+      !centerTabRef.current ||
+      !leftTopTabRef.current ||
+      !mainIntroCardRef.current
+    )
+      return;
 
     // 초기 상태 설정
-    gsap.set([noteCardRef.current, orgChartCardRef.current, centerTabRef.current, leftTopTabRef.current, mainIntroCardRef.current], {
-      opacity: 0,
-      x: 100,
-      y: 50,
-      rotation: 5
-    });
+    gsap.set(
+      [
+        noteCardRef.current,
+        orgChartCardRef.current,
+        centerTabRef.current,
+        leftTopTabRef.current,
+        mainIntroCardRef.current,
+      ],
+      {
+        opacity: 0,
+        x: 100,
+        y: 50,
+        rotation: 5,
+      },
+    );
 
     // ScrollTrigger로 애니메이션 트리거
     const tl = gsap.timeline({
@@ -333,8 +349,8 @@ export default function Introduction() {
         trigger: noteCardRef.current,
         start: 'top 80%',
         end: 'bottom 20%',
-        toggleActions: 'play none none reverse'
-      }
+        toggleActions: 'play none none reverse',
+      },
     });
 
     // 각 카드를 순차적으로 애니메이션
@@ -344,57 +360,73 @@ export default function Introduction() {
       y: 0,
       rotation: 0,
       duration: 1,
-      ease: 'power2.out'
+      ease: 'power2.out',
     })
-    .to(orgChartCardRef.current, {
-      opacity: 1,
-      x: 0,
-      y: 0,
-      rotation: 0,
-      duration: 1,
-      ease: 'power2.out'
-    }, '-=0.5')
-    .to(centerTabRef.current, {
-      opacity: 1,
-      x: 0,
-      y: 0,
-      rotation: 0,
-      duration: 1,
-      ease: 'power2.out'
-    }, '-=0.5')
-    .to(leftTopTabRef.current, {
-      opacity: 1,
-      x: 0,
-      y: 0,
-      rotation: 0,
-      duration: 1,
-      ease: 'power2.out'
-    }, '-=0.5')
-    .to(mainIntroCardRef.current, {
-      opacity: 1,
-      x: 0,
-      y: 0,
-      rotation: 0,
-      duration: 1,
-      ease: 'power2.out'
-    }, '-=0.5');
+      .to(
+        orgChartCardRef.current,
+        {
+          opacity: 1,
+          x: 0,
+          y: 0,
+          rotation: 0,
+          duration: 1,
+          ease: 'power2.out',
+        },
+        '-=0.5',
+      )
+      .to(
+        centerTabRef.current,
+        {
+          opacity: 1,
+          x: 0,
+          y: 0,
+          rotation: 0,
+          duration: 1,
+          ease: 'power2.out',
+        },
+        '-=0.5',
+      )
+      .to(
+        leftTopTabRef.current,
+        {
+          opacity: 1,
+          x: 0,
+          y: 0,
+          rotation: 0,
+          duration: 1,
+          ease: 'power2.out',
+        },
+        '-=0.5',
+      )
+      .to(
+        mainIntroCardRef.current,
+        {
+          opacity: 1,
+          x: 0,
+          y: 0,
+          rotation: 0,
+          duration: 1,
+          ease: 'power2.out',
+        },
+        '-=0.5',
+      );
 
     return () => {
       tl.kill();
-      ScrollTrigger.getAll().forEach(trigger => trigger.kill());
+      ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
     };
   }, []);
 
   return (
-    <div className='min-h-screen min-w-[1440px] bg-white'>
+    <div className='min-h-screen min-w-screen bg-white'>
       {/* [GSAP] 게이지바 섹션만 감싸는 배경색 변화 트리거 */}
-      <div 
+      <div
         ref={backgroundRef}
         className='bg-black pb-50'
         style={{ backgroundColor: 'rgb(0, 0, 0)' }}
       >
         {/* 게이지바 섹션 */}
-        <div className='flex flex-col items-center justify-center px-4 h-220'>
+        <div className='flex flex-col items-center justify-center px-4 min-h-screen'>
           {/* 스크롤바 콘텐츠 */}
           <div className='z-10 flex flex-col items-center justify-center relative'>
             {/* 스크롤 안내 */}
@@ -430,7 +462,9 @@ export default function Introduction() {
               </div>
               {/* 스크롤 안내 */}
               <div className='text-center text-white mt-8 animate-bounce'>
-                <p className='text-sm text-gray-400 mb-2'>스크롤하여 계속하기</p>
+                <p className='text-sm text-gray-400 mb-2'>
+                  스크롤하여 계속하기
+                </p>
                 <div className='w-6 h-10 border-2 border-gray-400 rounded-full mx-auto flex justify-center'>
                   <div className='w-1 h-3 bg-gray-400 rounded-full mt-2 animate-pulse'></div>
                 </div>
@@ -529,7 +563,8 @@ export default function Introduction() {
                     items: [
                       {
                         text: 'Activity',
-                        className: 'text-xl text-white font-small tracking-tight',
+                        className:
+                          'text-xl text-white font-small tracking-tight',
                         itemClass: 'bg-blue-500 rounded-2xl p-3 my-1',
                       },
                       {
@@ -570,7 +605,9 @@ export default function Introduction() {
             <div className='absolute w-[173px] h-[129px] bottom-0 right-0 bg-gray-100 rounded-xl shadow-lg p-3'>
               <div className='grid grid-cols-1 gap-2'>
                 <span className='text-xl font-small tracking-tight'>Study</span>
-                <span className='text-xl font-small tracking-tight'>Project</span>
+                <span className='text-xl font-small tracking-tight'>
+                  Project
+                </span>
                 <span className='text-xl font-small tracking-tight'>
                   Networking
                 </span>
@@ -675,10 +712,10 @@ export default function Introduction() {
           </div>
         </div>
       </div>
-      
+
       {/* Widget 컴포넌트 - 알록이란? 섹션 이후에 표시 */}
       <Widget ref={widgetRef} style={{ visibility: 'hidden' }} />
-      
+
       {/* 무엇을 하나요?(모달) 섹션 */}
       <div className='relative py-20 flex justify-center'>
         <div id='modal-section' className='relative py-20 scale-[0.6]'>
@@ -688,11 +725,15 @@ export default function Introduction() {
               <div
                 ref={modalSectionRef}
                 className='w-full h-full bg-gray-200 rounded-3xl shadow-lg relative overflow-hidden'
-                >
+              >
                 {/* 상단 헤더 */}
                 <div className='text-center w-full h-[329px] flex flex-col justify-center items-center'>
-                  <h2 className='text-6xl font-bold text-black mb-6'>Activity</h2>
-                  <p className='text-4xl text-black'>ALOC에서는 무엇을 하나요?</p>
+                  <h2 className='text-6xl font-bold text-black mb-6'>
+                    Activity
+                  </h2>
+                  <p className='text-4xl text-black'>
+                    ALOC에서는 무엇을 하나요?
+                  </p>
                 </div>
 
                 {/* 구분선 */}
@@ -718,40 +759,46 @@ export default function Introduction() {
         <div className='relative pb-20 scale-[0.7]'>
           <div className='container px-4'>
             <div className='w-[1440px] h-[950px] relative'>
-              {/* 활동 폴더들 */} 
+              {/* 활동 폴더들 */}
               {(() => {
                 const activityCards = [
                   { label: '지식공유회' },
                   { label: '스터디/프로젝트' },
                   { label: '네트워킹' },
                 ] as const;
-                
+
                 return (
                   <div className='absolute left-[0px] top-[214px] w-[289px] flex flex-col items-center gap-[80px]'>
                     {activityCards.map((card, index) => (
                       <button
-                      key={index}
-                      type='button'
-                      onClick={() =>
-                        handleSelectActivity(card.label as ActivityLabel)
-                      }
-                      className='group cursor-pointer flex flex-col items-center gap-2 focus:outline-none'
+                        key={index}
+                        type='button'
+                        onClick={() =>
+                          handleSelectActivity(card.label as ActivityLabel)
+                        }
+                        className='group cursor-pointer flex flex-col items-center gap-2 focus:outline-none'
                       >
-                        <div className={`relative w-[189px] h-[155px] transition-transform duration-200 ease-out ${
-                          selectedActivity === card.label ? 'scale-105' : 'scale-[0.8]'
-                        } group-hover:scale-105`}>
+                        <div
+                          className={`relative w-[189px] h-[155px] transition-transform duration-200 ease-out ${
+                            selectedActivity === card.label
+                              ? 'scale-105'
+                              : 'scale-[0.8]'
+                          } group-hover:scale-105`}
+                        >
                           <Image
                             src='/images/introduction/folder.svg'
                             alt='folder'
                             fill
                             className='object-cover'
-                            />
+                          />
                         </div>
                         <div
                           className={`text-[30px] text-center transition-[font-weight] duration-150 ${
-                            selectedActivity === card.label ? 'text-blue-600 font-bold' : 'text-black'
+                            selectedActivity === card.label
+                              ? 'text-blue-600 font-bold'
+                              : 'text-black'
                           } group-hover:font-bold`}
-                          >
+                        >
                           {card.label}
                         </div>
                       </button>
@@ -763,7 +810,7 @@ export default function Introduction() {
               {/* 메모 탭 (노란색 배경) */}
               <div
                 className={`${activityConfigMap[selectedActivity].memoTab.positionClass} w-[676px] h-[425px] bg-yellow-200 rounded-lg shadow-lg ${getAnimClasses()}`}
-                >
+              >
                 {/* 브라우저 헤더 */}
                 <div className='w-full h-[29px] bg-yellow-300 rounded-t-lg flex items-center px-3'>
                   <div className='flex items-center gap-1'>
@@ -782,10 +829,10 @@ export default function Introduction() {
               {/* 중앙 사진 탭 - 선택된 활동 이미지 표시 */}
               <div
                 className={`${activityConfigMap[selectedActivity].centralPhotoTab.positionClass}`}
-                >
+              >
                 <div
                   className={`w-[748px] h-[584px] bg-gray-100 rounded-xl overflow-hidden shadow-lg ${getAnimClasses()}`}
-                  >
+                >
                   <div className='bg-gray-200 px-4 py-2 flex items-center justify-between'>
                     {/* 3개 원 그룹 - 좌측 배치 */}
                     <div className='flex items-center gap-3'>
@@ -798,7 +845,7 @@ export default function Introduction() {
                       <span className='text-m text-gray-600'>
                         {
                           activityConfigMap[selectedActivity].centralPhotoTab
-                          .headerText
+                            .headerText
                         }
                       </span>
                     </div>
@@ -810,7 +857,7 @@ export default function Introduction() {
                       width={748}
                       height={584}
                       className='w-full h-full object-cover'
-                      />
+                    />
                   </div>
                 </div>
               </div>
@@ -818,7 +865,7 @@ export default function Introduction() {
               {/* 우측 하단 알림 카드 */}
               <div
                 className={`${activityConfigMap[selectedActivity].alertCard.positionClass} shadow-lg w-[521px] h-[312px] bg-gray-200 rounded-[24px] flex justify-center relative ${getAnimClasses()}`}
-                >
+              >
                 {/* 느낌표 아이콘 → alert.png 이미지로 대체 */}
                 <div className='absolute top-[41px] left-[201px] w-[132px] h-[132px]'>
                   <Image
@@ -827,7 +874,7 @@ export default function Introduction() {
                     width={132}
                     height={132}
                     className='w-full h-full object-cover'
-                    />
+                  />
                 </div>
                 {/* 텍스트 */}
                 <div className='absolute top-[165px]  text-[24px] text-black text-center'>
@@ -837,7 +884,7 @@ export default function Introduction() {
                 <Link
                   href={activityConfigMap[selectedActivity].alertCard.link}
                   className='absolute top-[219px] left-[37px] w-[461px] h-[48px] bg-gradient-to-b from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 rounded-[16px] flex items-center justify-center cursor-pointer transition-all duration-200'
-                  >
+                >
                   <span className='text-[24px] text-white'>더보기</span>
                 </Link>
               </div>
