@@ -25,21 +25,22 @@ export const useDraggable = ({
   scale = 1,
   dragColor = '#f2f2f4',
 }: UseDraggableProps) => {
-  const [position, setPosition] = useState<Position>(() => {
-    if (typeof window === 'undefined') {
-      return { x: 0, y: 0 };
-    }
-    const scaledWidth = containerWidth * scale;
-    const scaledHeight = containerHeight * scale;
-    const centerX = (window.innerWidth - scaledWidth) / 2;
-    const centerY = (window.innerHeight - scaledHeight) / 2;
-    return { x: centerX, y: centerY };
-  });
-
+  const [position, setPosition] = useState<Position>({ x: 0, y: 0 });
   const [isDragging, setIsDragging] = useState(false);
   const [dragOffset, setDragOffset] = useState<DragOffset>({ x: 0, y: 0 });
   const [isInDragArea, setIsInDragArea] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
+
+  // scale 값이 변경될 때마다 중앙 위치 재계산
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const scaledWidth = containerWidth * scale;
+      const scaledHeight = containerHeight * scale;
+      const centerX = (window.innerWidth - scaledWidth) / 2;
+      const centerY = (window.innerHeight - scaledHeight) / 2;
+      setPosition({ x: centerX, y: centerY });
+    }
+  }, [containerWidth, containerHeight, scale]);
 
   const handleMouseDown = (e: React.MouseEvent) => {
     if (containerRef.current) {
