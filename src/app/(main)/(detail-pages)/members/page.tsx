@@ -77,7 +77,7 @@ export default function Members() {
               />
             </div>
             <span className='ml-[10px] text-[18.84px] font-bold text-text-primary'>
-              멤버 소개
+              전체 멤버
             </span>
           </button>
         </div>
