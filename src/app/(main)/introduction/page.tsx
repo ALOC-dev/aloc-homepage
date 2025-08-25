@@ -3,11 +3,16 @@
 import { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import {
   ActivityLabel,
   activityImageMap,
   activityConfigMap,
 } from '@/app/data/introduction';
+
+// GSAP ScrollTrigger 플러그인 등록
+gsap.registerPlugin(ScrollTrigger);
 
 interface BrowserTabHeaderProps {
   label: string;
@@ -50,6 +55,7 @@ export default function Introduction() {
   );
   const [inActive, setInActive] = useState(false);
   const timeoutsRef = useRef<number[]>([]);
+  const backgroundRef = useRef<HTMLDivElement>(null); // [GSAP]
 
   const clearAllTimers = () => {
     timeoutsRef.current.forEach((id) => window.clearTimeout(id));
@@ -166,71 +172,136 @@ export default function Introduction() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // [GSAP] ScrollTrigger를 사용한 배경색 변화 애니메이션
+  useEffect(() => {
+    if (!backgroundRef.current) return;
+
+    // 초기 배경색을 검은색으로 설정 (깜빡임 방지)
+    backgroundRef.current.style.backgroundColor = 'rgb(0, 0, 0)';
+    
+    // 약간의 지연 후 다시 한번 설정하여 확실하게 적용
+    const initialTimer = setTimeout(() => {
+      if (backgroundRef.current) {
+        backgroundRef.current.style.backgroundColor = 'rgb(0, 0, 0)';
+      }
+    }, 10);
+
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: backgroundRef.current,
+        start: 'top top', // 트리거 요소 상단이 화면 상단에 있을 때 시작
+        end: 'bottom top',   // 트리거 요소 하단이 화면 상단에 있을 때 끝
+        scrub: 1, // 더 부드러운 스크러빙
+        onUpdate: (self) => {
+          const progress = self.progress;
+          // 검은색에서 흰색으로 점점 바뀌는 효과 (더 부드럽게)
+          const blackToWhite = Math.round(1500 * progress);
+          const backgroundColor = `rgb(${blackToWhite}, ${blackToWhite}, ${blackToWhite})`;
+          
+          // 전체 페이지 배경색 변경
+          if (backgroundRef.current) {
+            backgroundRef.current.style.backgroundColor = backgroundColor;
+          }
+        },
+        onEnter: () => {
+          // 트리거 영역에 진입할 때 초기화
+          if (backgroundRef.current) {
+            backgroundRef.current.style.backgroundColor = 'rgb(0, 0, 0)';
+          }
+        },
+        onLeave: () => {
+          // 트리거 영역을 벗어날 때 완전히 흰색으로
+          if (backgroundRef.current) {
+            backgroundRef.current.style.backgroundColor = 'rgb(255, 255, 255)';
+          }
+        }
+      }
+    });
+
+    return () => {
+      clearTimeout(initialTimer);
+      tl.kill();
+      ScrollTrigger.getAll().forEach(trigger => trigger.kill());
+      // 컴포넌트 언마운트 시 배경색 복원
+      if (backgroundRef.current) {
+        backgroundRef.current.style.backgroundColor = '';
+      }
+    };
+  }, []);
+
   return (
-    <div className='min-h-screen bg-white min-w-[1440px]'>
-      {/* 게이지바 섹션 */}
-      <div className='min-h-screen flex flex-col items-center justify-center px-4 bg-black'>
-        {/* 스크롤바 콘텐츠 */}
-        <div className='z-10 flex flex-col items-center justify-center relative'>
-          {/* 스크롤 안내 */}
-          <div
-            className={`mt-36 transition-all duration-1500 ease-in-out ${
-              scrollProgress >= 100 ? 'opacity-0 ' : 'opacity-100 '
-            }`}
-          >
-            {/* 중앙 이미지 */}
-            <div className='w-full h-64 mb-16 relative'>
-              <Image
-                src='/images/introduction/aloc-logo.png'
-                alt='ALOC'
-                fill
-                className='object-contain'
-                priority
-              />
-            </div>
-            {/* 스크롤 게이지바 */}
+    <div className='min-h-screen min-w-[1440px] bg-white'>
+      {/* [GSAP] 게이지바 섹션만 감싸는 배경색 변화 트리거 */}
+      <div 
+        ref={backgroundRef}
+        className='bg-black pb-100'
+        style={{ backgroundColor: 'rgb(0, 0, 0)' }}
+      >
+        {/* 게이지바 섹션 */}
+        <div className='flex flex-col items-center justify-center px-4 h-220'>
+          {/* 스크롤바 콘텐츠 */}
+          <div className='z-10 flex flex-col items-center justify-center relative'>
+            {/* 스크롤 안내 */}
             <div
-              className={`z-20 transition-all duration-1000 ease-in-out ${
-                scrollProgress >= 100
-                  ? 'opacity-0 pointer-events-none'
-                  : 'opacity-100'
+              className={`mt-36 transition-all duration-1500 ease-in-out ${
+                scrollProgress >= 100 ? 'opacity-0 ' : 'opacity-100 '
               }`}
             >
-              <div className='w-72 md:w-96 h-4 bg-gray-600 rounded-full overflow-hidden'>
-                <div
-                  className='h-full bg-white transition-all duration-300 ease-out'
-                  style={{ width: `${scrollProgress}%` }}
+              {/* 중앙 이미지 */}
+              <div className='w-full h-64 mb-16 relative'>
+                <Image
+                  src='/images/introduction/aloc-logo.png'
+                  alt='ALOC'
+                  fill
+                  className='object-contain'
+                  priority
                 />
               </div>
-            </div>
-            {/* 스크롤 안내 */}
-            <div className='text-center text-white mt-8 animate-bounce'>
-              <p className='text-sm text-gray-400 mb-2'>스크롤하여 계속하기</p>
-              <div className='w-6 h-10 border-2 border-gray-400 rounded-full mx-auto flex justify-center'>
-                <div className='w-1 h-3 bg-gray-400 rounded-full mt-2 animate-pulse'></div>
+              {/* 스크롤 게이지바 */}
+              <div
+                className={`z-20 transition-all duration-1000 ease-in-out ${
+                  scrollProgress >= 100
+                    ? 'opacity-0 pointer-events-none'
+                    : 'opacity-100'
+                }`}
+              >
+                <div className='w-72 md:w-96 h-4 bg-gray-600 rounded-full overflow-hidden'>
+                  <div
+                    className='h-full bg-white transition-all duration-300 ease-out'
+                    style={{ width: `${scrollProgress}%` }}
+                  />
+                </div>
+              </div>
+              {/* 스크롤 안내 */}
+              <div className='text-center text-white mt-8 animate-bounce'>
+                <p className='text-sm text-gray-400 mb-2'>스크롤하여 계속하기</p>
+                <div className='w-6 h-10 border-2 border-gray-400 rounded-full mx-auto flex justify-center'>
+                  <div className='w-1 h-3 bg-gray-400 rounded-full mt-2 animate-pulse'></div>
+                </div>
               </div>
             </div>
-          </div>
-          {/* 동아리 소개 메인 텍스트 */}
-          <div
-            className={`transition-all duration-1500 ease-in-out text-center text-white max-w-2xl mx-auto absolute ${
-              scrollProgress === 100
-                ? 'opacity-100 transform translate-y-0'
-                : 'opacity-0 transform translate-y-[40px]'
-            }`}
-          >
-            <h1 className='text-[120px]  font-bold mb-6'>ALOC</h1>
-            <p className='text-[20px]  text-gray-300 leading-relaxed'>
-              서울시립대학교 컴퓨터과학부 학술 소모임
-            </p>
+            {/* 동아리 소개 메인 텍스트 */}
+            <div
+              className={`transition-all duration-1500 ease-in-out text-center text-white max-w-2xl mx-auto absolute ${
+                scrollProgress === 100
+                  ? 'opacity-100 transform translate-y-0'
+                  : 'opacity-0 transform translate-y-[40px]'
+              }`}
+            >
+              <h1 className='text-[120px]  font-bold mb-6'>ALOC</h1>
+              <p className='text-[20px]  text-white leading-relaxed'>
+                서울시립대학교 컴퓨터과학부 학술 소모임
+              </p>
+            </div>
           </div>
         </div>
       </div>
 
+
       {/* 알록이란? 섹션 */}
       <div
         id='intro-section'
-        className='bg-white relative min-h-[1080px] w-[1440px] left-1/2 -translate-x-1/2 mb-10 scale-[0.8]'
+        className='relative min-h-[1080px] w-[1440px] left-1/2 -translate-x-1/2 mb-10 scale-[0.8] z-20'
       >
         {/* 전체 프레임 기준으로 카드들을 겹쳐서 배치 */}
 
@@ -400,7 +471,7 @@ export default function Introduction() {
           {/* 메인 콘텐츠 */}
           <div className='relative z-10 flex flex-col items-center text-center h-full'>
             {/* 로고 이미지 */}
-            <div className='w-28 h-28 rounded-full overflow-hidden bg-white shadow-md flex-shrink-0 mb-6'>
+            <div className='w-28 h-28 rounded-full overflow-hidden shadow-md flex-shrink-0 mb-6'>
               <Image
                 src='/images/introduction/aloc-logo.png'
                 alt='ALOC Logo'
@@ -444,7 +515,7 @@ export default function Introduction() {
       </div>
 
       {/* 무엇을 하나요?(모달) 섹션 */}
-      <div id='modal-section' className='bg-white relative py-20 scale-[0.6]'>
+      <div id='modal-section' className='relative py-20 scale-[0.6]'>
         <div className='container mx-auto px-4'>
           <div className='w-[769px] h-[460px] mx-auto flex flex-col justify-center items-center'>
             {/* 모달 카드 */}
@@ -479,7 +550,7 @@ export default function Introduction() {
       </div>
 
       {/* 알록의 활동 섹션 */}
-      <div className='bg-white relative pb-20 scale-[0.7]'>
+      <div className='relative pb-20 scale-[0.7]'>
         <div className='container px-4'>
           <div className='w-[1440px] h-[950px] relative'>
             {/* 활동 폴더들 */}
