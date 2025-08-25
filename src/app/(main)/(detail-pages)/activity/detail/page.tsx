@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Document, Page, pdfjs } from 'react-pdf';
@@ -9,12 +9,6 @@ import { useSearchParams } from 'next/navigation';
 import { projects, studies } from '@/app/data/activities';
 import 'react-pdf/dist/Page/TextLayer.css';
 import 'react-pdf/dist/Page/AnnotationLayer.css';
-
-// PDF.js 워커 설정 (공식 문서 권장 방법)
-pdfjs.GlobalWorkerOptions.workerSrc = new URL(
-  'pdfjs-dist/build/pdf.worker.min.mjs',
-  import.meta.url,
-).toString();
 
 export default function ActivityDetail() {
   const searchParams = useSearchParams();
@@ -26,6 +20,11 @@ export default function ActivityDetail() {
   const currentItem = currentList.find((item) => item.id === activityId);
   const [currentSlide, setCurrentSlide] = useState<number>(1);
   const [numPages, setNumPages] = useState<number>(0);
+
+  // PDF.js 워커 설정 (Next.js 환경에 맞게 수정)
+  useEffect(() => {
+    pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.js`;
+  }, []);
 
   // PDF 문서 로드 성공 핸들러
   function onDocumentLoadSuccess({ numPages }: { numPages: number }) {
