@@ -20,9 +20,9 @@ interface Generation {
 
 // 세대 데이터 (레퍼런스 안정화를 위해 컴포넌트 외부에 정의)
 const generations: Generation[] = [
-  { id: 3, name: '3기', color: 'var(--color-brand-orange)' },
-  { id: 2, name: '2기', color: 'var(--color-brand-green-bright)' },
-  { id: 1, name: '1기', color: 'var(--color-brand-blue)' },
+  { id: 3, name: '3기', color: '#C3FFCC' },
+  { id: 2, name: '2기', color: '#FFF8C1' },
+  { id: 1, name: '1기', color: '#FFC4E3' },
 ];
 
 export default function Members() {
