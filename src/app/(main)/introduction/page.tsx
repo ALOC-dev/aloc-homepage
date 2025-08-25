@@ -10,6 +10,7 @@ import {
   activityImageMap,
   activityConfigMap,
 } from '@/app/data/introduction';
+import Widget from '@/components/Widget';
 
 // GSAP ScrollTrigger 플러그인 등록
 gsap.registerPlugin(ScrollTrigger);
@@ -49,6 +50,7 @@ export default function Introduction() {
   const modalSectionRef = useRef<HTMLDivElement>(null);
   const [selectedActivity, setSelectedActivity] =
     useState<ActivityLabel>('지식공유회');
+  const [showWidget, setShowWidget] = useState(false);
   const [showIntroSection, setShowIntroSection] = useState(false);
   const [transitionStage, setTransitionStage] = useState<'idle' | 'out' | 'in'>(
     'idle',
@@ -63,6 +65,8 @@ export default function Introduction() {
   const centerTabRef = useRef<HTMLDivElement>(null);
   const leftTopTabRef = useRef<HTMLDivElement>(null);
   const mainIntroCardRef = useRef<HTMLDivElement>(null);
+  const introSectionRef = useRef<HTMLDivElement>(null);
+  const widgetRef = useRef<HTMLDivElement>(null);
 
   const clearAllTimers = () => {
     timeoutsRef.current.forEach((id) => window.clearTimeout(id));
@@ -189,6 +193,70 @@ export default function Introduction() {
       ScrollTrigger.getAll().forEach(trigger => trigger.kill());
     };
   }, []);
+
+  // Widget 표시 여부를 제어하는 useEffect
+  useEffect(() => {
+    const handleScroll = () => {
+      if (!introSectionRef.current) return;
+      
+      const rect = introSectionRef.current.getBoundingClientRect();
+      const windowHeight = window.innerHeight;
+      
+      // "알록이란?" 섹션이 화면에 보이기 시작하면 Widget 표시
+      if (rect.top <= windowHeight * 0.8) {
+        setShowWidget(true);
+      } else {
+        setShowWidget(false);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  // Widget 애니메이션 useEffect
+  useEffect(() => {
+    if (!widgetRef.current) return;
+
+    // 초기 상태 설정
+    gsap.set(widgetRef.current, {
+      opacity: 0,
+      x: 50,
+      scale: 0.8
+    });
+
+    if (showWidget) {
+      // Widget이 나타날 때 애니메이션
+      gsap.to(widgetRef.current, {
+        opacity: 1,
+        x: 0,
+        scale: 1,
+        duration: 0.8,
+        ease: 'power2.out',
+        onStart: () => {
+          // 애니메이션 시작 시 visibility를 visible로 변경
+          if (widgetRef.current) {
+            widgetRef.current.style.visibility = 'visible';
+          }
+        }
+      });
+    } else {
+      // Widget이 사라질 때 애니메이션
+      gsap.to(widgetRef.current, {
+        opacity: 0,
+        x: 50,
+        scale: 0.8,
+        duration: 0.5,
+        ease: 'power2.in',
+        onComplete: () => {
+          // 애니메이션 완료 후 visibility를 hidden으로 변경
+          if (widgetRef.current) {
+            widgetRef.current.style.visibility = 'hidden';
+          }
+        }
+      });
+    }
+  }, [showWidget]);
 
   // [GSAP] ScrollTrigger를 사용한 배경색 변화 애니메이션
   useEffect(() => {
@@ -387,6 +455,7 @@ export default function Introduction() {
       {/* 알록이란? 섹션 */}
       <div className='flex justify-center -mt-50'>
         <div
+          ref={introSectionRef}
           id='intro-section'
           className='relative min-h-[1080px] w-[1440px] scale-[0.8] z-20'
         >
@@ -606,7 +675,10 @@ export default function Introduction() {
           </div>
         </div>
       </div>
-
+      
+      {/* Widget 컴포넌트 - 알록이란? 섹션 이후에 표시 */}
+      <Widget ref={widgetRef} style={{ visibility: 'hidden' }} />
+      
       {/* 무엇을 하나요?(모달) 섹션 */}
       <div className='relative py-20 flex justify-center'>
         <div id='modal-section' className='relative py-20 scale-[0.6]'>

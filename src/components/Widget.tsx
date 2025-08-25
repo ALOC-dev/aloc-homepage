@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import React from 'react';
+import React, { forwardRef } from 'react';
 
 interface NavItem {
   id: string;
@@ -15,9 +15,10 @@ interface NavItem {
 
 interface WidgetProps {
   className?: string;
+  style?: React.CSSProperties;
 }
 
-const Widget: React.FC<WidgetProps> = ({ className = '' }) => {
+const Widget = forwardRef<HTMLDivElement, WidgetProps>(({ className = '', style }, ref) => {
   const navItems: NavItem[] = [
     {
       id: 'home',
@@ -72,8 +73,12 @@ const Widget: React.FC<WidgetProps> = ({ className = '' }) => {
 
   return (
     <div
+      ref={ref}
       className={`fixed w-[110px] h-fit pb-5 right-[30px] top-[104px] rounded-[30px] z-50 ${className}`}
-      style={{ background: 'rgba(255, 255, 255, 0.70)' }}
+      style={{ 
+        background: 'rgba(255, 255, 255, 0.70)',
+        ...style
+      }}
     >
       <div className='flex flex-col items-center '>
         {navItems.map((item) => (
@@ -104,6 +109,8 @@ const Widget: React.FC<WidgetProps> = ({ className = '' }) => {
       </div>
     </div>
   );
-};
+});
+
+Widget.displayName = 'Widget';
 
 export default Widget;
