@@ -23,7 +23,7 @@ export default function Main() {
         </button>
       </div>
       {/* 배경 이미지와 스티커들을 포함하는 컨테이너 */}
-      <div className='w-[1088px] relative aspect-[2054/1377] rounded-4xl bg-gradient-to-t from-gray-800 via-gray-700 to-gray-600 shadow-2xl'>
+      <div className='w-[60%] relative aspect-[2054/1377] rounded-4xl bg-gradient-to-t from-gray-800 via-gray-700 to-gray-600 shadow-2xl'>
         {/* 메인 로고 - 정중앙 */}
         <div className='absolute inset-0 left-[50%] top-[50%] -translate-x-1/2 -translate-y-1/2 w-[15%] aspect-[1/1] z-5'>
           <Image
