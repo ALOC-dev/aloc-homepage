@@ -2,8 +2,33 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
+import { useState } from 'react';
 
 export default function Main() {
+  const [hoveredSticker, setHoveredSticker] = useState<string | null>(null);
+
+  const handleStickerHover = (stickerId: string) => {
+    setHoveredSticker(stickerId);
+  };
+
+  const handleStickerLeave = () => {
+    setHoveredSticker(null);
+  };
+
+  const getStickerClassName = (stickerId: string) => {
+    const baseClasses = 'object-contain duration-200 cursor-pointer';
+    const isHovered = hoveredSticker === stickerId;
+    const isOtherHovered =
+      hoveredSticker !== null && hoveredSticker !== stickerId;
+
+    if (isHovered) {
+      return `${baseClasses} brightness-100`;
+    } else if (isOtherHovered) {
+      return `${baseClasses} brightness-15 opacity-40`;
+    } else {
+      return baseClasses;
+    }
+  };
   return (
     <div className='fixed w-screen h-screen bg-white overflow-hidden'>
       {/* 헤더 영역 - flexbox 밖으로 분리 */}
@@ -38,37 +63,49 @@ export default function Main() {
           />
         </div>
         {/* 스티커 1 - activity 스티커 */}
-        <div className='absolute left-[5.75%] top-[18.5%] transform origin-top-left -rotate-[17.14deg] z-10 w-[36.8%] aspect-[1150/396]'>
+        <div
+          className='absolute left-[5.75%] top-[18.5%] transform origin-top-left -rotate-[17.14deg] z-10 w-[36.8%] aspect-[1150/396]'
+          onMouseEnter={() => handleStickerHover('activity')}
+          onMouseLeave={handleStickerLeave}
+        >
           <Link href='/activity'>
             <Image
               src='/images/main/activity.png'
               alt='Activity Sticker'
               fill
-              className='hover:scale-110 transition-transform duration-200 cursor-pointer object-contain'
+              className={getStickerClassName('activity')}
             />
           </Link>
         </div>
 
         {/* 스티커 2 - camera 스티커 */}
-        <div className='absolute left-[70%] top-[32.5%]  origin-top-left transform rotate-[9.52deg] z-10 w-[27.6%] aspect-[464/696]'>
+        <div
+          className='absolute left-[70%] top-[32.5%]  origin-top-left transform rotate-[9.52deg] z-10 w-[27.6%] aspect-[464/696]'
+          onMouseEnter={() => handleStickerHover('camera')}
+          onMouseLeave={handleStickerLeave}
+        >
           <Link href='/gallery'>
             <Image
               src='/images/main/camera.png'
               alt='Camera Sticker'
               fill
-              className='object-contain hover:scale-110 transition-transform duration-200 cursor-pointer'
+              className={getStickerClassName('camera')}
             />
           </Link>
         </div>
 
         {/* 스티커 3 - 맥주잔 스티커 */}
-        <div className='absolute left-[7.9%] top-[50.8%] transform origin-top-left rotate-[10.61deg] z-10 w-[29.4%] aspect-[1/1]'>
+        <div
+          className='absolute left-[7.9%] top-[50.8%] transform origin-top-left rotate-[10.61deg] z-10 w-[29.4%] aspect-[1/1]'
+          onMouseEnter={() => handleStickerHover('beer')}
+          onMouseLeave={handleStickerLeave}
+        >
           <Link href='/members'>
             <Image
               src='/images/main/맥주잔.png'
               alt='Beer Sticker'
               fill
-              className='object-contain hover:scale-110 transition-transform duration-200 cursor-pointer'
+              className={getStickerClassName('beer')}
             />
           </Link>
         </div>
@@ -79,7 +116,11 @@ export default function Main() {
             src='/images/main/computer_science.png'
             alt='Computer Science Sticker'
             fill
-            className='object-contain'
+            className={
+              hoveredSticker !== null
+                ? 'object-contain brightness-0 opacity-50 transition-all duration-200'
+                : 'object-contain transition-all duration-200'
+            }
           />
         </div>
 
@@ -89,7 +130,11 @@ export default function Main() {
             src='/images/main/시립대마스코트.png'
             alt='University Mascot'
             fill
-            className='object-contain'
+            className={
+              hoveredSticker !== null
+                ? 'object-contain brightness-0 opacity-50 transition-all duration-200'
+                : 'object-contain transition-all duration-200'
+            }
           />
         </div>
 
@@ -99,18 +144,26 @@ export default function Main() {
             src='/images/main/서울시립대로고.png'
             alt='University of Seoul Logo'
             fill
-            className='object-contain'
+            className={
+              hoveredSticker !== null
+                ? 'object-contain brightness-0 opacity-50 transition-all duration-200'
+                : 'object-contain transition-all duration-200'
+            }
           />
         </div>
 
         {/* 스티커 7 - aloc */}
-        <div className='absolute left-[62.1%] top-[-4.7%] transform origin-top-left rotate-[9.59deg] z-10 w-[41.5%] aspect-[467/375]'>
+        <div
+          className='absolute left-[62.1%] top-[-4.7%] transform origin-top-left rotate-[9.59deg] z-10 w-[41.5%] aspect-[467/375]'
+          onMouseEnter={() => handleStickerHover('aloc')}
+          onMouseLeave={handleStickerLeave}
+        >
           <Link href='/introduction'>
             <Image
               src='/images/main/aloc.png'
               alt='ALL LINKED ONE CODE'
               fill
-              className='object-contain hover:scale-110 transition-transform duration-200 cursor-pointer'
+              className={getStickerClassName('aloc')}
             />
           </Link>
         </div>
