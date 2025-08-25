@@ -213,7 +213,7 @@ export default function ActivityPage() {
               {/* 프로젝트 이미지 */}
               <Link
                 href={`/activity/detail?id=${currentItem?.id}&type=${selectedTab}`}
-                className='w-[350px] h-[148px] border border-border-bright rounded-[20px] overflow-hidden cursor-pointer hover:opacity-90 transition-opacity'
+                className='w-[400px] h-[198px] border border-border-bright rounded-[20px] overflow-hidden cursor-pointer hover:opacity-90 transition-opacity'
               >
                 <Document
                   file={pdfPath}
@@ -224,8 +224,8 @@ export default function ActivityPage() {
                       <Image
                         src='/images/activity/loading.png'
                         alt='PDF 로딩 중'
-                        width={350}
-                        height={148}
+                        width={400}
+                        height={198}
                         className='w-full h-full object-cover'
                       />
                     </div>
@@ -238,7 +238,7 @@ export default function ActivityPage() {
                 >
                   <Page
                     pageNumber={currentSlide}
-                    width={350}
+                    width={400}
                     renderTextLayer={false}
                     renderAnnotationLayer={false}
                     loading={
@@ -259,7 +259,7 @@ export default function ActivityPage() {
                 </Document>
               </Link>
               {/* 미니 슬라이드 쇼 */}
-              <div className='w-full mt-[10px] h-[15px] bg-white flex items-center justify-center gap-[15px]'>
+              <div className='w-full mt-[5px] h-[15px] bg-white flex items-center justify-center gap-[15px]'>
                 <button
                   onClick={goToPreviousSlide}
                   disabled={currentSlide === 1}
@@ -368,7 +368,7 @@ export default function ActivityPage() {
               </div>
 
               {/* 팀 멤버 */}
-              <div className='flex mt-[25px] gap-[13px] flex-row w-full justify-center'>
+              <div className='flex mt-[8px] gap-[13px] flex-row w-full justify-center'>
                 {currentItem?.members?.map((name, index) => {
                   // 멤버 이름으로 ID 찾기
                   const member = members.find(
