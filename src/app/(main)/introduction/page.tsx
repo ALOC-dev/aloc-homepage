@@ -56,6 +56,13 @@ export default function Introduction() {
   const [inActive, setInActive] = useState(false);
   const timeoutsRef = useRef<number[]>([]);
   const backgroundRef = useRef<HTMLDivElement>(null); // [GSAP]
+  
+  // 알록이란? 섹션 카드들에 대한 ref
+  const noteCardRef = useRef<HTMLDivElement>(null);
+  const orgChartCardRef = useRef<HTMLDivElement>(null);
+  const centerTabRef = useRef<HTMLDivElement>(null);
+  const leftTopTabRef = useRef<HTMLDivElement>(null);
+  const mainIntroCardRef = useRef<HTMLDivElement>(null);
 
   const clearAllTimers = () => {
     timeoutsRef.current.forEach((id) => window.clearTimeout(id));
@@ -229,12 +236,82 @@ export default function Introduction() {
     };
   }, []);
 
+  // [GSAP] 알록이란? 섹션 카드들 애니메이션
+  useEffect(() => {
+    if (!noteCardRef.current || !orgChartCardRef.current || !centerTabRef.current || !leftTopTabRef.current || !mainIntroCardRef.current) return;
+
+    // 초기 상태 설정
+    gsap.set([noteCardRef.current, orgChartCardRef.current, centerTabRef.current, leftTopTabRef.current, mainIntroCardRef.current], {
+      opacity: 0,
+      x: 100,
+      y: 50,
+      rotation: 5
+    });
+
+    // ScrollTrigger로 애니메이션 트리거
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: noteCardRef.current,
+        start: 'top 80%',
+        end: 'bottom 20%',
+        toggleActions: 'play none none reverse'
+      }
+    });
+
+    // 각 카드를 순차적으로 애니메이션
+    tl.to(noteCardRef.current, {
+      opacity: 1,
+      x: 0,
+      y: 0,
+      rotation: 0,
+      duration: 1,
+      ease: 'power2.out'
+    })
+    .to(orgChartCardRef.current, {
+      opacity: 1,
+      x: 0,
+      y: 0,
+      rotation: 0,
+      duration: 1,
+      ease: 'power2.out'
+    }, '-=0.5')
+    .to(centerTabRef.current, {
+      opacity: 1,
+      x: 0,
+      y: 0,
+      rotation: 0,
+      duration: 1,
+      ease: 'power2.out'
+    }, '-=0.5')
+    .to(leftTopTabRef.current, {
+      opacity: 1,
+      x: 0,
+      y: 0,
+      rotation: 0,
+      duration: 1,
+      ease: 'power2.out'
+    }, '-=0.5')
+    .to(mainIntroCardRef.current, {
+      opacity: 1,
+      x: 0,
+      y: 0,
+      rotation: 0,
+      duration: 1,
+      ease: 'power2.out'
+    }, '-=0.5');
+
+    return () => {
+      tl.kill();
+      ScrollTrigger.getAll().forEach(trigger => trigger.kill());
+    };
+  }, []);
+
   return (
     <div className='min-h-screen min-w-[1440px] bg-white'>
       {/* [GSAP] 게이지바 섹션만 감싸는 배경색 변화 트리거 */}
       <div 
         ref={backgroundRef}
-        className='bg-black pb-100'
+        className='bg-black pb-50'
         style={{ backgroundColor: 'rgb(0, 0, 0)' }}
       >
         {/* 게이지바 섹션 */}
@@ -296,252 +373,259 @@ export default function Introduction() {
           </div>
         </div>
       </div>
-
-
       {/* 알록이란? 섹션 */}
-      <div
-        id='intro-section'
-        className='relative min-h-[1080px] w-[1440px] left-1/2 -translate-x-1/2 mb-10 scale-[0.8] z-20'
-      >
-        {/* 전체 프레임 기준으로 카드들을 겹쳐서 배치 */}
-
-        {/* 1. 노트 스타일 카드 (우상단) */}
+      <div className='flex justify-center -mt-100'>
         <div
-          className={`absolute top-[61px] right-[106px] w-[389px] h-[224px] bg-yellow-50 rounded-xl shadow-lg border-l-4 border-yellow-400 ${INTRO_ANIM_BASE} ${showIntroSection ? INTRO_ANIM_VISIBLE : INTRO_ANIM_HIDDEN}`}
+          id='intro-section'
+          className='relative min-h-[1080px] w-[1440px] scale-[0.8] z-20'
         >
-          <div className='bg-yellow-100 rounded-lg p-6 h-full'>
-            <h3 className='text-2xl font-medium text-gray-800 mb-4'>
-              <span className='text-blue-600'>A</span>
-              <span className='text-blue-600'>L</span>
-              <span className='text-blue-600'>O</span>
-              <span className='text-blue-600'>C</span>,{' '}
-              <span className='text-blue-600'>A</span>
-              <span className='text-black'>ll </span>
-              <span className='text-blue-600'>L</span>
-              <span className='text-black'>inked </span>
-              <span className='text-blue-600'>O</span>
-              <span className='text-black'>ne </span>
-              <span className='text-blue-600'>C</span>
-              <span className='text-black'>ode</span>. 하나의 연결된~
-            </h3>
-          </div>
-        </div>
+          {/* 전체 프레임 기준으로 카드들을 겹쳐서 배치 */}
 
-        {/* 2. 조직도 스타일 카드 (좌하단) */}
-        <div
-          className={`absolute bottom-[93px] left-[67px] w-[511px] h-[320px] ${INTRO_ANIM_BASE} ${showIntroSection ? INTRO_ANIM_VISIBLE : INTRO_ANIM_HIDDEN}`}
-        >
-          <div className='inset-0 p-5 w-[346px] h-[298px] grid grid-rows-3 bg-gray-100 rounded-xl shadow-lg'>
-            {(() => {
-              // 조직도 데이터 정의
-              const orgData = [
-                {
-                  items: [
-                    {
-                      text: 'Univ Of Seoul',
-                      className: 'text-xl font-small tracking-tight',
-                      itemClass: '',
-                    },
-                    {
-                      text: 'Computer Science',
-                      className: 'text-xl font-small tracking-tight',
-                      itemClass: '',
-                    },
-                  ],
-                  containerClass:
-                    'grid grid-rows-2 mx-3 border-b-2 border-gray-300',
-                },
-                {
-                  items: [
-                    {
-                      text: 'ALOC',
-                      className: 'text-xl font-small tracking-tight',
-                      itemClass: '',
-                    },
-                    {
-                      text: 'All Linked One Code',
-                      className: 'text-xl font-small tracking-tight',
-                      itemClass: '',
-                    },
-                  ],
-                  containerClass:
-                    'grid grid-rows-2 mx-3 border-b-2 border-gray-300',
-                },
-                {
-                  items: [
-                    {
-                      text: 'Activity',
-                      className: 'text-xl text-white font-small tracking-tight',
-                      itemClass: 'bg-blue-500 rounded-2xl p-3 my-1',
-                    },
-                    {
-                      text: 'All Linked One Code',
-                      className: 'text-xl font-small tracking-tight',
-                      itemClass: 'mx-3',
-                    },
-                  ],
-                  containerClass: 'grid grid-rows-2',
-                },
-              ];
-
-              return orgData.map((section, sectionIndex) => (
-                <div key={sectionIndex} className={section.containerClass}>
-                  {section.items.map((item, itemIndex) => (
-                    <div
-                      key={itemIndex}
-                      className={`flex items-center justify-between ${item.itemClass || ''}`}
-                    >
-                      <span className={item.className}>{item.text}</span>
-                      <div className='w-4 h-4'>
-                        <Image
-                          src='/images/members/arrow-right.svg'
-                          alt='arrow-right'
-                          width={8}
-                          height={8}
-                          className='object-contain'
-                        />
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              ));
-            })()}
-          </div>
-
-          {/* 오른쪽: 활동 분야 */}
-          <div className='absolute w-[173px] h-[129px] bottom-0 right-0 bg-gray-100 rounded-xl shadow-lg p-3'>
-            <div className='grid grid-cols-1 gap-2'>
-              <span className='text-xl font-small tracking-tight'>Study</span>
-              <span className='text-xl font-small tracking-tight'>Project</span>
-              <span className='text-xl font-small tracking-tight'>
-                Networking
-              </span>
+          {/* 1. 노트 스타일 카드 (우상단) */}
+          <div
+            ref={noteCardRef}
+            className='absolute top-[61px] right-[106px] w-[389px] h-[224px] bg-yellow-50 rounded-xl shadow-lg border-l-4 border-yellow-400'
+          >
+            <div className='bg-yellow-100 rounded-lg p-6 h-full'>
+              <h3 className='text-2xl font-medium text-gray-800 mb-4'>
+                <span className='text-blue-600'>A</span>
+                <span className='text-blue-600'>L</span>
+                <span className='text-blue-600'>O</span>
+                <span className='text-blue-600'>C</span>,{' '}
+                <span className='text-blue-600'>A</span>
+                <span className='text-black'>ll </span>
+                <span className='text-blue-600'>L</span>
+                <span className='text-black'>inked </span>
+                <span className='text-blue-600'>O</span>
+                <span className='text-black'>ne </span>
+                <span className='text-blue-600'>C</span>
+                <span className='text-black'>ode</span>. 하나의 연결된~
+              </h3>
             </div>
           </div>
-        </div>
 
-        {/* 3. 중앙 탭 */}
-        <div
-          className={`absolute top-[166px] left-[310px] z-10 ${INTRO_ANIM_BASE} ${showIntroSection ? INTRO_ANIM_VISIBLE : INTRO_ANIM_HIDDEN}`}
-        >
-          <div className='w-[794px] h-[649px] bg-gray-100 rounded-xl overflow-hidden shadow-lg'>
-            <BrowserTabHeader label='ALOC' />
+          {/* 2. 조직도 스타일 카드 (좌하단) */}
+          <div
+            ref={orgChartCardRef}
+            className='absolute bottom-[93px] left-[67px] w-[511px] h-[320px]'
+          >
+            <div className='inset-0 p-5 w-[346px] h-[298px] grid grid-rows-3 bg-gray-100 rounded-xl shadow-lg'>
+              {(() => {
+                // 조직도 데이터 정의
+                const orgData = [
+                  {
+                    items: [
+                      {
+                        text: 'Univ Of Seoul',
+                        className: 'text-xl font-small tracking-tight',
+                        itemClass: '',
+                      },
+                      {
+                        text: 'Computer Science',
+                        className: 'text-xl font-small tracking-tight',
+                        itemClass: '',
+                      },
+                    ],
+                    containerClass:
+                      'grid grid-rows-2 mx-3 border-b-2 border-gray-300',
+                  },
+                  {
+                    items: [
+                      {
+                        text: 'ALOC',
+                        className: 'text-xl font-small tracking-tight',
+                        itemClass: '',
+                      },
+                      {
+                        text: 'All Linked One Code',
+                        className: 'text-xl font-small tracking-tight',
+                        itemClass: '',
+                      },
+                    ],
+                    containerClass:
+                      'grid grid-rows-2 mx-3 border-b-2 border-gray-300',
+                  },
+                  {
+                    items: [
+                      {
+                        text: 'Activity',
+                        className: 'text-xl text-white font-small tracking-tight',
+                        itemClass: 'bg-blue-500 rounded-2xl p-3 my-1',
+                      },
+                      {
+                        text: 'All Linked One Code',
+                        className: 'text-xl font-small tracking-tight',
+                        itemClass: 'mx-3',
+                      },
+                    ],
+                    containerClass: 'grid grid-rows-2',
+                  },
+                ];
+
+                return orgData.map((section, sectionIndex) => (
+                  <div key={sectionIndex} className={section.containerClass}>
+                    {section.items.map((item, itemIndex) => (
+                      <div
+                        key={itemIndex}
+                        className={`flex items-center justify-between ${item.itemClass || ''}`}
+                      >
+                        <span className={item.className}>{item.text}</span>
+                        <div className='w-4 h-4'>
+                          <Image
+                            src='/images/members/arrow-right.svg'
+                            alt='arrow-right'
+                            width={8}
+                            height={8}
+                            className='object-contain'
+                          />
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                ));
+              })()}
+            </div>
+
+            {/* 오른쪽: 활동 분야 */}
+            <div className='absolute w-[173px] h-[129px] bottom-0 right-0 bg-gray-100 rounded-xl shadow-lg p-3'>
+              <div className='grid grid-cols-1 gap-2'>
+                <span className='text-xl font-small tracking-tight'>Study</span>
+                <span className='text-xl font-small tracking-tight'>Project</span>
+                <span className='text-xl font-small tracking-tight'>
+                  Networking
+                </span>
+              </div>
+            </div>
+          </div>
+
+          {/* 3. 중앙 탭 */}
+          <div
+            ref={centerTabRef}
+            className='absolute top-[166px] left-[310px] z-10'
+          >
+            <div className='w-[794px] h-[649px] bg-gray-100 rounded-xl overflow-hidden shadow-lg'>
+              <BrowserTabHeader label='ALOC' />
+              <div className='h-full flex items-center justify-center'>
+                <Image
+                  src='/images/introduction/알록이란2.png'
+                  alt='ALOC 소개'
+                  width={794}
+                  height={649}
+                  className='w-full h-full object-cover'
+                />
+              </div>
+            </div>
+          </div>
+
+          {/* 4. 좌 상단 탭 */}
+          <div
+            ref={leftTopTabRef}
+            className='absolute top-[30px] left-[75px] w-[299px] h-[290px] bg-gray-100 rounded-xl overflow-hidden shadow-lg z-20'
+          >
+            <BrowserTabHeader
+              label='ALOC'
+              gapClass='gap-2'
+              labelClassName='text-xs'
+            />
             <div className='h-full flex items-center justify-center'>
               <Image
-                src='/images/introduction/알록이란2.png'
-                alt='ALOC 소개'
-                width={794}
-                height={649}
+                src='/images/introduction/알록이란1.png'
+                alt='Study'
+                width={299}
+                height={290}
                 className='w-full h-full object-cover'
               />
             </div>
           </div>
-        </div>
 
-        {/* 4. 좌 상단 탭 */}
-        <div
-          className={`absolute top-[30px] left-[75px] w-[299px] h-[290px] bg-gray-100 rounded-xl overflow-hidden shadow-lg z-20 ${INTRO_ANIM_BASE} ${showIntroSection ? INTRO_ANIM_VISIBLE : INTRO_ANIM_HIDDEN}`}
-        >
-          <BrowserTabHeader
-            label='ALOC'
-            gapClass='gap-2'
-            labelClassName='text-xs'
-          />
-          <div className='h-full flex items-center justify-center'>
-            <Image
-              src='/images/introduction/알록이란1.png'
-              alt='Study'
-              width={299}
-              height={290}
-              className='w-full h-full object-cover'
-            />
-          </div>
-        </div>
-
-        {/* 5. 메인 소개 카드 (우하단) */}
-        <div
-          className={`absolute bottom-[59px] right-[200px] w-[335px] h-[520px] bg-gray-100 rounded-3xl p-8 shadow-lg overflow-hidden z-40 ${INTRO_ANIM_BASE} ${showIntroSection ? INTRO_ANIM_VISIBLE : INTRO_ANIM_HIDDEN}`}
-        >
-          {/* 도움말 버튼 */}
-          <div className='absolute top-4 right-4'>
-            <button className='w-6 h-6 bg-gray-300 rounded-full flex items-center justify-center text-black text-sm hover:bg-gray-400 transition-colors'>
-              ?
-            </button>
-          </div>
-          {/* 메인 콘텐츠 */}
-          <div className='relative z-10 flex flex-col items-center text-center h-full'>
-            {/* 로고 이미지 */}
-            <div className='w-28 h-28 rounded-full overflow-hidden shadow-md flex-shrink-0 mb-6'>
-              <Image
-                src='/images/introduction/aloc-logo.png'
-                alt='ALOC Logo'
-                width={112}
-                height={112}
-                className='object-cover'
-              />
-            </div>
-
-            {/* 텍스트 콘텐츠 */}
-            <div className='mb-8'>
-              <h2 className='text-4xl font-bold text-black mb-4'>ALOC</h2>
-              <p className='text-base text-gray-600 leading-relaxed'>
-                ALOC은 서울시립대학교 컴퓨터과학부
-                <br />
-                학술 소모임입니다.
-                <br />
-                함께 성장하는 개발 문화를 만듭니다.
-              </p>
-            </div>
-
-            {/* 버튼 그룹 */}
-            <div className='w-full space-y-3'>
-              <button className='w-full bg-gradient-to-b from-blue-500 to-blue-600 text-white px-8 py-2 rounded-4xl font-medium hover:from-blue-600 hover:to-blue-700 transition-all duration-300 shadow-md'>
-                가입하기!
-              </button>
-              <button className='w-full bg-gray-300 text-black px-8 py-2 rounded-4xl font-medium hover:bg-gray-400 transition-all duration-300'>
-                재밌겠다!
+          {/* 5. 메인 소개 카드 (우하단) */}
+          <div
+            ref={mainIntroCardRef}
+            className='absolute bottom-[59px] right-[200px] w-[335px] h-[520px] bg-gray-100 rounded-3xl p-8 shadow-lg overflow-hidden z-40'
+          >
+            {/* 도움말 버튼 */}
+            <div className='absolute top-4 right-4'>
+              <button className='w-6 h-6 bg-gray-300 rounded-full flex items-center justify-center text-black text-sm hover:bg-gray-400 transition-colors'>
+                ?
               </button>
             </div>
+            {/* 메인 콘텐츠 */}
+            <div className='relative z-10 flex flex-col items-center text-center h-full'>
+              {/* 로고 이미지 */}
+              <div className='w-28 h-28 rounded-full overflow-hidden shadow-md flex-shrink-0 mb-6'>
+                <Image
+                  src='/images/introduction/aloc-logo.png'
+                  alt='ALOC Logo'
+                  width={112}
+                  height={112}
+                  className='object-cover'
+                />
+              </div>
 
-            {/* 체크박스 */}
-            <div className='absolute bottom-1 left-1/2 transform -translate-x-1/2 flex items-center gap-2'>
-              <input type='checkbox' id='dontAsk' className='w-4 h-4' />
-              <label htmlFor='dontAsk' className='text-sm text-gray-600'>
-                다시 묻지 않기
-              </label>
+              {/* 텍스트 콘텐츠 */}
+              <div className='mb-8'>
+                <h2 className='text-4xl font-bold text-black mb-4'>ALOC</h2>
+                <p className='text-base text-gray-600 leading-relaxed'>
+                  ALOC은 서울시립대학교 컴퓨터과학부
+                  <br />
+                  학술 소모임입니다.
+                  <br />
+                  함께 성장하는 개발 문화를 만듭니다.
+                </p>
+              </div>
+
+              {/* 버튼 그룹 */}
+              <div className='w-full space-y-3'>
+                <button className='w-full bg-gradient-to-b from-blue-500 to-blue-600 text-white px-8 py-2 rounded-4xl font-medium hover:from-blue-600 hover:to-blue-700 transition-all duration-300 shadow-md'>
+                  가입하기!
+                </button>
+                <button className='w-full bg-gray-300 text-black px-8 py-2 rounded-4xl font-medium hover:bg-gray-400 transition-all duration-300'>
+                  재밌겠다!
+                </button>
+              </div>
+
+              {/* 체크박스 */}
+              <div className='absolute bottom-1 left-1/2 transform -translate-x-1/2 flex items-center gap-2'>
+                <input type='checkbox' id='dontAsk' className='w-4 h-4' />
+                <label htmlFor='dontAsk' className='text-sm text-gray-600'>
+                  다시 묻지 않기
+                </label>
+              </div>
             </div>
           </div>
         </div>
       </div>
 
       {/* 무엇을 하나요?(모달) 섹션 */}
-      <div id='modal-section' className='relative py-20 scale-[0.6]'>
-        <div className='container mx-auto px-4'>
-          <div className='w-[769px] h-[460px] mx-auto flex flex-col justify-center items-center'>
-            {/* 모달 카드 */}
-            <div
-              className={`w-full h-full bg-gray-200 rounded-3xl shadow-lg relative overflow-hidden transition-all duration-1500 ease-out ${
-                showModalSection
+      <div className='relative bg-red-500 py-20 flex justify-center'>
+        <div id='modal-section' className='relative py-20 scale-[0.6]'>
+          <div className='container mx-auto px-4'>
+            <div className='w-[769px] h-[460px] mx-auto flex flex-col justify-center items-center'>
+              {/* 모달 카드 */}
+              <div
+                className={`w-full h-full bg-gray-200 rounded-3xl shadow-lg relative overflow-hidden transition-all duration-1500 ease-out ${
+                  showModalSection
                   ? 'opacity-100 transform translate-y-0'
                   : 'opacity-0 transform translate-y-150'
-              }`}
-            >
-              {/* 상단 헤더 */}
-              <div className='text-center w-full h-[329px] flex flex-col justify-center items-center'>
-                <h2 className='text-6xl font-bold text-black mb-6'>Activity</h2>
-                <p className='text-4xl text-black'>ALOC에서는 무엇을 하나요?</p>
-              </div>
-
-              {/* 구분선 */}
-              <div className='border-t-4 border-gray-300'></div>
-
-              {/* 하단 버튼 영역 */}
-              <div className='flex flex-row w-full h-[131px]'>
-                <div className='basis-1/2 border-r-4 border-gray-300 flex justify-center items-center'>
-                  <span className='text-4xl text-blue-500'>options</span>
+                }`}
+                >
+                {/* 상단 헤더 */}
+                <div className='text-center w-full h-[329px] flex flex-col justify-center items-center'>
+                  <h2 className='text-6xl font-bold text-black mb-6'>Activity</h2>
+                  <p className='text-4xl text-black'>ALOC에서는 무엇을 하나요?</p>
                 </div>
-                <div className='basis-1/2 flex justify-center items-center'>
-                  <span className='text-4xl text-blue-500'>close</span>
+
+                {/* 구분선 */}
+                <div className='border-t-4 border-gray-300'></div>
+
+                {/* 하단 버튼 영역 */}
+                <div className='flex flex-row w-full h-[131px]'>
+                  <div className='basis-1/2 border-r-4 border-gray-300 flex justify-center items-center'>
+                    <span className='text-4xl text-blue-500'>options</span>
+                  </div>
+                  <div className='basis-1/2 flex justify-center items-center'>
+                    <span className='text-4xl text-blue-500'>close</span>
+                  </div>
                 </div>
               </div>
             </div>
@@ -550,127 +634,129 @@ export default function Introduction() {
       </div>
 
       {/* 알록의 활동 섹션 */}
-      <div className='relative pb-20 scale-[0.7]'>
-        <div className='container px-4'>
-          <div className='w-[1440px] h-[950px] relative'>
-            {/* 활동 폴더들 */}
-            {(() => {
-              const activityCards = [
-                { label: '지식공유회' },
-                { label: '스터디/프로젝트' },
-                { label: '네트워킹' },
-              ] as const;
-
-              return (
-                <div className='absolute left-[0px] top-[214px] w-[289px] flex flex-col items-center gap-[80px]'>
-                  {activityCards.map((card, index) => (
-                    <button
+      <div className='relative bg-yellow-500 py-20 flex justify-center'>
+        <div className='relative pb-20 scale-[0.7]'>
+          <div className='container px-4'>
+            <div className='w-[1440px] h-[950px] relative'>
+              {/* 활동 폴더들 */} 
+              {(() => {
+                const activityCards = [
+                  { label: '지식공유회' },
+                  { label: '스터디/프로젝트' },
+                  { label: '네트워킹' },
+                ] as const;
+                
+                return (
+                  <div className='absolute left-[0px] top-[214px] w-[289px] flex flex-col items-center gap-[80px]'>
+                    {activityCards.map((card, index) => (
+                      <button
                       key={index}
                       type='button'
                       onClick={() =>
                         handleSelectActivity(card.label as ActivityLabel)
                       }
                       className='group cursor-pointer flex flex-col items-center gap-2 focus:outline-none'
-                    >
-                      <div className='relative w-[189px] h-[155px] scale-[0.8] transition-transform duration-200 ease-out group-hover:scale-105'>
-                        <Image
-                          src='/images/introduction/folder.svg'
-                          alt='folder'
-                          fill
-                          className='object-cover'
-                        />
-                      </div>
-                      <div
-                        className={`text-[30px] text-center transition-[font-weight] duration-150 ${selectedActivity === card.label ? 'text-blue-600' : 'text-black'} group-hover:font-bold`}
                       >
-                        {card.label}
-                      </div>
-                    </button>
-                  ))}
-                </div>
-              );
-            })()}
+                        <div className='relative w-[189px] h-[155px] scale-[0.8] transition-transform duration-200 ease-out group-hover:scale-105'>
+                          <Image
+                            src='/images/introduction/folder.svg'
+                            alt='folder'
+                            fill
+                            className='object-cover'
+                            />
+                        </div>
+                        <div
+                          className={`text-[30px] text-center transition-[font-weight] duration-150 ${selectedActivity === card.label ? 'text-blue-600' : 'text-black'} group-hover:font-bold`}
+                          >
+                          {card.label}
+                        </div>
+                      </button>
+                    ))}
+                  </div>
+                );
+              })()}
 
-            {/* 메모 탭 (노란색 배경) */}
-            <div
-              className={`${activityConfigMap[selectedActivity].memoTab.positionClass} w-[676px] h-[425px] bg-yellow-200 rounded-lg shadow-lg ${getAnimClasses()}`}
-            >
-              {/* 브라우저 헤더 */}
-              <div className='w-full h-[29px] bg-yellow-300 rounded-t-lg flex items-center px-3'>
-                <div className='flex items-center gap-1'>
-                  <div className='w-[19px] h-[18px] bg-yellow-200 border-2 border-yellow-600 rounded'></div>
-                </div>
-                <div className='flex-1'></div>
-              </div>
-              {/* 콘텐츠 영역 */}
-              <div className='w-full h-[396px] bg-yellow-100 p-6'>
-                <p className='text-[30px] leading-[1.33] tracking-[-3.33%] text-gray-800'>
-                  {activityConfigMap[selectedActivity].memoTab.content}
-                </p>
-              </div>
-            </div>
-
-            {/* 중앙 사진 탭 - 선택된 활동 이미지 표시 */}
-            <div
-              className={`${activityConfigMap[selectedActivity].centralPhotoTab.positionClass}`}
-            >
+              {/* 메모 탭 (노란색 배경) */}
               <div
-                className={`w-[748px] h-[584px] bg-gray-100 rounded-xl overflow-hidden shadow-lg ${getAnimClasses()}`}
-              >
-                <div className='bg-gray-200 px-4 py-2 flex items-center justify-between'>
-                  {/* 3개 원 그룹 - 좌측 배치 */}
-                  <div className='flex items-center gap-3'>
-                    <div className='w-3 h-3 bg-red-400 rounded-full'></div>
-                    <div className='w-3 h-3 bg-yellow-400 rounded-full'></div>
-                    <div className='w-3 h-3 bg-green-400 rounded-full'></div>
+                className={`${activityConfigMap[selectedActivity].memoTab.positionClass} w-[676px] h-[425px] bg-yellow-200 rounded-lg shadow-lg ${getAnimClasses()}`}
+                >
+                {/* 브라우저 헤더 */}
+                <div className='w-full h-[29px] bg-yellow-300 rounded-t-lg flex items-center px-3'>
+                  <div className='flex items-center gap-1'>
+                    <div className='w-[19px] h-[18px] bg-yellow-200 border-2 border-yellow-600 rounded'></div>
                   </div>
-                  {/* span - 중앙 배치 */}
-                  <div className='absolute left-1/2 transform -translate-x-1/2'>
-                    <span className='text-m text-gray-600'>
-                      {
-                        activityConfigMap[selectedActivity].centralPhotoTab
-                          .headerText
-                      }
-                    </span>
-                  </div>
+                  <div className='flex-1'></div>
                 </div>
-                <div className='h-full flex items-center justify-center'>
-                  <Image
-                    src={activityImageMap[selectedActivity]}
-                    alt={selectedActivity}
-                    width={748}
-                    height={584}
-                    className='w-full h-full object-cover'
-                  />
+                {/* 콘텐츠 영역 */}
+                <div className='w-full h-[396px] bg-yellow-100 p-6'>
+                  <p className='text-[30px] leading-[1.33] tracking-[-3.33%] text-gray-800'>
+                    {activityConfigMap[selectedActivity].memoTab.content}
+                  </p>
                 </div>
               </div>
-            </div>
 
-            {/* 우측 하단 알림 카드 */}
-            <div
-              className={`${activityConfigMap[selectedActivity].alertCard.positionClass} shadow-lg w-[521px] h-[312px] bg-gray-200 rounded-[24px] flex justify-center relative ${getAnimClasses()}`}
-            >
-              {/* 느낌표 아이콘 → alert.png 이미지로 대체 */}
-              <div className='absolute top-[41px] left-[201px] w-[132px] h-[132px]'>
-                <Image
-                  src='/images/introduction/alert.png'
-                  alt='alert'
-                  width={132}
-                  height={132}
-                  className='w-full h-full object-cover'
-                />
+              {/* 중앙 사진 탭 - 선택된 활동 이미지 표시 */}
+              <div
+                className={`${activityConfigMap[selectedActivity].centralPhotoTab.positionClass}`}
+                >
+                <div
+                  className={`w-[748px] h-[584px] bg-gray-100 rounded-xl overflow-hidden shadow-lg ${getAnimClasses()}`}
+                  >
+                  <div className='bg-gray-200 px-4 py-2 flex items-center justify-between'>
+                    {/* 3개 원 그룹 - 좌측 배치 */}
+                    <div className='flex items-center gap-3'>
+                      <div className='w-3 h-3 bg-red-400 rounded-full'></div>
+                      <div className='w-3 h-3 bg-yellow-400 rounded-full'></div>
+                      <div className='w-3 h-3 bg-green-400 rounded-full'></div>
+                    </div>
+                    {/* span - 중앙 배치 */}
+                    <div className='absolute left-1/2 transform -translate-x-1/2'>
+                      <span className='text-m text-gray-600'>
+                        {
+                          activityConfigMap[selectedActivity].centralPhotoTab
+                          .headerText
+                        }
+                      </span>
+                    </div>
+                  </div>
+                  <div className='h-full flex items-center justify-center'>
+                    <Image
+                      src={activityImageMap[selectedActivity]}
+                      alt={selectedActivity}
+                      width={748}
+                      height={584}
+                      className='w-full h-full object-cover'
+                      />
+                  </div>
+                </div>
               </div>
-              {/* 텍스트 */}
-              <div className='absolute top-[165px]  text-[24px] text-black text-center'>
-                {activityConfigMap[selectedActivity].alertCard.text}
+
+              {/* 우측 하단 알림 카드 */}
+              <div
+                className={`${activityConfigMap[selectedActivity].alertCard.positionClass} shadow-lg w-[521px] h-[312px] bg-gray-200 rounded-[24px] flex justify-center relative ${getAnimClasses()}`}
+                >
+                {/* 느낌표 아이콘 → alert.png 이미지로 대체 */}
+                <div className='absolute top-[41px] left-[201px] w-[132px] h-[132px]'>
+                  <Image
+                    src='/images/introduction/alert.png'
+                    alt='alert'
+                    width={132}
+                    height={132}
+                    className='w-full h-full object-cover'
+                    />
+                </div>
+                {/* 텍스트 */}
+                <div className='absolute top-[165px]  text-[24px] text-black text-center'>
+                  {activityConfigMap[selectedActivity].alertCard.text}
+                </div>
+                {/* 더보기 버튼 */}
+                <Link
+                  href={activityConfigMap[selectedActivity].alertCard.link}
+                  className='absolute top-[219px] left-[37px] w-[461px] h-[48px] bg-gradient-to-b from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 rounded-[16px] flex items-center justify-center cursor-pointer transition-all duration-200'
+                  >
+                  <span className='text-[24px] text-white'>더보기</span>
+                </Link>
               </div>
-              {/* 더보기 버튼 */}
-              <Link
-                href={activityConfigMap[selectedActivity].alertCard.link}
-                className='absolute top-[219px] left-[37px] w-[461px] h-[48px] bg-gradient-to-b from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 rounded-[16px] flex items-center justify-center cursor-pointer transition-all duration-200'
-              >
-                <span className='text-[24px] text-white'>더보기</span>
-              </Link>
             </div>
           </div>
         </div>
