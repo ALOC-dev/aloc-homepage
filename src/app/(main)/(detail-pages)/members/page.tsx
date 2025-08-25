@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { members, type Member } from '@/app/data/members';
@@ -8,6 +8,7 @@ import {
   SidebarContainer,
   HeaderContainer,
 } from '@/components/layout-components';
+import { useRouter, useSearchParams } from 'next/navigation';
 
 // 세대 타입 정의
 interface Generation {
@@ -17,6 +18,8 @@ interface Generation {
 }
 
 export default function Members() {
+  const router = useRouter();
+  const searchParams = useSearchParams();
   const [selectedGeneration, setSelectedGeneration] = useState<number | null>(
     null,
   );
@@ -28,6 +31,28 @@ export default function Members() {
     { id: 1, name: '1기', color: 'var(--color-brand-blue)' },
   ];
 
+  // URL 쿼리로부터 generation 동기화
+  useEffect(() => {
+    const genParam = searchParams?.get('generation');
+    if (genParam) {
+      const genNum = parseInt(genParam, 10);
+      if (generations.some((g) => g.id === genNum)) {
+        setSelectedGeneration(genNum);
+      }
+    }
+  }, [searchParams]);
+
+  // generation 변경 시 URL 업데이트
+  const pushGenerationToUrl = (gen: number | null) => {
+    const params = new URLSearchParams(searchParams?.toString());
+    if (gen) {
+      params.set('generation', String(gen));
+    } else {
+      params.delete('generation');
+    }
+    router.push(`/members?${params.toString()}`);
+  };
+
   // 멤버 데이터는 외부 파일에서 가져옴
 
   // 필터링된 멤버 목록
@@ -37,9 +62,35 @@ export default function Members() {
 
   // 세대 필터 클릭 핸들러
   const handleGenerationClick = (generationId: number) => {
-    setSelectedGeneration(
-      selectedGeneration === generationId ? null : generationId,
-    );
+    const next = selectedGeneration === generationId ? null : generationId;
+    setSelectedGeneration(next);
+    pushGenerationToUrl(next);
+  };
+
+  // 좌우 이동 핸들러 (이전/다음 기수)
+  const orderedGenIds = useMemo(
+    () => generations.map((g) => g.id),
+    [generations],
+  );
+
+  const goToPrevGeneration = () => {
+    if (!orderedGenIds.length) return;
+    const current = selectedGeneration ?? orderedGenIds[0];
+    const idx = orderedGenIds.indexOf(current);
+    const prevIdx = (idx - 1 + orderedGenIds.length) % orderedGenIds.length;
+    const target = orderedGenIds[prevIdx];
+    setSelectedGeneration(target);
+    pushGenerationToUrl(target);
+  };
+
+  const goToNextGeneration = () => {
+    if (!orderedGenIds.length) return;
+    const current = selectedGeneration ?? orderedGenIds[0];
+    const idx = orderedGenIds.indexOf(current);
+    const nextIdx = (idx + 1) % orderedGenIds.length;
+    const target = orderedGenIds[nextIdx];
+    setSelectedGeneration(target);
+    pushGenerationToUrl(target);
   };
 
   return (
@@ -102,20 +153,34 @@ export default function Members() {
 
           {/* 네비게이션 아이콘들 */}
           <div className='absolute top-1/2 -translate-y-1/2 left-[50px] flex space-x-[45px]'>
-            <Image
-              src='/images/members/arrow-left.svg'
-              alt='이전'
-              width={12.39}
-              height={21.11}
-              className='object-contain'
-            />
-            <Image
-              src='/images/members/arrow-right.svg'
-              alt='다음'
-              width={12.39}
-              height={21.11}
-              className='object-contain'
-            />
+            <button
+              type='button'
+              onClick={goToPrevGeneration}
+              aria-label='이전 기수'
+              className='cursor-pointer hover:opacity-80 transition-opacity'
+            >
+              <Image
+                src='/images/members/arrow-left.svg'
+                alt='이전'
+                width={12.39}
+                height={21.11}
+                className='object-contain'
+              />
+            </button>
+            <button
+              type='button'
+              onClick={goToNextGeneration}
+              aria-label='다음 기수'
+              className='cursor-pointer hover:opacity-80 transition-opacity'
+            >
+              <Image
+                src='/images/members/arrow-right.svg'
+                alt='다음'
+                width={12.39}
+                height={21.11}
+                className='object-contain'
+              />
+            </button>
           </div>
 
           {/* 검색 아이콘 */}
