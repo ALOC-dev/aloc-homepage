@@ -16,7 +16,7 @@ export const members: Member[] = [
   // 1기 멤버들 (재학)
   {
     id: 1,
-    name: '1기 김하람',
+    name: '김하람',
     role: '부원',
     stack: '프론트엔드, 백엔드',
     generation: 1,
@@ -29,7 +29,7 @@ export const members: Member[] = [
   },
   {
     id: 2,
-    name: '1기 김영진',
+    name: '김영진',
     role: '부원',
     stack: '백엔드, AI',
     generation: 1,
@@ -42,7 +42,7 @@ export const members: Member[] = [
   },
   {
     id: 3,
-    name: '1기 문재영',
+    name: '문재영',
     role: '부원',
     stack: '백엔드, AI',
     generation: 1,
@@ -55,7 +55,7 @@ export const members: Member[] = [
   },
   {
     id: 4,
-    name: '1기 박나은',
+    name: '박나은',
     role: '부원',
     stack: '프론트엔드, 백엔드',
     generation: 1,
@@ -68,7 +68,7 @@ export const members: Member[] = [
   },
   {
     id: 5,
-    name: '1기 박상윤',
+    name: '박상윤',
     role: '부원',
     stack: '프론트엔드, 백엔드',
     generation: 1,
@@ -81,7 +81,7 @@ export const members: Member[] = [
   },
   {
     id: 6,
-    name: '1기 배서현',
+    name: '배서현',
     role: '부원',
     stack: '백엔드, AI',
     generation: 1,
@@ -94,7 +94,7 @@ export const members: Member[] = [
   },
   {
     id: 7,
-    name: '1기 이강민',
+    name: '이강민',
     role: '부원',
     stack: '백엔드, AI',
     generation: 1,
@@ -107,7 +107,7 @@ export const members: Member[] = [
   },
   {
     id: 8,
-    name: '1기 이수빈',
+    name: '이수빈',
     role: '부원',
     stack: '프론트엔드, 백엔드',
     generation: 1,
@@ -120,7 +120,7 @@ export const members: Member[] = [
   },
   {
     id: 9,
-    name: '1기 이종우',
+    name: '이종우',
     role: '부원',
     stack: '프론트엔드, 백엔드',
     generation: 1,
@@ -133,7 +133,7 @@ export const members: Member[] = [
   },
   {
     id: 10,
-    name: '1기 정다현',
+    name: '정다현',
     role: '부원',
     stack: '백엔드, AI',
     generation: 1,
@@ -146,7 +146,7 @@ export const members: Member[] = [
   },
   {
     id: 11,
-    name: '1기 조수아',
+    name: '조수아',
     role: '부원',
     stack: '백엔드, AI',
     generation: 1,
@@ -159,7 +159,7 @@ export const members: Member[] = [
   },
   {
     id: 12,
-    name: '1기 조종빈',
+    name: '조종빈',
     role: '부원',
     stack: '프론트엔드, 백엔드',
     generation: 1,
@@ -174,7 +174,7 @@ export const members: Member[] = [
   // 2기 멤버들
   {
     id: 13,
-    name: '2기 김동현',
+    name: '김동현',
     role: '부원',
     stack: '백엔드, 프론트엔드',
     generation: 2,
@@ -187,7 +187,7 @@ export const members: Member[] = [
   },
   {
     id: 14,
-    name: '2기 김동환',
+    name: '김동환',
     role: '부원',
     stack: '백엔드, AI',
     generation: 2,
@@ -200,7 +200,7 @@ export const members: Member[] = [
   },
   {
     id: 15,
-    name: '2기 김준현',
+    name: '김준현',
     role: '부원',
     stack: '백엔드, AI',
     generation: 2,
@@ -213,7 +213,7 @@ export const members: Member[] = [
   },
   {
     id: 16,
-    name: '2기 나윤서',
+    name: '나윤서',
     role: '부원',
     stack: '프론트엔드, 백엔드',
     generation: 2,
@@ -226,7 +226,7 @@ export const members: Member[] = [
   },
   {
     id: 17,
-    name: '2기 박도현',
+    name: '박도현',
     role: '부원',
     stack: '백엔드, AI',
     generation: 2,
@@ -239,7 +239,7 @@ export const members: Member[] = [
   },
   {
     id: 18,
-    name: '2기 박주영',
+    name: '박주영',
     role: '회장',
     stack: '백엔드, AI',
     generation: 2,
@@ -253,7 +253,7 @@ export const members: Member[] = [
   },
   {
     id: 19,
-    name: '2기 유영호',
+    name: '유영호',
     role: '부원',
     stack: '프론트엔드, 백엔드',
     generation: 2,
@@ -266,7 +266,7 @@ export const members: Member[] = [
   },
   {
     id: 20,
-    name: '2기 이태권',
+    name: '이태권',
     role: '부원',
     stack: '백엔드, AI',
     generation: 2,
@@ -279,7 +279,7 @@ export const members: Member[] = [
   },
   {
     id: 21,
-    name: '2기 정지윤',
+    name: '정지윤',
     role: '부원',
     stack: '프론트엔드, 백엔드',
     generation: 2,
@@ -292,7 +292,7 @@ export const members: Member[] = [
   },
   {
     id: 22,
-    name: '2기 조우형',
+    name: '조우형',
     role: '부원',
     stack: '백엔드, AI',
     generation: 2,
@@ -305,7 +305,7 @@ export const members: Member[] = [
   },
   {
     id: 23,
-    name: '2기 최정혁',
+    name: '최정혁',
     role: '부원',
     stack: '백엔드, 프론트엔드',
     generation: 2,
@@ -320,7 +320,7 @@ export const members: Member[] = [
   // 3기 멤버들
   {
     id: 24,
-    name: '3기 김동현',
+    name: '김동현',
     role: '부원',
     stack: '프론트엔드, 백엔드',
     generation: 3,
@@ -333,7 +333,7 @@ export const members: Member[] = [
   },
   {
     id: 25,
-    name: '3기 김정훈',
+    name: '김정훈',
     role: '부원',
     stack: 'AI, 백엔드',
     generation: 3,
@@ -346,7 +346,7 @@ export const members: Member[] = [
   },
   {
     id: 26,
-    name: '3기 김준수',
+    name: '김준수',
     role: '부원',
     stack: '백엔드, 프론트엔드',
     generation: 3,
@@ -359,7 +359,7 @@ export const members: Member[] = [
   },
   {
     id: 27,
-    name: '3기 박성진',
+    name: '박성진',
     role: '부원',
     stack: '백엔드, AI',
     generation: 3,
@@ -372,7 +372,7 @@ export const members: Member[] = [
   },
   {
     id: 28,
-    name: '3기 배인수',
+    name: '배인수',
     role: '부원',
     stack: '프론트엔드, 백엔드',
     generation: 3,
@@ -385,7 +385,7 @@ export const members: Member[] = [
   },
   {
     id: 29,
-    name: '3기 백형우',
+    name: '백형우',
     role: '부원',
     stack: '백엔드, AI',
     generation: 3,
@@ -398,7 +398,7 @@ export const members: Member[] = [
   },
   {
     id: 30,
-    name: '3기 송희영',
+    name: '송희영',
     role: '부원',
     stack: '프론트엔드, 백엔드',
     generation: 3,
@@ -411,7 +411,7 @@ export const members: Member[] = [
   },
   {
     id: 31,
-    name: '3기 이도권',
+    name: '이도권',
     role: '부원',
     stack: '백엔드, AI',
     generation: 3,
@@ -424,7 +424,7 @@ export const members: Member[] = [
   },
   {
     id: 32,
-    name: '3기 이준형',
+    name: '이준형',
     role: '부원',
     stack: '프론트엔드, 백엔드',
     generation: 3,
@@ -437,7 +437,7 @@ export const members: Member[] = [
   },
   {
     id: 33,
-    name: '3기 이채우',
+    name: '이채우',
     role: '부원',
     stack: '백엔드, AI',
     generation: 3,
@@ -450,7 +450,7 @@ export const members: Member[] = [
   },
   {
     id: 34,
-    name: '3기 장지원',
+    name: '장지원',
     role: '부원',
     stack: '프론트엔드, 백엔드',
     generation: 3,
@@ -463,7 +463,7 @@ export const members: Member[] = [
   },
   {
     id: 35,
-    name: '3기 최문기',
+    name: '최문기',
     role: '부원',
     stack: '백엔드, AI',
     generation: 3,
@@ -476,7 +476,7 @@ export const members: Member[] = [
   },
   {
     id: 36,
-    name: '3기 허준재',
+    name: '허준재',
     role: '부원',
     stack: '프론트엔드, 백엔드',
     generation: 3,

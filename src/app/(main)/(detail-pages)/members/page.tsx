@@ -132,15 +132,15 @@ export default function Members() {
 
         {/* 테이블 헤더 그룹 */}
         <div className='flex items-center border-b border-border-gray h-[38px] relative bg-white flex-shrink-0'>
-          <span className='absolute left-[99.27px] text-[16.38px] text-text-secondary'>
+          <span className='absolute left-[89.27px] text-[16.38px] text-text-secondary'>
             이름
           </span>
-          <span className='absolute left-[495px] text-[16.38px]  text-text-secondary'>
-            역할
-          </span>
-          <span className='absolute left-[615px] text-[16.38px] text-text-secondary'>
-            관련스택
-          </span>
+          {/* 기수 + 역할 + 관련스택 (그룹) */}
+          <div className='absolute left-[490px] top-1/2 -translate-y-1/2 flex items-center gap-[50px]'>
+            <span className='text-[16.38px]  text-text-secondary'>기수</span>
+            <span className='text-[16.38px]  text-text-secondary'>역할</span>
+            <span className='text-[16.38px] text-text-secondary'>관련스택</span>
+          </div>
         </div>
 
         {/* 메인 콘텐츠 그룹 */}
@@ -173,16 +173,15 @@ export default function Members() {
                   </span>
                 </div>
 
-                {/* 역할 */}
-                <div>
-                  <span className='text-[18.02px] absolute left-[480px] top-[7.37px] font-[700] text-text-secondary group-hover:text-white'>
+                {/* 기수 + 역할 + 관련스택 (그룹) */}
+                <div className='absolute left-[480px] top-[7.37px] flex items-center gap-[50px]'>
+                  <span className='text-[18.02px] font-[700] text-text-secondary group-hover:text-white'>
+                    {member.generation}기
+                  </span>
+                  <span className='text-[18.02px] font-[700] text-text-secondary group-hover:text-white'>
                     {member.role}
                   </span>
-                </div>
-
-                {/* 관련스택 */}
-                <div>
-                  <span className='text-[18.02px]  absolute left-[600px] top-[7.37px] font-[700] text-text-secondary group-hover:text-white'>
+                  <span className='text-[18.02px] font-[700] text-text-secondary group-hover:text-white'>
                     {member.stack}
                   </span>
                 </div>
