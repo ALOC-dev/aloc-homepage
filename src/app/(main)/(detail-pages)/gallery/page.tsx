@@ -71,26 +71,11 @@ export default function Gallery() {
         <div className='relative' ref={dropdownRef}>
           <button
             onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-            className='w-30 flex justify-center items-center gap-2 rounded-lg hover:bg-gray-100 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500'
+            className='w-30 flex justify-center items-center gap-2 rounded-lg bg-blue-500 hover:bg-blue-600 active:bg-blue-700 transition-all duration-200 focus:outline-none relative overflow-hidden'
           >
-            <span className='text-md font-medium text-gray-700'>
+            <span className='text-md font-medium text-white'>
               {selectedCategory}
             </span>
-            <svg
-              className={`w-4 h-4 text-gray-500 transition-transform duration-200 ${
-                isDropdownOpen ? '' : 'rotate-180'
-              }`}
-              fill='none'
-              stroke='currentColor'
-              viewBox='0 0 24 24'
-            >
-              <path
-                strokeLinecap='round'
-                strokeLinejoin='round'
-                strokeWidth={2}
-                d='M19 9l-7 7-7-7'
-              />
-            </svg>
           </button>
 
           {/* 드롭다운 메뉴 */}
