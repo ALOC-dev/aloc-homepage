@@ -212,7 +212,12 @@ export default function Introduction() {
         const footerRect = footerElement?.getBoundingClientRect();
 
         // "알록이란?" 섹션이 화면에 보이기 시작하면 Widget 표시
-        if (rect.top <= windowHeight * 0.8) {
+        // 단, 화면 맨 아래까지 내렸을 때는 Widget 숨김
+        const isAtBottom =
+          window.scrollY + windowHeight >=
+          document.documentElement.scrollHeight - 10; // 10px 여유
+
+        if (rect.top <= windowHeight * 0.8 && !isAtBottom) {
           setShowWidget(true);
         } else {
           setShowWidget(false);
