@@ -196,34 +196,41 @@ export default function Introduction() {
 
   // Widget 표시 여부를 제어하는 useEffect
   useEffect(() => {
+    let scrollTimeout: NodeJS.Timeout;
+
     const handleScroll = () => {
       if (!introSectionRef.current) return;
 
-      const rect = introSectionRef.current.getBoundingClientRect();
-      const windowHeight = window.innerHeight;
+      // 스크롤 이벤트 디바운싱으로 성능 최적화
+      clearTimeout(scrollTimeout);
+      scrollTimeout = setTimeout(() => {
+        const rect = introSectionRef.current?.getBoundingClientRect();
+        if (!rect) return;
 
-      // "알록이란?" 섹션이 화면에 보이기 시작하면 Widget 표시
-      if (rect.top <= windowHeight * 0.8) {
-        setShowWidget(true);
-      } else {
-        setShowWidget(false);
-      }
+        const windowHeight = window.innerHeight;
+
+        // "알록이란?" 섹션이 화면에 보이기 시작하면 Widget 표시
+        if (rect.top <= windowHeight * 0.8) {
+          setShowWidget(true);
+        } else {
+          setShowWidget(false);
+        }
+      }, 16); // 약 60fps로 제한
     };
 
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      clearTimeout(scrollTimeout);
+    };
   }, []);
 
   // Widget 애니메이션 useEffect
   useEffect(() => {
     if (!widgetRef.current) return;
 
-    // 초기 상태 설정
-    gsap.set(widgetRef.current, {
-      opacity: 0,
-      x: 50,
-      scale: 0.8,
-    });
+    // 기존 애니메이션 중단
+    gsap.killTweensOf(widgetRef.current);
 
     if (showWidget) {
       // Widget이 나타날 때 애니메이션
@@ -231,7 +238,7 @@ export default function Introduction() {
         opacity: 1,
         x: 0,
         scale: 1,
-        duration: 0.8,
+        duration: 0.6,
         ease: 'power2.out',
         onStart: () => {
           // 애니메이션 시작 시 visibility를 visible로 변경
@@ -246,11 +253,12 @@ export default function Introduction() {
         opacity: 0,
         x: 50,
         scale: 0.8,
-        duration: 0.5,
+        duration: 0.4,
         ease: 'power2.in',
         onComplete: () => {
           // 애니메이션 완료 후 visibility를 hidden으로 변경
-          if (widgetRef.current) {
+          // showWidget이 여전히 false인 경우에만 hidden으로 설정
+          if (widgetRef.current && !showWidget) {
             widgetRef.current.style.visibility = 'hidden';
           }
         },
