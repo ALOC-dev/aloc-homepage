@@ -208,6 +208,8 @@ export default function Introduction() {
         if (!rect) return;
 
         const windowHeight = window.innerHeight;
+        const footerElement = document.querySelector('footer');
+        const footerRect = footerElement?.getBoundingClientRect();
 
         // "알록이란?" 섹션이 화면에 보이기 시작하면 Widget 표시
         if (rect.top <= windowHeight * 0.8) {
@@ -906,6 +908,105 @@ export default function Introduction() {
           </div>
         </div>
       </div>
+
+      {/* Footer */}
+      <footer className='bg-black text-white py-12 px-8'>
+        <div className='max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center'>
+          {/* 왼쪽: ALOC 로고 및 정보 */}
+          <div className='flex items-center mb-6 md:mb-0'>
+            <div className='w-12 h-12 mr-4'>
+              <Image
+                src='/images/introduction/aloc-logo.png'
+                alt='ALOC Logo'
+                width={48}
+                height={48}
+                className='object-contain'
+              />
+            </div>
+            <div>
+              <h3 className='text-xl font-bold text-white mb-1'>ALOC</h3>
+              <p className='text-gray-400 text-sm'>All Linked One Code</p>
+              <p className='text-gray-400 text-xs'>
+                서울시립대학교 컴퓨터과학부 학술 소모임
+              </p>
+            </div>
+          </div>
+
+          {/* 오른쪽: 소셜 미디어 및 연락처 */}
+          <div className='flex flex-col items-end'>
+            {/* 소셜 미디어 아이콘들 */}
+            <div className='flex space-x-4 mb-4'>
+              <a
+                href='https://github.com'
+                target='_blank'
+                rel='noopener noreferrer'
+                className='w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-gray-700 transition-colors'
+                aria-label='GitHub'
+              >
+                <Image
+                  src='/images/common/github-logo.png'
+                  alt='GitHub'
+                  width={20}
+                  height={20}
+                  className='object-contain'
+                />
+              </a>
+              <a
+                href='https://notion.so'
+                target='_blank'
+                rel='noopener noreferrer'
+                className='w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-gray-700 transition-colors'
+                aria-label='Notion'
+              >
+                <Image
+                  src='/images/common/notion-logo.png'
+                  alt='Notion'
+                  width={20}
+                  height={20}
+                  className='object-contain'
+                />
+              </a>
+              <a
+                href='mailto:aloc@uos.ac.kr'
+                className='w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-gray-700 transition-colors'
+                aria-label='Email'
+              >
+                <svg
+                  className='w-5 h-5 text-white'
+                  fill='none'
+                  stroke='currentColor'
+                  viewBox='0 0 24 24'
+                >
+                  <path
+                    strokeLinecap='round'
+                    strokeLinejoin='round'
+                    strokeWidth={2}
+                    d='M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z'
+                  />
+                </svg>
+              </a>
+              <a
+                href='#'
+                className='w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-gray-700 transition-colors'
+                aria-label='More'
+              >
+                <svg
+                  className='w-5 h-5 text-white'
+                  fill='currentColor'
+                  viewBox='0 0 24 24'
+                >
+                  <path d='M12 2C13.1 2 14 2.9 14 4C14 5.1 13.1 6 12 6C10.9 6 10 5.1 10 4C10 2.9 10.9 2 12 2ZM12 10C13.1 10 14 10.9 14 12C14 13.1 13.1 14 12 14C10.9 14 10 13.1 10 12C10 10.9 10.9 10 12 10ZM12 18C13.1 18 14 18.9 14 20C14 21.1 13.1 22 12 22C10.9 22 10 21.1 10 20C10 18.9 10.9 18 12 18Z' />
+                </svg>
+              </a>
+            </div>
+
+            {/* 저작권 문구 */}
+            <p className='text-gray-400 text-sm'>
+              © ALOC 2025. Made in Seoul.
+            </p>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 }
