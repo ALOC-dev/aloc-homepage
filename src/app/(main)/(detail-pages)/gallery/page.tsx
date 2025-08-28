@@ -67,11 +67,11 @@ export default function Gallery() {
       </div>
 
       {/* 카테고리 선택 드롭다운 */}
-      <div className='w-full px-3 py-1 h-7'>
+      <div className='w-full px-2 py-1.5 h-7'>
         <div className='relative' ref={dropdownRef}>
           <button
             onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-            className='w-30 flex justify-center items-center gap-2 rounded-lg bg-blue-500 hover:bg-blue-600 active:bg-blue-700 transition-all duration-200 focus:outline-none relative overflow-hidden'
+            className='w-30 flex justify-center items-center gap-2 rounded-xl bg-blue-500 hover:bg-blue-600 active:bg-blue-700 transition-all duration-200 focus:outline-none relative overflow-hidden'
           >
             <span className='text-md font-medium text-white'>
               {selectedCategory}
