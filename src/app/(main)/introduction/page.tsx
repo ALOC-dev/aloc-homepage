@@ -714,7 +714,13 @@ export default function Introduction() {
       </div>
 
       {/* Widget 컴포넌트 - 알록이란? 섹션 이후에 표시 */}
-      <Widget ref={widgetRef} style={{ visibility: 'hidden' }} />
+      <Widget
+        ref={widgetRef}
+        style={{
+          visibility: 'hidden',
+          background: 'rgba(240, 240, 240, 0.8)',
+        }}
+      />
 
       {/* 무엇을 하나요?(모달) 섹션 */}
       <div className='relative py-20 flex justify-center'>

@@ -190,8 +190,8 @@ export default function Members() {
           </span>
           {/* 기수 + 역할 + 관련스택 (그룹) */}
           <div className='absolute left-[490px] top-1/2 -translate-y-1/2 flex items-center gap-[50px]'>
-            <span className='text-[16.38px]  text-text-secondary'>기수</span>
-            <span className='text-[16.38px]  text-text-secondary'>역할</span>
+            <span className='text-[16.38px] text-text-secondary'>기수</span>
+            <span className='text-[16.38px] text-text-secondary'>역할</span>
             <span className='text-[16.38px] text-text-secondary'>관련스택</span>
           </div>
         </div>
