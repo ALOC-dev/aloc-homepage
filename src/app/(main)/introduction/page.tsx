@@ -875,14 +875,14 @@ export default function Introduction() {
           <div className='flex flex-col items-end'>
             <div className='flex space-x-4 mb-4'>
               <a
-                href='https://github.com'
+                href='https://github.com/orgs/ALOC-dev/dashboard'
                 target='_blank'
                 rel='noopener noreferrer'
                 className='w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-gray-700 transition-colors'
                 aria-label='GitHub'
               >
                 <Image
-                  src='/images/common/github-logo.png'
+                  src='/images/common/github-mark-white.svg'
                   alt='GitHub'
                   width={20}
                   height={20}
