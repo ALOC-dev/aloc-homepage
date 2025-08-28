@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, useCallback } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { gsap } from 'gsap';
@@ -14,6 +14,20 @@ import Widget from '@/components/Widget';
 
 // GSAP ScrollTrigger 플러그인 등록
 gsap.registerPlugin(ScrollTrigger);
+
+// 상수 정의
+const ANIMATION_CONFIG = {
+  DURATION: 1.5,
+  EASE: 'power2.out',
+  SCROLL_DEBOUNCE: 16,
+  PROGRESS_STEP: 5,
+} as const;
+
+const SCROLL_TRIGGER_CONFIG = {
+  START: 'top 80%',
+  END: 'bottom 20%',
+  TOGGLE_ACTIONS: 'play none none reverse',
+} as const;
 
 interface BrowserTabHeaderProps {
   label: string;
@@ -40,88 +54,141 @@ function BrowserTabHeader({
   );
 }
 
+// 애니메이션 유틸리티 함수
+const createScrollAnimation = (
+  element: HTMLElement,
+  config: {
+    opacity?: number;
+    y?: number;
+    x?: number;
+    rotation?: number;
+    duration?: number;
+  } = {},
+) => {
+  const {
+    opacity = 1,
+    y = 0,
+    x = 0,
+    rotation = 0,
+    duration = ANIMATION_CONFIG.DURATION,
+  } = config;
+
+  // 초기 상태 설정
+  gsap.set(element, {
+    opacity: 0,
+    y: 150,
+    x: 100,
+    rotation: 5,
+  });
+
+  // ScrollTrigger 애니메이션
+  const tl = gsap.timeline({
+    scrollTrigger: {
+      trigger: element,
+      start: SCROLL_TRIGGER_CONFIG.START,
+      end: SCROLL_TRIGGER_CONFIG.END,
+      toggleActions: SCROLL_TRIGGER_CONFIG.TOGGLE_ACTIONS,
+    },
+  });
+
+  tl.to(element, {
+    opacity,
+    y,
+    x,
+    rotation,
+    duration,
+    ease: ANIMATION_CONFIG.EASE,
+  });
+
+  return tl;
+};
+
 export default function Introduction() {
-  // 알록이란? 섹션 공통 애니메이션 클래스
-  const INTRO_ANIM_BASE = 'transition-all duration-1500 ease-out';
-  const INTRO_ANIM_HIDDEN = 'opacity-0 translate-x-50';
-  const INTRO_ANIM_VISIBLE = 'opacity-100 translate-x-0';
   const [scrollProgress, setScrollProgress] = useState(0);
   const [isScrollLocked, setIsScrollLocked] = useState(true);
-  const modalSectionRef = useRef<HTMLDivElement>(null);
   const [selectedActivity, setSelectedActivity] =
     useState<ActivityLabel>('지식공유회');
   const [showWidget, setShowWidget] = useState(false);
-  const [showIntroSection, setShowIntroSection] = useState(false);
   const [transitionStage, setTransitionStage] = useState<'idle' | 'out' | 'in'>(
     'idle',
   );
   const [inActive, setInActive] = useState(false);
-  const timeoutsRef = useRef<number[]>([]);
-  const backgroundRef = useRef<HTMLDivElement>(null); // [GSAP]
 
-  // 알록이란? 섹션 카드들에 대한 ref
-  const noteCardRef = useRef<HTMLDivElement>(null);
-  const orgChartCardRef = useRef<HTMLDivElement>(null);
-  const centerTabRef = useRef<HTMLDivElement>(null);
-  const leftTopTabRef = useRef<HTMLDivElement>(null);
-  const mainIntroCardRef = useRef<HTMLDivElement>(null);
+  const timeoutsRef = useRef<number[]>([]);
+  const backgroundRef = useRef<HTMLDivElement>(null);
+  const modalSectionRef = useRef<HTMLDivElement>(null);
   const introSectionRef = useRef<HTMLDivElement>(null);
   const widgetRef = useRef<HTMLDivElement>(null);
 
-  const clearAllTimers = () => {
+  // 알록이란? 섹션 카드들에 대한 ref
+  const cardRefs = {
+    note: useRef<HTMLDivElement>(null),
+    orgChart: useRef<HTMLDivElement>(null),
+    centerTab: useRef<HTMLDivElement>(null),
+    leftTopTab: useRef<HTMLDivElement>(null),
+    mainIntro: useRef<HTMLDivElement>(null),
+  };
+
+  const clearAllTimers = useCallback(() => {
     timeoutsRef.current.forEach((id) => window.clearTimeout(id));
     timeoutsRef.current = [];
-  };
+  }, []);
 
-  const handleSelectActivity = (next: ActivityLabel) => {
-    if (next === selectedActivity) return;
-    clearAllTimers();
-    setTransitionStage('out');
-    setInActive(false);
-    const t1 = window.setTimeout(() => {
-      setSelectedActivity(next);
-      setTransitionStage('in');
-      const t2 = window.setTimeout(() => {
-        setInActive(true);
-      }, 10);
-      timeoutsRef.current.push(t2);
-      const t3 = window.setTimeout(() => {
-        setTransitionStage('idle');
-        setInActive(false);
-      }, 500);
-      timeoutsRef.current.push(t3);
-    }, 250);
-    timeoutsRef.current.push(t1);
-  };
+  const handleSelectActivity = useCallback(
+    (next: ActivityLabel) => {
+      if (next === selectedActivity) return;
 
-  const getAnimClasses = () => {
+      clearAllTimers();
+      setTransitionStage('out');
+      setInActive(false);
+
+      const t1 = window.setTimeout(() => {
+        setSelectedActivity(next);
+        setTransitionStage('in');
+
+        const t2 = window.setTimeout(() => {
+          setInActive(true);
+        }, 10);
+        timeoutsRef.current.push(t2);
+
+        const t3 = window.setTimeout(() => {
+          setTransitionStage('idle');
+          setInActive(false);
+        }, 500);
+        timeoutsRef.current.push(t3);
+      }, 250);
+      timeoutsRef.current.push(t1);
+    },
+    [selectedActivity, clearAllTimers],
+  );
+
+  const getAnimClasses = useCallback(() => {
     const base = 'transition-all duration-500 ease-out will-change-transform';
     if (transitionStage === 'out') return `${base} opacity-0 translate-y-4`;
-    if (transitionStage === 'in')
+    if (transitionStage === 'in') {
       return `${base} ${inActive ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`;
+    }
     return `${base} opacity-100 translate-y-0`;
-  };
+  }, [transitionStage, inActive]);
 
+  // 스크롤 게이지바 처리
   useEffect(() => {
-    // 페이지 로드 시 스크롤 위치를 최상단으로 이동
     window.scrollTo(0, 0);
 
     const handleWheel = (e: WheelEvent) => {
-      // 게이지바가 100% 미만일 때만 스크롤 방지
       if (scrollProgress < 100) {
         e.preventDefault();
+        const scrollDelta =
+          e.deltaY > 0
+            ? ANIMATION_CONFIG.PROGRESS_STEP
+            : -ANIMATION_CONFIG.PROGRESS_STEP;
 
-        // 스크롤 방향에 따라 게이지바 증가/감소
-        const scrollDelta = e.deltaY > 0 ? 5 : -5; // 스크롤 감도 조절
         setScrollProgress((prev) => {
           const newProgress = Math.max(0, Math.min(100, prev + scrollDelta));
 
-          // 게이지바가 100%에 도달하면 스크롤 잠금 해제
           if (newProgress >= 100) {
-            // 3초 후에 스크롤 잠금 해제
             setTimeout(() => {
               setIsScrollLocked(false);
-              // body 스크롤 복원
               document.body.style.overflow = 'auto';
             }, 1000);
           }
@@ -131,21 +198,18 @@ export default function Introduction() {
       }
     };
 
-    // 스크롤 이벤트 방지 (게이지바 완성 전까지만)
     const preventScroll = (e: Event) => {
       if (scrollProgress < 100) {
         e.preventDefault();
       }
     };
 
-    // 터치 이벤트 처리 (모바일)
     const handleTouchMove = (e: TouchEvent) => {
       if (scrollProgress < 100) {
         e.preventDefault();
       }
     };
 
-    // 게이지바가 완성되기 전까지만 이벤트 리스너 등록
     if (isScrollLocked) {
       window.addEventListener('wheel', handleWheel, { passive: false });
       window.addEventListener('scroll', preventScroll, { passive: false });
@@ -161,32 +225,11 @@ export default function Introduction() {
     };
   }, [scrollProgress, isScrollLocked]);
 
-  // [GSAP] 모달 섹션 애니메이션
+  // 모달 섹션 애니메이션
   useEffect(() => {
     if (!modalSectionRef.current) return;
 
-    // 초기 상태 설정
-    gsap.set(modalSectionRef.current, {
-      opacity: 0,
-      y: 150,
-    });
-
-    // ScrollTrigger로 애니메이션 트리거
-    const tl = gsap.timeline({
-      scrollTrigger: {
-        trigger: modalSectionRef.current,
-        start: 'top 80%',
-        end: 'bottom 20%',
-        toggleActions: 'play none none reverse',
-      },
-    });
-
-    tl.to(modalSectionRef.current, {
-      opacity: 1,
-      y: 0,
-      duration: 1.5,
-      ease: 'power2.out',
-    });
+    const tl = createScrollAnimation(modalSectionRef.current);
 
     return () => {
       tl.kill();
@@ -194,30 +237,29 @@ export default function Introduction() {
     };
   }, []);
 
-  // Widget 표시 여부를 제어하는 useEffect
+  // Widget 표시 제어
   useEffect(() => {
     let scrollTimeout: NodeJS.Timeout;
 
     const handleScroll = () => {
       if (!introSectionRef.current) return;
 
-      // 스크롤 이벤트 디바운싱으로 성능 최적화
       clearTimeout(scrollTimeout);
       scrollTimeout = setTimeout(() => {
         const rect = introSectionRef.current?.getBoundingClientRect();
         if (!rect) return;
 
         const windowHeight = window.innerHeight;
-        const footerElement = document.querySelector('footer');
-        const footerRect = footerElement?.getBoundingClientRect();
+        const isAtBottom =
+          window.scrollY + windowHeight >=
+          document.documentElement.scrollHeight - 10;
 
-        // "알록이란?" 섹션이 화면에 보이기 시작하면 Widget 표시
-        if (rect.top <= windowHeight * 0.8) {
+        if (rect.top <= windowHeight * 0.8 && !isAtBottom) {
           setShowWidget(true);
         } else {
           setShowWidget(false);
         }
-      }, 16); // 약 60fps로 제한
+      }, ANIMATION_CONFIG.SCROLL_DEBOUNCE);
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
@@ -227,15 +269,13 @@ export default function Introduction() {
     };
   }, []);
 
-  // Widget 애니메이션 useEffect
+  // Widget 애니메이션
   useEffect(() => {
     if (!widgetRef.current) return;
 
-    // 기존 애니메이션 중단
     gsap.killTweensOf(widgetRef.current);
 
     if (showWidget) {
-      // Widget이 나타날 때 애니메이션
       gsap.to(widgetRef.current, {
         opacity: 1,
         x: 0,
@@ -243,14 +283,12 @@ export default function Introduction() {
         duration: 0.6,
         ease: 'power2.out',
         onStart: () => {
-          // 애니메이션 시작 시 visibility를 visible로 변경
           if (widgetRef.current) {
             widgetRef.current.style.visibility = 'visible';
           }
         },
       });
     } else {
-      // Widget이 사라질 때 애니메이션
       gsap.to(widgetRef.current, {
         opacity: 0,
         x: 50,
@@ -258,8 +296,6 @@ export default function Introduction() {
         duration: 0.4,
         ease: 'power2.in',
         onComplete: () => {
-          // 애니메이션 완료 후 visibility를 hidden으로 변경
-          // showWidget이 여전히 false인 경우에만 hidden으로 설정
           if (widgetRef.current && !showWidget) {
             widgetRef.current.style.visibility = 'hidden';
           }
@@ -268,14 +304,12 @@ export default function Introduction() {
     }
   }, [showWidget]);
 
-  // [GSAP] ScrollTrigger를 사용한 배경색 변화 애니메이션
+  // 배경색 변화 애니메이션
   useEffect(() => {
     if (!backgroundRef.current) return;
 
-    // 초기 배경색을 검은색으로 설정 (깜빡임 방지)
     backgroundRef.current.style.backgroundColor = 'rgb(0, 0, 0)';
 
-    // 약간의 지연 후 다시 한번 설정하여 확실하게 적용
     const initialTimer = setTimeout(() => {
       if (backgroundRef.current) {
         backgroundRef.current.style.backgroundColor = 'rgb(0, 0, 0)';
@@ -285,28 +319,24 @@ export default function Introduction() {
     const tl = gsap.timeline({
       scrollTrigger: {
         trigger: backgroundRef.current,
-        start: 'top top', // 트리거 요소 상단이 화면 상단에 있을 때 시작
-        end: 'bottom top', // 트리거 요소 하단이 화면 상단에 있을 때 끝
-        scrub: 1, // 더 부드러운 스크러빙
+        start: 'top top',
+        end: 'bottom top',
+        scrub: 1,
         onUpdate: (self) => {
           const progress = self.progress;
-          // 검은색에서 흰색으로 점점 바뀌는 효과 (더 부드럽게)
           const blackToWhite = Math.round(1500 * progress);
           const backgroundColor = `rgb(${blackToWhite}, ${blackToWhite}, ${blackToWhite})`;
 
-          // 전체 페이지 배경색 변경
           if (backgroundRef.current) {
             backgroundRef.current.style.backgroundColor = backgroundColor;
           }
         },
         onEnter: () => {
-          // 트리거 영역에 진입할 때 초기화
           if (backgroundRef.current) {
             backgroundRef.current.style.backgroundColor = 'rgb(0, 0, 0)';
           }
         },
         onLeave: () => {
-          // 트리거 영역을 벗어날 때 완전히 흰색으로
           if (backgroundRef.current) {
             backgroundRef.current.style.backgroundColor = 'rgb(255, 255, 255)';
           }
@@ -318,108 +348,51 @@ export default function Introduction() {
       clearTimeout(initialTimer);
       tl.kill();
       ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
-      // 컴포넌트 언마운트 시 배경색 복원
       if (backgroundRef.current) {
         backgroundRef.current.style.backgroundColor = '';
       }
     };
   }, []);
 
-  // [GSAP] 알록이란? 섹션 카드들 애니메이션
+  // 알록이란? 섹션 카드들 애니메이션
   useEffect(() => {
-    if (
-      !noteCardRef.current ||
-      !orgChartCardRef.current ||
-      !centerTabRef.current ||
-      !leftTopTabRef.current ||
-      !mainIntroCardRef.current
-    )
-      return;
+    const cardElements = Object.values(cardRefs)
+      .map((ref) => ref.current)
+      .filter(Boolean);
+    if (cardElements.length === 0) return;
 
     // 초기 상태 설정
-    gsap.set(
-      [
-        noteCardRef.current,
-        orgChartCardRef.current,
-        centerTabRef.current,
-        leftTopTabRef.current,
-        mainIntroCardRef.current,
-      ],
-      {
-        opacity: 0,
-        x: 100,
-        y: 50,
-        rotation: 5,
-      },
-    );
+    gsap.set(cardElements, {
+      opacity: 0,
+      x: 100,
+      y: 50,
+      rotation: 5,
+    });
 
-    // ScrollTrigger로 애니메이션 트리거
+    // 순차적 애니메이션
     const tl = gsap.timeline({
       scrollTrigger: {
-        trigger: noteCardRef.current,
-        start: 'top 80%',
-        end: 'bottom 20%',
-        toggleActions: 'play none none reverse',
+        trigger: cardElements[0],
+        start: SCROLL_TRIGGER_CONFIG.START,
+        end: SCROLL_TRIGGER_CONFIG.END,
+        toggleActions: SCROLL_TRIGGER_CONFIG.TOGGLE_ACTIONS,
       },
     });
 
-    // 각 카드를 순차적으로 애니메이션
-    tl.to(noteCardRef.current, {
-      opacity: 1,
-      x: 0,
-      y: 0,
-      rotation: 0,
-      duration: 1,
-      ease: 'power2.out',
-    })
-      .to(
-        orgChartCardRef.current,
+    cardElements.forEach((element, index) => {
+      tl.to(
+        element,
         {
           opacity: 1,
           x: 0,
           y: 0,
           rotation: 0,
           duration: 1,
-          ease: 'power2.out',
+          ease: ANIMATION_CONFIG.EASE,
         },
-        '-=0.5',
-      )
-      .to(
-        centerTabRef.current,
-        {
-          opacity: 1,
-          x: 0,
-          y: 0,
-          rotation: 0,
-          duration: 1,
-          ease: 'power2.out',
-        },
-        '-=0.5',
-      )
-      .to(
-        leftTopTabRef.current,
-        {
-          opacity: 1,
-          x: 0,
-          y: 0,
-          rotation: 0,
-          duration: 1,
-          ease: 'power2.out',
-        },
-        '-=0.5',
-      )
-      .to(
-        mainIntroCardRef.current,
-        {
-          opacity: 1,
-          x: 0,
-          y: 0,
-          rotation: 0,
-          duration: 1,
-          ease: 'power2.out',
-        },
-        '-=0.5',
+        index === 0 ? 0 : '-=0.5',
       );
+    });
 
     return () => {
       tl.kill();
@@ -429,23 +402,20 @@ export default function Introduction() {
 
   return (
     <div className='min-h-screen min-w-screen bg-white'>
-      {/* [GSAP] 게이지바 섹션만 감싸는 배경색 변화 트리거 */}
+      {/* 게이지바 섹션 */}
       <div
         ref={backgroundRef}
         className='bg-black pb-50'
         style={{ backgroundColor: 'rgb(0, 0, 0)' }}
       >
-        {/* 게이지바 섹션 */}
         <div className='flex flex-col items-center justify-center px-4 min-h-screen'>
-          {/* 스크롤바 콘텐츠 */}
           <div className='z-10 flex flex-col items-center justify-center relative'>
             {/* 스크롤 안내 */}
             <div
               className={`mt-36 transition-all duration-1500 ease-in-out ${
-                scrollProgress >= 100 ? 'opacity-0 ' : 'opacity-100 '
+                scrollProgress >= 100 ? 'opacity-0' : 'opacity-100'
               }`}
             >
-              {/* 중앙 이미지 */}
               <div className='w-full h-64 mb-16 relative'>
                 <Image
                   src='/images/introduction/aloc-logo.png'
@@ -455,7 +425,6 @@ export default function Introduction() {
                   priority
                 />
               </div>
-              {/* 스크롤 게이지바 */}
               <div
                 className={`z-20 transition-all duration-1000 ease-in-out ${
                   scrollProgress >= 100
@@ -470,7 +439,6 @@ export default function Introduction() {
                   />
                 </div>
               </div>
-              {/* 스크롤 안내 */}
               <div className='text-center text-white mt-8 animate-bounce'>
                 <p className='text-sm text-gray-400 mb-2'>
                   스크롤하여 계속하기
@@ -488,14 +456,15 @@ export default function Introduction() {
                   : 'opacity-0 transform translate-y-[40px]'
               }`}
             >
-              <h1 className='text-[120px]  font-bold mb-6'>ALOC</h1>
-              <p className='text-[20px]  text-white leading-relaxed'>
+              <h1 className='text-[120px] font-bold mb-6'>ALOC</h1>
+              <p className='text-[20px] text-white leading-relaxed'>
                 서울시립대학교 컴퓨터과학부 학술 소모임
               </p>
             </div>
           </div>
         </div>
       </div>
+
       {/* 알록이란? 섹션 */}
       <div className='flex justify-center -mt-50'>
         <div
@@ -503,11 +472,9 @@ export default function Introduction() {
           id='intro-section'
           className='relative min-h-[1080px] w-[1440px] scale-[0.8] z-20'
         >
-          {/* 전체 프레임 기준으로 카드들을 겹쳐서 배치 */}
-
           {/* 1. 노트 스타일 카드 (우상단) */}
           <div
-            ref={noteCardRef}
+            ref={cardRefs.note}
             className='absolute top-[61px] right-[106px] w-[389px] h-[224px] bg-yellow-50 rounded-xl shadow-lg border-l-4 border-yellow-400'
           >
             <div className='bg-yellow-100 rounded-lg p-6 h-full'>
@@ -530,24 +497,21 @@ export default function Introduction() {
 
           {/* 2. 조직도 스타일 카드 (좌하단) */}
           <div
-            ref={orgChartCardRef}
+            ref={cardRefs.orgChart}
             className='absolute bottom-[93px] left-[67px] w-[511px] h-[320px]'
           >
             <div className='inset-0 p-5 w-[346px] h-[298px] grid grid-rows-3 bg-gray-100 rounded-xl shadow-lg'>
               {(() => {
-                // 조직도 데이터 정의
                 const orgData = [
                   {
                     items: [
                       {
                         text: 'Univ Of Seoul',
                         className: 'text-xl font-small tracking-tight',
-                        itemClass: '',
                       },
                       {
                         text: 'Computer Science',
                         className: 'text-xl font-small tracking-tight',
-                        itemClass: '',
                       },
                     ],
                     containerClass:
@@ -558,12 +522,10 @@ export default function Introduction() {
                       {
                         text: 'ALOC',
                         className: 'text-xl font-small tracking-tight',
-                        itemClass: '',
                       },
                       {
                         text: 'All Linked One Code',
                         className: 'text-xl font-small tracking-tight',
-                        itemClass: '',
                       },
                     ],
                     containerClass:
@@ -580,7 +542,6 @@ export default function Introduction() {
                       {
                         text: 'All Linked One Code',
                         className: 'text-xl font-small tracking-tight',
-                        itemClass: 'mx-3',
                       },
                     ],
                     containerClass: 'grid grid-rows-2',
@@ -611,7 +572,6 @@ export default function Introduction() {
               })()}
             </div>
 
-            {/* 오른쪽: 활동 분야 */}
             <div className='absolute w-[173px] h-[129px] bottom-0 right-0 bg-gray-100 rounded-xl shadow-lg p-3'>
               <div className='grid grid-cols-1 gap-2'>
                 <span className='text-xl font-small tracking-tight'>Study</span>
@@ -627,7 +587,7 @@ export default function Introduction() {
 
           {/* 3. 중앙 탭 */}
           <div
-            ref={centerTabRef}
+            ref={cardRefs.centerTab}
             className='absolute top-[166px] left-[310px] z-10'
           >
             <div className='w-[794px] h-[649px] bg-gray-100 rounded-xl overflow-hidden shadow-lg'>
@@ -646,7 +606,7 @@ export default function Introduction() {
 
           {/* 4. 좌 상단 탭 */}
           <div
-            ref={leftTopTabRef}
+            ref={cardRefs.leftTopTab}
             className='absolute top-[30px] left-[75px] w-[299px] h-[290px] bg-gray-100 rounded-xl overflow-hidden shadow-lg z-20'
           >
             <BrowserTabHeader
@@ -667,18 +627,15 @@ export default function Introduction() {
 
           {/* 5. 메인 소개 카드 (우하단) */}
           <div
-            ref={mainIntroCardRef}
+            ref={cardRefs.mainIntro}
             className='absolute bottom-[59px] right-[200px] w-[335px] h-[520px] bg-gray-100 rounded-3xl p-8 shadow-lg overflow-hidden z-40'
           >
-            {/* 도움말 버튼 */}
             <div className='absolute top-4 right-4'>
               <button className='w-6 h-6 bg-gray-300 rounded-full flex items-center justify-center text-black text-sm hover:bg-gray-400 transition-colors'>
                 ?
               </button>
             </div>
-            {/* 메인 콘텐츠 */}
             <div className='relative z-10 flex flex-col items-center text-center h-full'>
-              {/* 로고 이미지 */}
               <div className='w-28 h-28 rounded-full overflow-hidden shadow-md flex-shrink-0 mb-6'>
                 <Image
                   src='/images/introduction/aloc-logo.png'
@@ -689,7 +646,6 @@ export default function Introduction() {
                 />
               </div>
 
-              {/* 텍스트 콘텐츠 */}
               <div className='mb-8'>
                 <h2 className='text-4xl font-bold text-black mb-4'>ALOC</h2>
                 <p className='text-base text-gray-600 leading-relaxed'>
@@ -701,7 +657,6 @@ export default function Introduction() {
                 </p>
               </div>
 
-              {/* 버튼 그룹 */}
               <div className='w-full space-y-3'>
                 <button className='w-full bg-gradient-to-b from-blue-500 to-blue-600 text-white px-8 py-2 rounded-4xl font-medium hover:from-blue-600 hover:to-blue-700 transition-all duration-300 shadow-md'>
                   가입하기!
@@ -711,7 +666,6 @@ export default function Introduction() {
                 </button>
               </div>
 
-              {/* 체크박스 */}
               <div className='absolute bottom-1 left-1/2 transform -translate-x-1/2 flex items-center gap-2'>
                 <input type='checkbox' id='dontAsk' className='w-4 h-4' />
                 <label htmlFor='dontAsk' className='text-sm text-gray-600'>
@@ -723,7 +677,7 @@ export default function Introduction() {
         </div>
       </div>
 
-      {/* Widget 컴포넌트 - 알록이란? 섹션 이후에 표시 */}
+      {/* Widget 컴포넌트 */}
       <Widget
         ref={widgetRef}
         style={{
@@ -737,12 +691,10 @@ export default function Introduction() {
         <div id='modal-section' className='relative py-20 scale-[0.6]'>
           <div className='mx-auto px-4'>
             <div className='w-[769px] h-[460px] mx-auto flex flex-col justify-center items-center'>
-              {/* 모달 카드 */}
               <div
                 ref={modalSectionRef}
                 className='w-full h-full bg-gray-200 rounded-3xl shadow-lg relative overflow-hidden'
               >
-                {/* 상단 헤더 */}
                 <div className='text-center w-full h-[329px] flex flex-col justify-center items-center'>
                   <h2 className='text-6xl font-bold text-black mb-6'>
                     Activity
@@ -751,11 +703,7 @@ export default function Introduction() {
                     ALOC에서는 무엇을 하나요?
                   </p>
                 </div>
-
-                {/* 구분선 */}
                 <div className='border-t-4 border-gray-300'></div>
-
-                {/* 하단 버튼 영역 */}
                 <div className='flex flex-row w-full h-[131px]'>
                   <div className='basis-1/2 border-r-4 border-gray-300 flex justify-center items-center'>
                     <span className='text-4xl text-blue-500'>options</span>
@@ -823,18 +771,16 @@ export default function Introduction() {
                 );
               })()}
 
-              {/* 메모 탭 (노란색 배경) */}
+              {/* 메모 탭 */}
               <div
                 className={`${activityConfigMap[selectedActivity].memoTab.positionClass} w-[676px] h-[425px] bg-yellow-200 rounded-lg shadow-lg ${getAnimClasses()}`}
               >
-                {/* 브라우저 헤더 */}
                 <div className='w-full h-[29px] bg-yellow-300 rounded-t-lg flex items-center px-3'>
                   <div className='flex items-center gap-1'>
                     <div className='w-[19px] h-[18px] bg-yellow-200 border-2 border-yellow-600 rounded'></div>
                   </div>
                   <div className='flex-1'></div>
                 </div>
-                {/* 콘텐츠 영역 */}
                 <div className='w-full h-[396px] bg-yellow-100 p-6'>
                   <p className='text-[30px] leading-[1.33] tracking-[-3.33%] text-gray-800'>
                     {activityConfigMap[selectedActivity].memoTab.content}
@@ -842,7 +788,7 @@ export default function Introduction() {
                 </div>
               </div>
 
-              {/* 중앙 사진 탭 - 선택된 활동 이미지 표시 */}
+              {/* 중앙 사진 탭 */}
               <div
                 className={`${activityConfigMap[selectedActivity].centralPhotoTab.positionClass}`}
               >
@@ -850,13 +796,11 @@ export default function Introduction() {
                   className={`w-[748px] h-[584px] bg-gray-100 rounded-xl overflow-hidden shadow-lg ${getAnimClasses()}`}
                 >
                   <div className='bg-gray-200 px-4 py-2 flex items-center justify-between'>
-                    {/* 3개 원 그룹 - 좌측 배치 */}
                     <div className='flex items-center gap-3'>
                       <div className='w-3 h-3 bg-red-400 rounded-full'></div>
                       <div className='w-3 h-3 bg-yellow-400 rounded-full'></div>
                       <div className='w-3 h-3 bg-green-400 rounded-full'></div>
                     </div>
-                    {/* span - 중앙 배치 */}
                     <div className='absolute left-1/2 transform -translate-x-1/2'>
                       <span className='text-m text-gray-600'>
                         {
@@ -882,7 +826,6 @@ export default function Introduction() {
               <div
                 className={`${activityConfigMap[selectedActivity].alertCard.positionClass} shadow-lg w-[521px] h-[312px] bg-gray-200 rounded-[24px] flex justify-center relative ${getAnimClasses()}`}
               >
-                {/* 느낌표 아이콘 → alert.png 이미지로 대체 */}
                 <div className='absolute top-[41px] left-[201px] w-[132px] h-[132px]'>
                   <Image
                     src='/images/introduction/alert.png'
@@ -892,11 +835,9 @@ export default function Introduction() {
                     className='w-full h-full object-cover'
                   />
                 </div>
-                {/* 텍스트 */}
-                <div className='absolute top-[165px]  text-[24px] text-black text-center'>
+                <div className='absolute top-[165px] text-[24px] text-black text-center'>
                   {activityConfigMap[selectedActivity].alertCard.text}
                 </div>
-                {/* 더보기 버튼 */}
                 <Link
                   href={activityConfigMap[selectedActivity].alertCard.link}
                   className='absolute top-[219px] left-[37px] w-[461px] h-[48px] bg-gradient-to-b from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 rounded-[16px] flex items-center justify-center cursor-pointer transition-all duration-200'
@@ -912,7 +853,6 @@ export default function Introduction() {
       {/* Footer */}
       <footer className='bg-black text-white py-12 px-8'>
         <div className='max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center'>
-          {/* 왼쪽: ALOC 로고 및 정보 */}
           <div className='flex items-center mb-6 md:mb-0'>
             <div className='w-12 h-12 mr-4'>
               <Image
@@ -932,9 +872,7 @@ export default function Introduction() {
             </div>
           </div>
 
-          {/* 오른쪽: 소셜 미디어 및 연락처 */}
           <div className='flex flex-col items-end'>
-            {/* 소셜 미디어 아이콘들 */}
             <div className='flex space-x-4 mb-4'>
               <a
                 href='https://github.com'
@@ -999,8 +937,6 @@ export default function Introduction() {
                 </svg>
               </a>
             </div>
-
-            {/* 저작권 문구 */}
             <p className='text-gray-400 text-sm'>
               © ALOC 2025. Made in Seoul.
             </p>
