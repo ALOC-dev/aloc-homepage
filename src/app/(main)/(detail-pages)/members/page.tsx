@@ -1,12 +1,13 @@
 'use client';
 
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { members, type Member } from '@/app/data/members';
 import {
   SidebarContainer,
   HeaderContainer,
+  EditButton,
 } from '@/components/layout-components';
 import { useGenerationNavigation } from '@/components/members/useGenerationNavigation';
 import { useMemberSearch } from '@/components/members/useMemberSearch';
@@ -144,6 +145,56 @@ export default function Members() {
               />
             </button>
           </div>
+
+          {/* 수정하기 버튼 */}
+          <EditButton
+            title='멤버 정보 수정'
+            fields={[
+              {
+                name: 'member',
+                label: '멤버 선택',
+                type: 'select',
+                placeholder: '멤버를 선택하세요',
+                options: members.map((member) => ({
+                  value: String(member.id),
+                  label: `${member.name} (${member.generation}기)`,
+                })),
+              },
+              {
+                name: 'name',
+                label: '이름',
+                type: 'text',
+                placeholder: '이름을 입력하세요',
+              },
+              {
+                name: 'generation',
+                label: '기수',
+                type: 'select',
+                placeholder: '기수를 선택하세요',
+                options: [
+                  { value: '1', label: '1기' },
+                  { value: '2', label: '2기' },
+                  { value: '3', label: '3기' },
+                ],
+              },
+              {
+                name: 'role',
+                label: '역할',
+                type: 'text',
+                placeholder: '역할을 입력하세요',
+              },
+              {
+                name: 'stack',
+                label: '관련 스택',
+                type: 'text',
+                placeholder: '관련 스택을 입력하세요',
+              },
+            ]}
+            onSave={(data) => {
+              console.log('멤버 정보 수정:', data);
+              // TODO: 실제 데이터 수정 로직 구현
+            }}
+          />
 
           {/* 검색 아이콘 및 검색창 */}
           <div

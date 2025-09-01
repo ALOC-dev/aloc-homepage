@@ -4,8 +4,11 @@ import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Document, Page, pdfjs } from 'react-pdf';
-import { SidebarContainer } from '@/components/layout-components';
-import { HeaderContainer } from '@/components/layout-components';
+import {
+  SidebarContainer,
+  HeaderContainer,
+  EditButton,
+} from '@/components/layout-components';
 import { projects, studies } from '@/app/data/activities';
 import { members } from '@/app/data/members';
 import 'react-pdf/dist/Page/TextLayer.css';
@@ -174,6 +177,45 @@ export default function ActivityPage() {
               className='object-contain'
             />
           </div>
+
+          {/* 수정하기 버튼 */}
+          <EditButton
+            title='활동 정보 수정'
+            fields={[
+              {
+                name: 'type',
+                label: '활동 유형',
+                type: 'select',
+                placeholder: '활동 유형을 선택하세요',
+                options: [
+                  { value: 'project', label: '프로젝트' },
+                  { value: 'study', label: '스터디' },
+                ],
+              },
+              {
+                name: 'title',
+                label: '제목',
+                type: 'text',
+                placeholder: '활동 제목을 입력하세요',
+              },
+              {
+                name: 'subtitle',
+                label: '부제목',
+                type: 'text',
+                placeholder: '활동 부제목을 입력하세요',
+              },
+              {
+                name: 'date',
+                label: '날짜',
+                type: 'text',
+                placeholder: '활동 날짜를 입력하세요',
+              },
+            ]}
+            onSave={(data) => {
+              console.log('활동 정보 수정:', data);
+              // TODO: 실제 데이터 수정 로직 구현
+            }}
+          />
         </HeaderContainer>
         <div className='flex h-full'>
           {/* 프로젝트/스터디 목록 컨테이너 */}
