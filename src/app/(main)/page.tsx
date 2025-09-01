@@ -16,26 +16,20 @@ export default function Main() {
   };
 
   const getStickerClassName = (stickerId: string) => {
-    const baseClasses = 'object-contain duration-200 cursor-pointer';
-    const isHovered = hoveredSticker === stickerId;
-    const isOtherHovered =
-      hoveredSticker !== null && hoveredSticker !== stickerId;
-
-    if (isHovered) {
-      return `${baseClasses} brightness-100`;
-    } else if (isOtherHovered) {
-      return `${baseClasses} brightness-15 opacity-40`;
-    } else {
-      return baseClasses;
-    }
+    const baseClasses = 'object-contain duration-200 cursor-pointer z-20';
+    if (!hoveredSticker) return `${baseClasses} brightness-100`; 
+    return hoveredSticker === stickerId
+      ? `${baseClasses} brightness-100 z-30`
+      : `${baseClasses} brightness-50`; 
   };
+
   return (
-    <div
-      className='fixed w-screen h-screen bg-cover bg-center overflow-hidden'
+    <div className='fixed w-screen h-screen bg-cover bg-center overflow-hidden'
       style={{ backgroundImage: "url('/images/main/main-background-2.png')" }}
     >
+
       {/* 헤더 영역 - flexbox 밖으로 분리 */}
-      <div className='absolute top-0 left-0 right-0 h-[10%] z-20'>
+      <div className='absolute top-0 left-0 right-0 h-[10%] z-40'>
         {/* Login 버튼 */}
         <div className='absolute right-[2%] top-[10%]'>
           <button className='text-[30px] cursor-pointer font-bold font-inter hover:text-blue-600 transition-colors bg-transparent border-none outline-none focus:outline-none'>
@@ -44,8 +38,13 @@ export default function Main() {
         </div>
       </div>
 
+      {/* 배경화면만 어둡게 하는 오버레이 */}
+      {hoveredSticker && (
+        <div className="absolute inset-0 bg-black opacity-40 z-10 pointer-events-none"></div>
+      )}
+
       {/* 맥북 컨테이너 - 중앙 정렬 */}
-      <div className='absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 relative'
+      <div className='absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 relative z-20'
         style={{
           width: "750px",
           height: "500px",
@@ -54,9 +53,15 @@ export default function Main() {
           borderRadius: "30px",
         }}
       >
+        {hoveredSticker && (
+          <div className="absolute inset-0 bg-black z-25 pointer-events-none transition-opacity opacity-60"
+          style={{ borderRadius: "30px" }}
+          />
+        )}
+
         {/* 메인 로고 - 정중앙 */}
         <div
-          className='absolute inset-0 left-[50%] top-[50%] -translate-x-1/2 -translate-y-1/2 w-[15%] aspect-[1/1] z-5'
+          className='absolute inset-0 left-[50%] top-[50%] -translate-x-1/2 -translate-y-1/2 w-[15%] aspect-[1/1] z-30'
         >
           <Image
             src='/images/main/logo-2.png'
@@ -69,8 +74,9 @@ export default function Main() {
         {/* 스티커 1 - about 스티커 */}
         <div
           className='absolute right-[40.5%] top-[25%] transform origin-top-left -rotate-[17.14deg] z-10 w-[80%] aspect-[1150/396]'
-          onMouseEnter={() => handleStickerHover('activity')}
+          onMouseEnter={() => handleStickerHover('about')}
           onMouseLeave={handleStickerLeave}
+          style={{ zIndex: hoveredSticker === 'about' ? 30 : 20 }}
         >
           <Link href='/instroduction'>
             <Image
@@ -87,6 +93,7 @@ export default function Main() {
           className='absolute left-[65%] top-[2%] transform origin-top-left rotate-[9.59deg] z-10 w-[30%] aspect-[467/375]'
           onMouseEnter={() => handleStickerHover('activity')}
           onMouseLeave={handleStickerLeave}
+          style={{ zIndex: hoveredSticker === 'activity' ? 30 : 20 }}
         >
           <Link href='/activity'>
             <Image
@@ -103,6 +110,7 @@ export default function Main() {
           className='absolute left-[7.0%] top-[36%] transform origin-top-left rotate-[10.61deg] z-10 w-[45%] aspect-[1/1]'
           onMouseEnter={() => handleStickerHover('member')}
           onMouseLeave={handleStickerLeave}
+          style={{ zIndex: hoveredSticker === 'member' ? 30 : 20 }}
         >
           <Link href='/members'>
             <Image
@@ -119,6 +127,7 @@ export default function Main() {
           className='absolute left-[62%] top-[45%]  origin-top-left transform rotate-[-9deg] z-10 w-[30%] aspect-[464/696]'
           onMouseEnter={() => handleStickerHover('camera')}
           onMouseLeave={handleStickerLeave}
+          style={{ zIndex: hoveredSticker === 'camera' ? 30 : 20 }}
         >
           <Link href='/gallery'>
             <Image
