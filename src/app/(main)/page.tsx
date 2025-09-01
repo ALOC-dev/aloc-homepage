@@ -29,13 +29,22 @@ export default function Main() {
     >
 
       {/* 헤더 영역 - flexbox 밖으로 분리 */}
-      <div className='absolute top-0 left-0 right-0 h-[10%] z-40'>
+      <div className='absolute top-[4%] right-[1%] h-[10%] z-40'>
         {/* Login 버튼 */}
-        <div className='absolute right-[2%] top-[10%]'>
-          <button className='text-[30px] cursor-pointer font-bold font-inter hover:text-blue-600 transition-colors bg-transparent border-none outline-none focus:outline-none'>
-            login
-          </button>
-        </div>
+        <Link href="/login">
+          <div
+            onMouseEnter={() => setHoveredSticker("login")}
+            onMouseLeave={() => setHoveredSticker(null)}
+            className="cursor-pointer inline-block"
+          >
+            <Image
+              src={hoveredSticker === "login" ? "/images/main/login-2.png" : "/images/main/login.png"}
+              alt="Login"
+              width={200}   
+              height={1}  
+            />
+          </div>
+        </Link>
       </div>
 
       {/* 배경화면만 어둡게 하는 오버레이 */}
