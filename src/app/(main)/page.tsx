@@ -30,7 +30,10 @@ export default function Main() {
     }
   };
   return (
-    <div className='fixed w-screen h-screen bg-white overflow-hidden'>
+    <div
+      className='fixed w-screen h-screen bg-cover bg-center overflow-hidden'
+      style={{ backgroundImage: "url('/images/main/main-background.png')" }}
+    >
       {/* 헤더 영역 - flexbox 밖으로 분리 */}
       <div className='absolute top-0 left-0 right-0 h-[10%] z-20'>
         {/* 로고 아이콘 */}
@@ -52,7 +55,15 @@ export default function Main() {
       </div>
 
       {/* 맥북 컨테이너 - 중앙 정렬 */}
-      <div className='absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[60%] aspect-[2054/1377] rounded-4xl bg-gradient-to-t from-gray-800 via-gray-700 to-gray-600 shadow-2xl'>
+      <div className='absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 relative'
+        style={{
+          width: "600px",
+          height: "400px",
+          background: "linear-gradient(113.96deg, #E6E5E6 0%, #35302B 100%)",
+          boxShadow: "30px 30px 50px rgba(0, 0, 0, 0.8)",
+          borderRadius: "30px",
+        }}
+      >
         {/* 메인 로고 - 정중앙 */}
         <div className='absolute inset-0 left-[50%] top-[50%] -translate-x-1/2 -translate-y-1/2 w-[15%] aspect-[1/1] z-5'>
           <Image
