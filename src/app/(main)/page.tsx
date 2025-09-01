@@ -29,8 +29,8 @@ export default function Main() {
     >
 
       {/* 헤더 영역 - flexbox 밖으로 분리 */}
-      <div className='absolute top-[4%] right-[1%] h-[10%] z-40'>
-        {/* Login 버튼 */}
+      <div className='absolute top-[40px] right-[50px] h-[10%] z-40'>
+        {/* Login */}
         <Link href="/login">
           <div
             onMouseEnter={() => setHoveredSticker("login")}
@@ -51,6 +51,16 @@ export default function Main() {
       {hoveredSticker && (
         <div className="absolute inset-0 bg-black opacity-40 z-10 pointer-events-none"></div>
       )}
+
+      {/* 노트 스티커 */}
+      <div className="absolute bottom-[-250px] left-[-100px] z-30 w-[500px] h-[600px] rotate-[-20deg]">
+        <Image
+          src="/images/main/note.png"
+          alt="Note"
+          fill
+          className="object-contain"
+        />
+      </div>
 
       {/* 맥북 컨테이너 - 중앙 정렬 */}
       <div className='absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 relative z-20'
