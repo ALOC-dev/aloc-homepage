@@ -36,16 +36,6 @@ export default function Main() {
     >
       {/* 헤더 영역 - flexbox 밖으로 분리 */}
       <div className='absolute top-0 left-0 right-0 h-[10%] z-20'>
-        {/* 로고 아이콘 */}
-        <div className='absolute left-[1.1%] top-[20%]'>
-          <Image
-            src='/images/common/아이콘.png'
-            alt='ALOC Logo'
-            width={80}
-            height={80}
-            className='object-contain'
-          />
-        </div>
         {/* Login 버튼 */}
         <div className='absolute right-[2%] top-[10%]'>
           <button className='text-[30px] cursor-pointer font-bold font-inter hover:text-blue-600 transition-colors bg-transparent border-none outline-none focus:outline-none'>
@@ -65,9 +55,11 @@ export default function Main() {
         }}
       >
         {/* 메인 로고 - 정중앙 */}
-        <div className='absolute inset-0 left-[50%] top-[50%] -translate-x-1/2 -translate-y-1/2 w-[15%] aspect-[1/1] z-5'>
+        <div
+          className='absolute inset-0 left-[50%] top-[50%] -translate-x-1/2 -translate-y-1/2 w-[15%] aspect-[1/1] z-5'
+        >
           <Image
-            src='/images/main/logo.png'
+            src='/images/main/logo-2.png'
             alt='ALOC Main Logo'
             fill
             className='object-contain'
