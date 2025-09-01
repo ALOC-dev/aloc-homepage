@@ -113,48 +113,6 @@ export default function Main() {
           </Link>
         </div>
 
-        {/* 스티커 4 - computer-science 스티커 */}
-        <div className='absolute left-[15%] top-[38%] transform origin-top-left rotate-[5deg] z-10 w-[25.7%] aspect-[740/302]'>
-          <Image
-            src='/images/main/computer_science.png'
-            alt='Computer Science Sticker'
-            fill
-            className={
-              hoveredSticker !== null
-                ? 'object-contain brightness-0 opacity-50 transition-all duration-200'
-                : 'object-contain transition-all duration-200'
-            }
-          />
-        </div>
-
-        {/* 스티커 5 - 부엉이 캐릭터 */}
-        <div className='absolute left-[53.1%] top-[58.8%] -rotate-[10deg] z-10 w-[13.2%] aspect-[782/1173]'>
-          <Image
-            src='/images/main/시립대마스코트.png'
-            alt='University Mascot'
-            fill
-            className={
-              hoveredSticker !== null
-                ? 'object-contain brightness-0 opacity-50 transition-all duration-200'
-                : 'object-contain transition-all duration-200'
-            }
-          />
-        </div>
-
-        {/* 스티커 6 - 서울시립대 로고 */}
-        <div className='absolute left-[48.3%] top-[78%] z-10 w-[36.8%] aspect-[347/152]'>
-          <Image
-            src='/images/main/서울시립대로고.png'
-            alt='University of Seoul Logo'
-            fill
-            className={
-              hoveredSticker !== null
-                ? 'object-contain brightness-0 opacity-50 transition-all duration-200'
-                : 'object-contain transition-all duration-200'
-            }
-          />
-        </div>
-
         {/* 스티커 7 - aloc */}
         <div
           className='absolute left-[62.1%] top-[-4.7%] transform origin-top-left rotate-[9.59deg] z-10 w-[41.5%] aspect-[467/375]'
