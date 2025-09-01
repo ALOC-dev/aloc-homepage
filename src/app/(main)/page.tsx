@@ -53,12 +53,17 @@ export default function Main() {
       )}
 
       {/* 노트 스티커 */}
-      <div className="absolute bottom-[-250px] left-[-100px] z-30 w-[500px] h-[600px] rotate-[-20deg]">
+      <div
+        className="absolute bottom-[-250px] left-[-100px] z-30 w-[500px] h-[600px] rotate-[-20deg]"
+        style={{ zIndex: 20 }}
+      >
         <Image
           src="/images/main/note.png"
           alt="Note"
           fill
-          className="object-contain"
+          className={`object-contain duration-200 ${
+            hoveredSticker ? 'brightness-50' : 'brightness-100'
+          }`}
         />
       </div>
 
