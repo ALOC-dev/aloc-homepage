@@ -17,31 +17,35 @@ export default function Main() {
 
   const getStickerClassName = (stickerId: string) => {
     const baseClasses = 'object-contain duration-200 cursor-pointer z-20';
-    if (!hoveredSticker) return `${baseClasses} brightness-100`; 
+    if (!hoveredSticker) return `${baseClasses} brightness-100`;
     return hoveredSticker === stickerId
       ? `${baseClasses} brightness-100 z-30`
-      : `${baseClasses} brightness-50`; 
+      : `${baseClasses} brightness-50`;
   };
 
   return (
-    <div className='fixed w-screen h-screen bg-cover bg-center overflow-hidden'
+    <div
+      className='fixed w-screen h-screen bg-cover bg-center overflow-hidden'
       style={{ backgroundImage: "url('/images/main/main-background-2.png')" }}
     >
-
       {/* 헤더 영역 - flexbox 밖으로 분리 */}
       <div className='absolute top-[40px] right-[50px] h-[10%] z-40'>
         {/* Login */}
-        <Link href="/login">
+        <Link href='/login'>
           <div
-            onMouseEnter={() => setHoveredSticker("login")}
+            onMouseEnter={() => setHoveredSticker('login')}
             onMouseLeave={() => setHoveredSticker(null)}
-            className="cursor-pointer inline-block"
+            className='cursor-pointer inline-block'
           >
             <Image
-              src={hoveredSticker === "login" ? "/images/main/login-2.png" : "/images/main/login.png"}
-              alt="Login"
-              width={200}   
-              height={1}  
+              src={
+                hoveredSticker === 'login'
+                  ? '/images/main/login-2.png'
+                  : '/images/main/login.png'
+              }
+              alt='Login'
+              width={200}
+              height={1}
             />
           </div>
         </Link>
@@ -49,17 +53,17 @@ export default function Main() {
 
       {/* 배경화면만 어둡게 하는 오버레이 */}
       {hoveredSticker && (
-        <div className="absolute inset-0 bg-black opacity-40 z-10 pointer-events-none"></div>
+        <div className='absolute inset-0 bg-black opacity-40 z-10 pointer-events-none'></div>
       )}
 
       {/* 노트 스티커 */}
       <div
-        className="absolute bottom-[-250px] left-[-100px] z-30 w-[500px] h-[600px] rotate-[-20deg]"
+        className='absolute bottom-[-250px] left-[-100px] z-30 w-[500px] h-[600px] rotate-[-20deg]'
         style={{ zIndex: 20 }}
       >
         <Image
-          src="/images/main/note.png"
-          alt="Note"
+          src='/images/main/note.png'
+          alt='Note'
           fill
           className={`object-contain duration-200 ${
             hoveredSticker ? 'brightness-50' : 'brightness-100'
@@ -68,25 +72,25 @@ export default function Main() {
       </div>
 
       {/* 맥북 컨테이너 - 중앙 정렬 */}
-      <div className='absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 relative z-20'
+      <div
+        className='absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 relative z-20'
         style={{
-          width: "750px",
-          height: "500px",
-          background: "linear-gradient(113.96deg, #E6E5E6 0%, #35302B 100%)",
-          boxShadow: "30px 30px 50px rgba(0, 0, 0, 0.8)",
-          borderRadius: "30px",
+          width: '750px',
+          height: '500px',
+          background: 'linear-gradient(113.96deg, #E6E5E6 0%, #35302B 100%)',
+          boxShadow: '30px 30px 50px rgba(0, 0, 0, 0.8)',
+          borderRadius: '30px',
         }}
       >
         {hoveredSticker && (
-          <div className="absolute inset-0 bg-black z-25 pointer-events-none transition-opacity opacity-60"
-          style={{ borderRadius: "30px" }}
+          <div
+            className='absolute inset-0 bg-black z-25 pointer-events-none transition-opacity opacity-60'
+            style={{ borderRadius: '30px' }}
           />
         )}
 
         {/* 메인 로고 - 정중앙 */}
-        <div
-          className='absolute inset-0 left-[50%] top-[50%] -translate-x-1/2 -translate-y-1/2 w-[15%] aspect-[1/1] z-30'
-        >
+        <div className='absolute inset-0 left-[50%] top-[50%] -translate-x-1/2 -translate-y-1/2 w-[15%] aspect-[1/1] z-30'>
           <Image
             src='/images/main/logo-2.png'
             alt='ALOC Main Logo'
@@ -102,7 +106,7 @@ export default function Main() {
           onMouseLeave={handleStickerLeave}
           style={{ zIndex: hoveredSticker === 'about' ? 30 : 20 }}
         >
-          <Link href='/instroduction'>
+          <Link href='/about'>
             <Image
               src='/images/main/about.png'
               alt='About Sticker'
