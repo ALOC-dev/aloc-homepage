@@ -52,13 +52,13 @@ export function EditButton({
         onClick={() => setIsEditModalOpen(true)}
         className={className}
       >
-        수정하기
+        추가하기
       </button>
 
-      {/* 수정하기 모달 */}
+      {/* 추가하기 모달 */}
       {isEditModalOpen && (
-        <div className='fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50'>
-          <div className='bg-white rounded-lg p-6 w-[500px] max-w-[90vw] max-h-[80vh] overflow-y-auto'>
+        <div className='relative w-[400px] h-[500px] left-1/2 -translate-x-1/2 top-1/2 flex items-center justify-center z-50'>
+          <div className='bg-white rounded-lg p-6 w-[400px] max-w-[90vw] max-h-[80vh] overflow-y-auto'>
             <div className='flex items-center justify-between mb-6'>
               <h2 className='text-[20px] font-bold text-text-primary'>
                 {title}
@@ -135,7 +135,7 @@ export function EditButton({
                 onClick={handleSave}
                 className='flex-1 h-[40px] bg-brand-blue text-white rounded-md text-[14px] font-medium hover:bg-brand-blue-hover transition-colors'
               >
-                수정 완료
+                추가 완료
               </button>
             </div>
           </div>

@@ -151,16 +151,6 @@ export default function Members() {
             title='멤버 정보 수정'
             fields={[
               {
-                name: 'member',
-                label: '멤버 선택',
-                type: 'select',
-                placeholder: '멤버를 선택하세요',
-                options: members.map((member) => ({
-                  value: String(member.id),
-                  label: `${member.name} (${member.generation}기)`,
-                })),
-              },
-              {
                 name: 'name',
                 label: '이름',
                 type: 'text',
@@ -175,19 +165,32 @@ export default function Members() {
                   { value: '1', label: '1기' },
                   { value: '2', label: '2기' },
                   { value: '3', label: '3기' },
+                  { value: '4', label: '4기' },
                 ],
               },
               {
                 name: 'role',
                 label: '역할',
-                type: 'text',
-                placeholder: '역할을 입력하세요',
+                type: 'select',
+                placeholder: '역할을 선택하세요',
+                options: [
+                  { value: '회장', label: '회장' },
+                  { value: '부회장', label: '부회장' },
+                  { value: '총무', label: '총무' },
+                  { value: '브랜드매니저', label: '브랜드매니저' },
+                  { value: '부원', label: '부원' },
+                ],
               },
               {
                 name: 'stack',
                 label: '관련 스택',
-                type: 'text',
-                placeholder: '관련 스택을 입력하세요',
+                type: 'select',
+                placeholder: '관련 스택을 선택하세요',
+                options: [
+                  { value: '프론트엔드', label: '프론트엔드' },
+                  { value: '백엔드', label: '백엔드' },
+                  { value: 'AI', label: 'AI' },
+                ],
               },
             ]}
             onSave={(data) => {
