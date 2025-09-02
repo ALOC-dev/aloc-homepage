@@ -5,7 +5,7 @@ import Image from 'next/image';
 import { folderData, folderImages, type FolderType } from '@/app/data/gallery';
 import {
   SmallHeaderContainer,
-  EditButton,
+  PlusButton,
 } from '@/components/layout-components';
 
 export default function Gallery() {
@@ -57,9 +57,9 @@ export default function Gallery() {
           {folderData[selectedFolder].name}
         </h1>
 
-        {/* 수정하기 버튼 */}
-        <EditButton
-          title='갤러리 정보 수정'
+        {/* 추가하기 버튼 */}
+        <PlusButton
+          title='갤러리 정보 추가'
           className='absolute top-1/2 -translate-y-1/2 left-[150px] w-[80px] h-[32px] bg-brand-blue text-white rounded-md text-[14px] font-medium hover:bg-brand-blue-hover transition-colors cursor-pointer flex items-center justify-center'
           fields={[
             {
@@ -89,8 +89,8 @@ export default function Gallery() {
             },
           ]}
           onSave={(data) => {
-            console.log('갤러리 정보 수정:', data);
-            // TODO: 실제 데이터 수정 로직 구현
+            console.log('갤러리 정보 추가:', data);
+            // TODO: 실제 데이터 추가 로직 구현
           }}
         />
       </SmallHeaderContainer>

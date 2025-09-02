@@ -36,7 +36,7 @@ const Widget = forwardRef<HTMLDivElement, WidgetProps>(
         label: 'About',
         icon: '/images/widget/about-icon.png',
         alt: 'About',
-        href: '/introduction',
+        href: '/about',
         width: 67,
         height: 67,
       },

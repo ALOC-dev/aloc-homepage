@@ -5,4 +5,4 @@ export { useDraggable } from './useDraggable';
 export { default as SidebarContainer } from './SidebarContainer';
 export { default as HeaderContainer } from './HeaderContainer';
 export { SmallHeaderContainer } from './SmallHeaderContainer';
-export { EditButton } from './EditButton';
+export { PlusButton } from './PlusButton';

@@ -7,7 +7,7 @@ import { Document, Page, pdfjs } from 'react-pdf';
 import {
   SidebarContainer,
   HeaderContainer,
-  EditButton,
+  PlusButton,
 } from '@/components/layout-components';
 import { projects, studies } from '@/app/data/activities';
 import { members } from '@/app/data/members';
@@ -178,9 +178,9 @@ export default function ActivityPage() {
             />
           </div>
 
-          {/* 수정하기 버튼 */}
-          <EditButton
-            title='활동 정보 수정'
+          {/* 추가하기 버튼 */}
+          <PlusButton
+            title='활동 정보 추가'
             fields={[
               {
                 name: 'type',
@@ -212,8 +212,8 @@ export default function ActivityPage() {
               },
             ]}
             onSave={(data) => {
-              console.log('활동 정보 수정:', data);
-              // TODO: 실제 데이터 수정 로직 구현
+              console.log('활동 정보 추가:', data);
+              // TODO: 실제 데이터 추가 로직 구현
             }}
           />
         </HeaderContainer>

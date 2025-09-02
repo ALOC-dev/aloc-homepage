@@ -7,7 +7,7 @@ import { members, type Member } from '@/app/data/members';
 import {
   SidebarContainer,
   HeaderContainer,
-  EditButton,
+  PlusButton,
 } from '@/components/layout-components';
 import { useGenerationNavigation } from '@/components/members/useGenerationNavigation';
 import { useMemberSearch } from '@/components/members/useMemberSearch';
@@ -146,9 +146,9 @@ export default function Members() {
             </button>
           </div>
 
-          {/* 수정하기 버튼 */}
-          <EditButton
-            title='멤버 정보 수정'
+          {/* 추가하기 버튼 */}
+          <PlusButton
+            title='멤버 정보 추가'
             fields={[
               {
                 name: 'name',
@@ -194,8 +194,8 @@ export default function Members() {
               },
             ]}
             onSave={(data) => {
-              console.log('멤버 정보 수정:', data);
-              // TODO: 실제 데이터 수정 로직 구현
+              console.log('멤버 정보 추가:', data);
+              // TODO: 실제 데이터 추가 로직 구현
             }}
           />
 
