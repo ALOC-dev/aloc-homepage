@@ -209,8 +209,9 @@ export default function ActivityPage() {
 
         {/* 수정하기 버튼 */}
         <EditButton
-          title='활동 정보 수정'
-          className='absolute z-40 w-[80px] h-[32px] left-[250px] top-[30px] bg-orange-500 text-white rounded-md text-[14px] font-medium hover:bg-orange-600 transition-colors cursor-pointer flex items-center justify-center'
+          title={`${currentItem.title} 관리`}
+          //EditButton의 className 속성을 덮어씀
+          className='absolute z-40 w-[80px] h-[80px] right-[5px] top-[90px] hover:opacity-50 transition-colors cursor-pointer flex items-center justify-center'
           fields={[
             {
               name: 'type',
@@ -259,6 +260,8 @@ export default function ActivityPage() {
             />
           </div>
         </HeaderContainer>
+
+        {/* 프로젝트/스터디 목록 컨테이너 */}
         <div className='flex h-full'>
           {/* 프로젝트/스터디 목록 컨테이너 */}
           <div className='flex flex-col items-center w-[220px] h-full border-r border-border-bright'>

@@ -20,7 +20,7 @@ export function EditButton({
   title = '정보 수정',
   fields = [],
   onSave,
-  className = 'w-[80px] h-[32px] bg-orange-500 text-white rounded-md text-[14px] font-medium hover:bg-orange-600 transition-colors cursor-pointer flex items-center justify-center',
+  className = 'bg-blue-500 cursor-pointer flex items-center justify-center',
 }: EditButtonProps) {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [formData, setFormData] = useState<Record<string, string>>({});
@@ -56,11 +56,10 @@ export function EditButton({
         <Image
           src='/images/common/edit.svg'
           alt='수정'
-          width={16}
-          height={16}
+          width={32}
+          height={32}
           className='mr-1'
         />
-        수정하기
       </button>
 
       {/* 수정하기 모달 */}
