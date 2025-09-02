@@ -65,33 +65,16 @@ export function EditButton({
 
       {/* 수정하기 모달 */}
       {isEditModalOpen && (
-        <div className='absolute inset-0 bg-gray-500 bg-opacity-20 flex items-center justify-center z-50'>
+        <div className='absolute inset-0 bg-black/50 flex items-center justify-center z-50'>
           <div className='bg-white rounded-lg p-6 w-[400px] max-w-[90vw] max-h-[80vh] overflow-y-auto'>
             <div className='flex items-center justify-between mb-6'>
+              {/* 모달 타이틀 */}
               <h2 className='text-[20px] font-bold text-text-primary'>
                 {title}
               </h2>
-              <button
-                type='button'
-                onClick={handleCancel}
-                className='w-8 h-8 flex items-center justify-center hover:bg-gray-100 rounded-full transition-colors'
-              >
-                <svg
-                  width='16'
-                  height='16'
-                  viewBox='0 0 24 24'
-                  fill='none'
-                  stroke='currentColor'
-                  strokeWidth='2'
-                  strokeLinecap='round'
-                  strokeLinejoin='round'
-                >
-                  <line x1='18' y1='6' x2='6' y2='18'></line>
-                  <line x1='6' y1='6' x2='18' y2='18'></line>
-                </svg>
-              </button>
             </div>
 
+            {/* 필드 입력 컨테이너 */}
             <div className='space-y-4'>
               {fields.map((field) => (
                 <div key={field.name}>
@@ -131,6 +114,7 @@ export function EditButton({
             </div>
 
             <div className='flex gap-3 mt-6'>
+              {/* 취소 버튼 */}
               <button
                 type='button'
                 onClick={handleCancel}
@@ -138,6 +122,7 @@ export function EditButton({
               >
                 취소
               </button>
+              {/* 수정 완료 버튼 */}
               <button
                 type='button'
                 onClick={handleSave}

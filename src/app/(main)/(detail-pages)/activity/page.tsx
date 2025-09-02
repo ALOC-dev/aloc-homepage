@@ -8,6 +8,7 @@ import {
   SidebarContainer,
   HeaderContainer,
   PlusButton,
+  EditButton,
 } from '@/components/layout-components';
 import { projects, studies } from '@/app/data/activities';
 import { members } from '@/app/data/members';
@@ -206,6 +207,46 @@ export default function ActivityPage() {
           }}
         />
 
+        {/* 수정하기 버튼 */}
+        <EditButton
+          title='활동 정보 수정'
+          className='absolute z-40 w-[80px] h-[32px] left-[250px] top-[30px] bg-orange-500 text-white rounded-md text-[14px] font-medium hover:bg-orange-600 transition-colors cursor-pointer flex items-center justify-center'
+          fields={[
+            {
+              name: 'type',
+              label: '활동 유형',
+              type: 'select',
+              placeholder: '활동 유형을 선택하세요',
+              options: [
+                { value: 'project', label: '프로젝트' },
+                { value: 'study', label: '스터디' },
+              ],
+            },
+            {
+              name: 'title',
+              label: '제목',
+              type: 'text',
+              placeholder: '활동 제목을 입력하세요',
+            },
+            {
+              name: 'subtitle',
+              label: '부제목',
+              type: 'text',
+              placeholder: '활동 부제목을 입력하세요',
+            },
+            {
+              name: 'date',
+              label: '날짜',
+              type: 'text',
+              placeholder: '활동 날짜를 입력하세요',
+            },
+          ]}
+          onSave={(data) => {
+            console.log('활동 정보 수정:', data);
+            // TODO: 실제 데이터 수정 로직 구현
+          }}
+        />
+
         {/* 상단 헤더 */}
         <HeaderContainer>
           <div className='absolute top-1/2 -translate-y-1/2 left-[50px]'>
@@ -223,22 +264,26 @@ export default function ActivityPage() {
           <div className='flex flex-col items-center w-[220px] h-full border-r border-border-bright'>
             <div className='mt-[15px] flex flex-col'>
               {currentList.map((item, index) => (
-                <button
+                <div
                   key={item.id}
-                  onClick={() => setSelectedItem(item.id)}
-                  className={`w-[170px] min-h-[80px] flex flex-col justify-center items-start rounded-[7.5px] p-5 cursor-pointer transition-colors ${
+                  className={`w-[170px] min-h-[80px] rounded-[7.5px] p-5 ${
                     selectedItem === item.id
                       ? 'bg-yellow-200'
                       : 'bg-transparent'
                   }`}
                 >
-                  <h3 className='text-[15.5px] font-bold text-text-primary mb-[4.5px] text-left truncate w-full'>
-                    {item.title}
-                  </h3>
-                  <p className='text-[14.5px] text-text-secondary leading-tight text-left truncate w-full'>
-                    {item.subtitle}
-                  </p>
-                </button>
+                  <button
+                    onClick={() => setSelectedItem(item.id)}
+                    className='w-full text-left cursor-pointer transition-colors'
+                  >
+                    <h3 className='text-[15.5px] font-bold text-text-primary mb-[4.5px] truncate w-full'>
+                      {item.title}
+                    </h3>
+                    <p className='text-[14.5px] font-bold text-text-secondary leading-tight truncate w-full'>
+                      {item.subtitle}
+                    </p>
+                  </button>
+                </div>
               ))}
             </div>
           </div>
