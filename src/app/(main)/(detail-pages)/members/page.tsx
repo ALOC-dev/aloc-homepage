@@ -111,7 +111,60 @@ export default function Members() {
       </SidebarContainer>
 
       {/* 오른쪽 영역 (헤더바 + 메인 콘텐츠) */}
-      <div className='flex-1 h-full flex flex-col'>
+      <div className='flex-1 h-full flex flex-col relative'>
+        {/* 추가하기 버튼 */}
+        <PlusButton
+          title='멤버 정보 추가'
+          className='absolute z-50 w-[80px] h-[32px] left-[150px] top-[30px] bg-blue-500 text-white rounded-md text-[14px] font-medium hover:bg-brand-blue-hover transition-colors cursor-pointer flex items-center justify-center'
+          fields={[
+            {
+              name: 'name',
+              label: '이름',
+              type: 'text',
+              placeholder: '이름을 입력하세요',
+            },
+            {
+              name: 'generation',
+              label: '기수',
+              type: 'select',
+              placeholder: '기수를 선택하세요',
+              options: [
+                { value: '1', label: '1기' },
+                { value: '2', label: '2기' },
+                { value: '3', label: '3기' },
+                { value: '4', label: '4기' },
+              ],
+            },
+            {
+              name: 'role',
+              label: '역할',
+              type: 'select',
+              placeholder: '역할을 선택하세요',
+              options: [
+                { value: '회장', label: '회장' },
+                { value: '부회장', label: '부회장' },
+                { value: '총무', label: '총무' },
+                { value: '브랜드매니저', label: '브랜드매니저' },
+                { value: '부원', label: '부원' },
+              ],
+            },
+            {
+              name: 'stack',
+              label: '관련 스택',
+              type: 'select',
+              placeholder: '관련 스택을 선택하세요',
+              options: [
+                { value: '프론트엔드', label: '프론트엔드' },
+                { value: '백엔드', label: '백엔드' },
+                { value: 'AI', label: 'AI' },
+              ],
+            },
+          ]}
+          onSave={(data) => {
+            console.log('멤버 정보 추가:', data);
+            // TODO: 실제 데이터 추가 로직 구현
+          }}
+        />
         {/* 상단 헤더바 그룹 */}
         <HeaderContainer>
           {/* 네비게이션 아이콘 */}
@@ -145,59 +198,6 @@ export default function Members() {
               />
             </button>
           </div>
-
-          {/* 추가하기 버튼 */}
-          <PlusButton
-            title='멤버 정보 추가'
-            fields={[
-              {
-                name: 'name',
-                label: '이름',
-                type: 'text',
-                placeholder: '이름을 입력하세요',
-              },
-              {
-                name: 'generation',
-                label: '기수',
-                type: 'select',
-                placeholder: '기수를 선택하세요',
-                options: [
-                  { value: '1', label: '1기' },
-                  { value: '2', label: '2기' },
-                  { value: '3', label: '3기' },
-                  { value: '4', label: '4기' },
-                ],
-              },
-              {
-                name: 'role',
-                label: '역할',
-                type: 'select',
-                placeholder: '역할을 선택하세요',
-                options: [
-                  { value: '회장', label: '회장' },
-                  { value: '부회장', label: '부회장' },
-                  { value: '총무', label: '총무' },
-                  { value: '브랜드매니저', label: '브랜드매니저' },
-                  { value: '부원', label: '부원' },
-                ],
-              },
-              {
-                name: 'stack',
-                label: '관련 스택',
-                type: 'select',
-                placeholder: '관련 스택을 선택하세요',
-                options: [
-                  { value: '프론트엔드', label: '프론트엔드' },
-                  { value: '백엔드', label: '백엔드' },
-                  { value: 'AI', label: 'AI' },
-                ],
-              },
-            ]}
-            onSave={(data) => {
-              console.log('멤버 정보 추가:', data);
-              // TODO: 실제 데이터 추가 로직 구현
-            }}
-          />
 
           {/* 검색 아이콘 및 검색창 */}
           <div

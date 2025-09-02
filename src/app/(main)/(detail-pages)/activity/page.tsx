@@ -165,7 +165,47 @@ export default function ActivityPage() {
       </SidebarContainer>
 
       {/* 메인 콘텐츠 영역 */}
-      <div className='flex-col flex-1'>
+      <div className='flex-col flex-1 relative'>
+        {/* 추가하기 버튼 */}
+        <PlusButton
+          title='활동 정보 추가'
+          className='absolute z-50 w-[80px] h-[32px] left-[150px] top-[30px] bg-blue-500 text-white rounded-md text-[14px] font-medium hover:bg-brand-blue-hover transition-colors cursor-pointer flex items-center justify-center'
+          fields={[
+            {
+              name: 'type',
+              label: '활동 유형',
+              type: 'select',
+              placeholder: '활동 유형을 선택하세요',
+              options: [
+                { value: 'project', label: '프로젝트' },
+                { value: 'study', label: '스터디' },
+              ],
+            },
+            {
+              name: 'title',
+              label: '제목',
+              type: 'text',
+              placeholder: '활동 제목을 입력하세요',
+            },
+            {
+              name: 'subtitle',
+              label: '부제목',
+              type: 'text',
+              placeholder: '활동 부제목을 입력하세요',
+            },
+            {
+              name: 'date',
+              label: '날짜',
+              type: 'text',
+              placeholder: '활동 날짜를 입력하세요',
+            },
+          ]}
+          onSave={(data) => {
+            console.log('활동 정보 추가:', data);
+            // TODO: 실제 데이터 추가 로직 구현
+          }}
+        />
+
         {/* 상단 헤더 */}
         <HeaderContainer>
           <div className='absolute top-1/2 -translate-y-1/2 left-[50px]'>
@@ -177,45 +217,6 @@ export default function ActivityPage() {
               className='object-contain'
             />
           </div>
-
-          {/* 추가하기 버튼 */}
-          <PlusButton
-            title='활동 정보 추가'
-            fields={[
-              {
-                name: 'type',
-                label: '활동 유형',
-                type: 'select',
-                placeholder: '활동 유형을 선택하세요',
-                options: [
-                  { value: 'project', label: '프로젝트' },
-                  { value: 'study', label: '스터디' },
-                ],
-              },
-              {
-                name: 'title',
-                label: '제목',
-                type: 'text',
-                placeholder: '활동 제목을 입력하세요',
-              },
-              {
-                name: 'subtitle',
-                label: '부제목',
-                type: 'text',
-                placeholder: '활동 부제목을 입력하세요',
-              },
-              {
-                name: 'date',
-                label: '날짜',
-                type: 'text',
-                placeholder: '활동 날짜를 입력하세요',
-              },
-            ]}
-            onSave={(data) => {
-              console.log('활동 정보 추가:', data);
-              // TODO: 실제 데이터 추가 로직 구현
-            }}
-          />
         </HeaderContainer>
         <div className='flex h-full'>
           {/* 프로젝트/스터디 목록 컨테이너 */}

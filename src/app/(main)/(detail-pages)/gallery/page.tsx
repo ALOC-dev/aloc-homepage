@@ -51,48 +51,48 @@ export default function Gallery() {
   };
 
   return (
-    <div className='w-full h-full bg-gray-100 flex flex-col'>
+    <div className='w-full h-full bg-gray-100 flex flex-col relative'>
+      {/* 추가하기 버튼 */}
+      <PlusButton
+        title='갤러리 정보 추가'
+        className='absolute z-50 w-[80px] h-[32px] left-[150px] top-[10px] bg-blue-500 text-white rounded-md text-[14px] font-medium hover:bg-brand-blue-hover transition-colors cursor-pointer flex items-center justify-center'
+        fields={[
+          {
+            name: 'category',
+            label: '카테고리',
+            type: 'select',
+            placeholder: '카테고리를 선택하세요',
+            options: [
+              { value: 'all', label: '전체' },
+              { value: 'knowledge-sharing', label: '지식공유회' },
+              { value: 'final-presentation', label: '최종발표회' },
+              { value: 'after-party', label: '뒷풀이' },
+              { value: 'daily-life', label: '일상사진' },
+            ],
+          },
+          {
+            name: 'title',
+            label: '제목',
+            type: 'text',
+            placeholder: '갤러리 제목을 입력하세요',
+          },
+          {
+            name: 'description',
+            label: '설명',
+            type: 'text',
+            placeholder: '갤러리 설명을 입력하세요',
+          },
+        ]}
+        onSave={(data) => {
+          console.log('갤러리 정보 추가:', data);
+          // TODO: 실제 데이터 추가 로직 구현
+        }}
+      />
+
       <SmallHeaderContainer>
         <h1 className='text-[20px] font-bold text-black'>
           {folderData[selectedFolder].name}
         </h1>
-
-        {/* 추가하기 버튼 */}
-        <PlusButton
-          title='갤러리 정보 추가'
-          className='absolute top-1/2 -translate-y-1/2 left-[150px] w-[80px] h-[32px] bg-brand-blue text-white rounded-md text-[14px] font-medium hover:bg-brand-blue-hover transition-colors cursor-pointer flex items-center justify-center'
-          fields={[
-            {
-              name: 'category',
-              label: '카테고리',
-              type: 'select',
-              placeholder: '카테고리를 선택하세요',
-              options: [
-                { value: 'all', label: '전체' },
-                { value: 'knowledge-sharing', label: '지식공유회' },
-                { value: 'final-presentation', label: '최종발표회' },
-                { value: 'after-party', label: '뒷풀이' },
-                { value: 'daily-life', label: '일상사진' },
-              ],
-            },
-            {
-              name: 'title',
-              label: '제목',
-              type: 'text',
-              placeholder: '갤러리 제목을 입력하세요',
-            },
-            {
-              name: 'description',
-              label: '설명',
-              type: 'text',
-              placeholder: '갤러리 설명을 입력하세요',
-            },
-          ]}
-          onSave={(data) => {
-            console.log('갤러리 정보 추가:', data);
-            // TODO: 실제 데이터 추가 로직 구현
-          }}
-        />
       </SmallHeaderContainer>
 
       {/* 메인 이미지 영역 */}
