@@ -83,7 +83,7 @@ export default function ActivityPage() {
         <div className='mt-[59px] flex flex-col items-center justify-center'>
           {/* ALOC Team List 제목 */}
           <h1 className='text-[17.84px] font-semibold text-border-dark leading-[1.2]'>
-            ALOC Team List
+            ALOC Activities
           </h1>
           {/* Project 탭 */}
           <button
