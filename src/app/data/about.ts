@@ -9,7 +9,7 @@ export const activityImageMap: Record<ActivityLabel, string> = {
 export type ActivityConfig = {
   memoTab: { positionClass: string; content: string };
   centralPhotoTab: { positionClass: string; headerText: string };
-  alertCard: { positionClass: string; text: string; link: string };
+  alertCard?: { positionClass: string; text: string; link: string };
 };
 
 export const activityConfigMap: Record<ActivityLabel, ActivityConfig> = {
@@ -22,11 +22,6 @@ export const activityConfigMap: Record<ActivityLabel, ActivityConfig> = {
     centralPhotoTab: {
       positionClass: 'absolute top-[280px] left-[420px]',
       headerText: '지식공유회',
-    },
-    alertCard: {
-      positionClass: 'absolute top-[760px] left-[740px]',
-      text: 'ALOC의 지식공유회가 궁금하신가요?',
-      link: '/gallery',
     },
   },
   '스터디/프로젝트': {

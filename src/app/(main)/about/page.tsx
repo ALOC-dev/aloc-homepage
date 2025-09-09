@@ -823,28 +823,30 @@ export default function Introduction() {
               </div>
 
               {/* 우측 하단 알림 카드 */}
-              <div
-                className={`${activityConfigMap[selectedActivity].alertCard.positionClass} shadow-lg w-[521px] h-[312px] bg-gray-200 rounded-[24px] flex justify-center relative ${getAnimClasses()}`}
-              >
-                <div className='absolute top-[41px] left-[201px] w-[132px] h-[132px]'>
-                  <Image
-                    src='/images/introduction/alert.png'
-                    alt='alert'
-                    width={132}
-                    height={132}
-                    className='w-full h-full object-cover'
-                  />
-                </div>
-                <div className='absolute top-[165px] text-[24px] text-black text-center'>
-                  {activityConfigMap[selectedActivity].alertCard.text}
-                </div>
-                <Link
-                  href={activityConfigMap[selectedActivity].alertCard.link}
-                  className='absolute top-[219px] left-[37px] w-[461px] h-[48px] bg-gradient-to-b from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 rounded-[16px] flex items-center justify-center cursor-pointer transition-all duration-200'
+              {activityConfigMap[selectedActivity].alertCard && (
+                <div
+                  className={`${activityConfigMap[selectedActivity].alertCard.positionClass} shadow-lg w-[521px] h-[312px] bg-gray-200 rounded-[24px] flex justify-center relative ${getAnimClasses()}`}
                 >
-                  <span className='text-[24px] text-white'>더보기</span>
-                </Link>
-              </div>
+                  <div className='absolute top-[41px] left-[201px] w-[132px] h-[132px]'>
+                    <Image
+                      src='/images/introduction/alert.png'
+                      alt='alert'
+                      width={132}
+                      height={132}
+                      className='w-full h-full object-cover'
+                    />
+                  </div>
+                  <div className='absolute top-[165px] text-[24px] text-black text-center'>
+                    {activityConfigMap[selectedActivity].alertCard.text}
+                  </div>
+                  <Link
+                    href={activityConfigMap[selectedActivity].alertCard.link}
+                    className='absolute top-[219px] left-[37px] w-[461px] h-[48px] bg-gradient-to-b from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 rounded-[16px] flex items-center justify-center cursor-pointer transition-all duration-200'
+                  >
+                    <span className='text-[24px] text-white'>더보기</span>
+                  </Link>
+                </div>
+              )}
             </div>
           </div>
         </div>

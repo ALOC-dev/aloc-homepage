@@ -24,10 +24,7 @@ export default function Main() {
   };
 
   return (
-    <div
-      className='fixed w-screen h-screen bg-cover bg-center overflow-hidden'
-      style={{ backgroundImage: "url('/images/main/main-background-2.png')" }}
-    >
+    <div className='fixed w-screen h-screen bg-cover bg-center overflow-hidden bg-[url("/images/main/main-background-2.png")]'>
       {/* 헤더 영역 - flexbox 밖으로 분리 */}
       <div className='absolute top-[40px] right-[50px] h-[10%] z-40'>
         {/* Login */}

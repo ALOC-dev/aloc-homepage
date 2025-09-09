@@ -72,7 +72,7 @@ export default function ActivityPage() {
   };
 
   // PDF 파일 경로 (activities 데이터에서 가져오거나 기본값 사용)
-2  const pdfPath =
+  const pdfPath =
     currentItem?.pdfPath ||
     '/pdfs/activities/projects/ALOC_최종발표회_UOScholar.pdf';
   return (
