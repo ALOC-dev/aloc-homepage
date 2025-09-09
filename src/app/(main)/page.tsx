@@ -31,7 +31,7 @@ export default function Main() {
       {/* 헤더 영역 - flexbox 밖으로 분리 */}
       <div className='absolute top-[40px] right-[50px] h-[10%] z-40'>
         {/* Login */}
-        <Link href='/login'>
+        <Link href={'/login'}>
           <div
             onMouseEnter={() => setHoveredSticker('login')}
             onMouseLeave={() => setHoveredSticker(null)}
